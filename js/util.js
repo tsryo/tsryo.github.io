@@ -1,4 +1,4 @@
-// "use strict";
+"use strict";
 
 window.onload = function() {
   	const mainPanel = document.getElementById("right-panel").querySelector("table.panel-contents tr td");
