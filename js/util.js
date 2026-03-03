@@ -34,7 +34,7 @@ window.onload = function() {
   	const loadLinks = function() {
   		mainPanel.innerHTML = `<ul>
   			  <li><a href="https://scholar.google.com/citations?user=qqIazjAAAAAJ">Google Scholar</a></li>
-			  <li><a href="https://researchinformation.amsterdamumc.org/en/persons/tsvetan-yordanov">AUMC research profile</a></li>  
+			  <li><a href="https://www.amsterdamumc.org/en/research/researchers/tsvetan-yordanov.htm">AUMC research profile</a></li>  
 			  <li><a href="https://www.researchgate.net/profile/Tsvetan-Yordanov">ResearchGate</a></li>
 			  <li><a href="https://orcid.org/0000-0003-0554-6646">ORCID iD</a></li>
 			  <li><a href="https://www.linkedin.com/in/tsvetan-yordanov-998bb766/">LinkedIn</a></li>
