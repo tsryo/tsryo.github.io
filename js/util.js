@@ -10,17 +10,21 @@ window.onload = function() {
 			<br><p style="text-align: right; padding-right:3em;">-Hannah Arendt</p> </i>
 		</p><br><br>
 		<p>
-			  Experienced software engineer with a passion for research.<br>
-	          Currently a fulltime PhD student at Amsterdam University Medical Center (AUMC).
-	          <br>PhD project name 
-	          <a href="https://www.amc.nl/web/research/departments/medical-informatics-1/projects.htm" target="_blank">AI4Cardiology</a>.<br> 
-	          Areas of interest include (but are not limited to): machine learning, natural language processing, federated learning, biostatistics.<br>
-	          Using my curiosity and knowledge to help bring forth improvements to humanity, one step at a time.
-	          <br><br>
-	          Currently a partime software engineer for the Netherlands Heart Registration (NHR).
-	          Highly experienced in backend and middleware web appliation tehcnologies, and fairly experienced with frontend technologies.
-	          I see little point in listing frameworks and programming langauges here, I would much rather say that I have the mentality of choosing the right
-	          instrument for the task at hand. 
+			Research engineer working at the intersection of AI and clinical medicine.
+			<br>
+			PhD candidate at 
+			<a href="https://www.amsterdamumc.org/" target="_blank">Amsterdam University Medical Center</a> / 
+			<a href="https://www.uva.nl/" target="_blank">University of Amsterdam</a>, 
+			with a dissertation on machine learning in cardiovascular disease — modelling, prediction, and phenotyping across multimodal and multi-centre data. Defence scheduled for June 2026.
+			<br><br>
+
+			Areas of interest include (but are not limited to): machine learning, natural language processing, federated learning, biostatistics, and multimodal modelling in regulated clinical environments. My work spans research design, validation, and translation into production-ready ML pipelines and privacy-preserving infrastructure.
+			<br><br>
+
+			Currently a research engineer in primary care data systems at Amsterdam UMC, designing reproducible ML pipelines for large-scale patient risk modelling. Previously part-time software engineer within Amsterdam UMC, building physician-facing clinical decision support systems.
+			<br><br>
+
+			Experienced in backend and middleware architectures, cloud-native systems, and DevOps practices in regulated environments. Rather than listing frameworks and languages, I prefer to choose the right instrument for the task at hand.
 	    </p>`;
 
   	};
