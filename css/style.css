@@ -6,6 +6,9 @@
   Fonts (self-hosted, SIL Open Font License 1.1):
   IBM Plex Sans (IBM), Cinzel (Natanael Gama), Ruslan Display (Denis Masharov,
   subset to the letters of "Цеко"), VT323 (Peter Hull).
+  Cyrillic stand-ins, loaded only on pages that use Cyrillic: IBM Plex Sans
+  Cyrillic, Cormorant SC (Christian Thalmann) for Cinzel, Tiny5 (Stefie
+  Justprince) for VT323.
 */
 
 @font-face {
@@ -28,6 +31,38 @@
   font-weight: 400 900;
   font-display: swap;
 }
+/* Cyrillic: same family names, so the browser picks these per glyph. */
+@font-face {
+  font-family: "Plex";
+  src: url("../assets/fonts/plex-sans-cyr.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Plex";
+  src: url("../assets/fonts/plex-sans-italic-cyr.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Cinzel";
+  src: url("../assets/fonts/cormorant-sc-700-cyr.woff2") format("woff2");
+  font-weight: 400 900;
+  font-display: swap;
+  size-adjust: 112%;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "VT323";
+  src: url("../assets/fonts/tiny5-cyr.woff2") format("woff2");
+  font-display: swap;
+  size-adjust: 84%;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
 @font-face {
   font-family: "Ruslan";
   src: url("../assets/fonts/ruslan-tseko.woff2") format("woff2");
@@ -41,10 +76,10 @@
 }
 
 :root {
-  --bg: #0b0806;
-  --bg-deep: #060403;
-  --surface: #120d09;
-  --surface-2: #1a130d;
+  --bg: #1a120c;
+  --bg-deep: #130d08;
+  --surface: #22170e;
+  --surface-2: #2c1e12;
   --text: #eee4d2;
   --muted: #b3a48f;
 
@@ -55,12 +90,23 @@
   --gold: #ecc77f;
   --unique: #c7b377;
   --magic: #8585ff;
-  --waypoint: #5aa8ff;
+  --waypoint: #4fd1c5;
+  --tile: #2fb3c0;
   --blood: #c4281c;
 
-  --iron: #4a3b28;
-  --trim: #7a6240;
-  --line: rgba(199, 179, 119, 0.2);
+  --iron: #5e4126;
+  --trim: #a07d4a;
+  --line: rgba(212, 175, 110, 0.22);
+
+  /* Dusk sky; each language leans it toward its home (see the html[lang] rules). */
+  --sky-1: #161a33;
+  --sky-2: #3a2648;
+  --sky-3: #8a3f4e;
+  --sky-4: #e0763a;
+  --sky-5: #f6b45a;
+  --hill-bg: #3e4f58;
+  --hill-es: #7a4c2c;
+  --hill-sc: #4a3a58;
   --on-accent: #140904;
 
   --sans: "Plex", "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -70,7 +116,8 @@
 
   --glow-amber: 0 0 6px rgba(255, 176, 0, 0.55), 0 0 16px rgba(255, 122, 26, 0.3);
 
-  --rivet: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0 16 8 8 16 0 8Z' fill='%23b8924f'/%3E%3Cpath d='M8 3.5 12.5 8 8 12.5 3.5 8Z' fill='%23140d08'/%3E%3Ccircle cx='8' cy='8' r='1.8' fill='%23ff8a2a'/%3E%3C/svg%3E");
+  --rivet: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 3H13V13H3Z' fill='%23c9a05a'/%3E%3Cpath d='M8 0.9 15.1 8 8 15.1 0.9 8Z' fill='%23c9a05a'/%3E%3Cpath d='M8 4 12 8 8 12 4 8Z' fill='%23237f8c'/%3E%3Ccircle cx='8' cy='8' r='1.5' fill='%23ffcf7a'/%3E%3C/svg%3E");
+  --tilework: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56' fill='none' stroke='%23d4af6e' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M18 18H38V38H18Z'/%3E%3Cpath d='M28 13.9 42.1 28 28 42.1 13.9 28Z'/%3E%3Cpath d='M0 0 13.9 13.9M56 0 42.1 13.9M0 56 13.9 42.1M56 56 42.1 42.1'/%3E%3C/svg%3E");
   --corner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M4 4H37L32 10H10V32L4 37Z' fill='%23241b12' stroke='%23c79a4a' stroke-width='1.5'/%3E%3Cpath d='M0 0 14 5H5V14Z' fill='%23e0bb6c'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.7' fill='%23ff8a2a'/%3E%3Ccircle cx='23' cy='7' r='1.3' fill='%23e0bb6c'/%3E%3Ccircle cx='7' cy='23' r='1.3' fill='%23e0bb6c'/%3E%3C/svg%3E");
   --rune: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke-width='2'%3E%3Cpath d='M16 1.5 30.5 16 16 30.5 1.5 16Z' stroke='%23ff9a3c'/%3E%3Ccircle cx='16' cy='16' r='6' stroke='%23ffb000'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23ffd27a' stroke='none'/%3E%3Cpath d='M16 5v4M16 23v4M5 16h4M23 16h4' stroke='%23ff9a3c'/%3E%3C/svg%3E");
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -99,7 +146,7 @@ html {
 body {
   position: relative;
   margin: 0;
-  background: var(--bg);
+  background: var(--tilework) center top / 56px, var(--bg);
   color: var(--text);
   font-family: var(--sans);
   font-size: 1.0625rem;
@@ -115,7 +162,7 @@ body::before {
   z-index: 90;
   pointer-events: none;
   background-image: var(--grain);
-  opacity: 0.09;
+  opacity: 0.06;
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -215,7 +262,7 @@ p { margin: 0 0 1em; }
 }
 .topbar nav::-webkit-scrollbar { display: none; }
 
-.topbar ul {
+.topbar nav ul {
   display: flex;
   gap: 0.2rem;
   margin: 0;
@@ -246,8 +293,45 @@ p { margin: 0 0 1em; }
 
 @media (min-width: 860px) {
   .topbar nav { flex: none; margin-left: auto; -webkit-mask-image: none; mask-image: none; }
-  .topbar ul { padding: 0; }
+  .topbar nav ul { padding: 0; }
 }
+
+/* Language switcher: torn war banners that sway on their rods. */
+.banner-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.langs {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0 0 0 0.6rem;
+  border-left: 1px solid var(--iron);
+  list-style: none;
+}
+.langs a { display: block; padding: 0.15rem 0.1rem 0; line-height: 0; }
+/* Hidden labels in a system font, so naming Български doesn't fetch the Cyrillic web font on every page. */
+.langs .visually-hidden { font-family: system-ui, sans-serif; }
+.banner {
+  display: block;
+  width: 1.45rem;
+  height: 2.1rem;
+  transform-origin: 50% 8%;
+  filter: saturate(0.45) brightness(0.62) drop-shadow(0 2px 2px rgba(0, 0, 0, 0.8));
+  transition: filter 0.2s;
+  animation: sway 4.2s ease-in-out infinite;
+}
+.langs li:nth-child(2) .banner { animation-delay: -1.4s; }
+.langs li:nth-child(3) .banner { animation-delay: -2.8s; }
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.langs a:hover .banner,
+.langs a:focus-visible .banner { filter: saturate(1) brightness(1) drop-shadow(0 0 6px rgba(255, 140, 0, 0.7)); }
+.langs a[aria-current="true"] .banner { filter: saturate(1) brightness(1.05) drop-shadow(0 0 5px rgba(255, 140, 0, 0.75)); }
+.banner-edge { fill: none; stroke: #120b05; stroke-width: 1; stroke-linejoin: round; }
+.banner-rod { fill: #8a6a38; }
+.banner-knob { fill: #e0bb6c; }
 
 /* ---------- Hero ---------- */
 
@@ -255,11 +339,27 @@ p { margin: 0 0 1em; }
   position: relative;
   overflow: hidden;
   padding-top: clamp(2.5rem, 7vw, 5rem);
-  background:
-    radial-gradient(ellipse 55% 40% at 50% 100%, rgba(255, 106, 20, 0.3), transparent 70%),
-    radial-gradient(ellipse 90% 60% at 30% 0%, #1c130c 0%, transparent 70%),
-    var(--bg-deep);
+  background: linear-gradient(to bottom, var(--sky-1) 0%, var(--sky-2) 34%, var(--sky-3) 62%, var(--sky-4) 86%, var(--sky-5) 100%);
 }
+/* A few early stars at the top of the sky. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 55% 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 27% 34%, #fff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 41% 9%, #ffe8c0 50%, transparent 51%),
+    radial-gradient(1px 1px at 58% 23%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 69% 12%, #d8fbff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 83% 27%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 92% 6%, #fff 50%, transparent 51%);
+  background-size: 700px 420px;
+  opacity: 0.55;
+}
+/* Keep the hero text readable where the sky turns bright. */
+.hero-text { text-shadow: 0 1px 12px rgba(20, 10, 30, 0.55); }
 
 /* CRT: scanlines and a dark vignette. */
 .crt {
@@ -268,8 +368,8 @@ p { margin: 0 0 1em; }
   z-index: 5;
   pointer-events: none;
   background:
-    repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 3px),
-    radial-gradient(ellipse 85% 75% at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.6) 100%);
+    repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse 90% 80% at 50% 40%, transparent 60%, rgba(10, 5, 15, 0.35) 100%);
   /* Fade out at the bottom so the ground meets the next section without a seam. */
   -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 97%);
   mask-image: linear-gradient(to bottom, #000 70%, transparent 97%);
@@ -316,6 +416,9 @@ h1 {
   letter-spacing: 0.05em;
   line-height: 1;
 }
+
+/* On the Bulgarian page the title is only Cyrillic, in the Slavonic display face. */
+.metal-cyr { font-family: var(--cyrillic); font-weight: 400; letter-spacing: 0.04em; }
 
 /* Gold metal lettering, lit from below by fire. */
 .metal {
@@ -367,7 +470,7 @@ h1 {
 .lede {
   max-width: 34rem;
   margin-top: 1rem;
-  color: var(--muted);
+  color: #e3d6c2;
   font-size: 1.15rem;
 }
 
@@ -509,12 +612,12 @@ h1 {
 }
 .memory-caption span { display: block; }
 
-/* ---------- Skyline: ruined cathedral at night ---------- */
+/* ---------- Skyline: Bulgaria, Spain / Lut Gholein and Scotland at dusk ---------- */
 
 .skyline {
   position: relative;
   z-index: 2;
-  height: clamp(110px, 15vw, 210px);
+  height: clamp(130px, 17vw, 240px);
   margin-top: -1.5rem;
 }
 .skyline svg {
@@ -523,24 +626,66 @@ h1 {
   width: 100%;
   height: 100%;
 }
-.hills { fill: #1d130b; }
-/* Same colour as the page below, so the ground runs into the next section. */
-.ground { fill: var(--bg); }
-.trees path {
-  fill: none;
-  stroke: var(--bg);
-  stroke-width: 3;
-  stroke-linecap: round;
-}
-.windows {
-  fill: #ffa040;
-  filter: drop-shadow(0 0 2px #ff7a1a) drop-shadow(0 0 7px #ff4d00);
-  animation: candle 3.2s ease-in-out infinite;
-}
+.sk-hills { fill: url(#sk-hills); opacity: 0.85; }
+.sk-hill-bg { stop-color: var(--hill-bg); }
+.sk-hill-es { stop-color: var(--hill-es); }
+.sk-hill-sc { stop-color: var(--hill-sc); }
+.sk-ground-end { stop-color: var(--bg); }
+
+.sk-wall { fill: #6e5a46; }
+.sk-trunk { fill: #2e1d12; }
+.sk-leaf { fill: #3f4d26; }
+.sk-leaf-2 { fill: #4d5c2e; }
+.sk-stonewall { fill: #6e5a48; }
+.sk-door, .sk-gate { fill: #2a170c; }
+.sk-timber, .sk-shutter { fill: #4a2c16; }
+.sk-brace, .sk-mullion { stroke: #4a2c16; stroke-width: 3.5; fill: none; }
+.sk-mullion { stroke-width: 1.6; }
+.sk-roof { fill: #a8462a; }
+.sk-tiles { stroke: #7a2e18; stroke-width: 1.6; fill: none; }
+.sk-eave { fill: #3a1e10; opacity: 0.55; }
+.sk-chimney { fill: #dcc8a4; }
+.sk-chimney-cap { fill: #7a2e18; }
+
+.sk-ribs { stroke: #a6eef2; stroke-opacity: 0.45; stroke-width: 1.4; fill: none; }
+.sk-gold { stroke: #e6c06a; stroke-width: 2.4; fill: none; }
+.sk-goldfill { fill: #f2d27e; }
+.sk-band { fill: #6a4426; }
+.sk-merlons { fill: #b9844e; }
+.palm-trunk { fill: none; stroke: #3a2414; stroke-width: 6; stroke-linecap: round; }
+.palm-frond { fill: none; stroke: #2f3d1c; stroke-width: 4.5; stroke-linecap: round; }
+
+.sk-crag { fill: #3a2e3c; }
+.sk-heather { fill: #a46ab8; opacity: 0.8; }
+.sk-merlons-stone { fill: #8a8090; }
+.sk-slate { fill: #3a4252; }
+.sk-pole { stroke: #2a2a30; stroke-width: 1.6; }
+.sk-saltire { fill: #1f4f9a; }
+.sk-saltire-x { stroke: #f2efe6; stroke-width: 1.8; }
+
+/* Lit windows. The home of the current language glows brightest. */
+.skyline .lit { fill: #ffcf6e; opacity: 0.75; transition: opacity 0.6s, filter 0.6s; animation: candle 3.2s ease-in-out infinite; }
+html[lang="en"] .sk-sc .lit,
+html[lang="bg"] .sk-bg .lit,
+html[lang="es"] .sk-es .lit { opacity: 1; filter: drop-shadow(0 0 3px #ffb347) drop-shadow(0 0 8px #ff8a2a); }
 @keyframes candle {
-  0%, 100% { opacity: 1; }
-  30% { opacity: 0.82; }
-  60% { opacity: 0.95; }
+  0%, 100% { fill-opacity: 1; }
+  30% { fill-opacity: 0.84; }
+  60% { fill-opacity: 0.95; }
+}
+
+/* Each language leans the sky toward home: heather for Scotland, rose for Bulgaria, amber for Spain. */
+html[lang="en"] {
+  --sky-1: #141c33; --sky-2: #2e2f55; --sky-3: #6a4a72; --sky-4: #c9784a; --sky-5: #ebb066;
+  --hill-sc: #5a3f6a;
+}
+html[lang="bg"] {
+  --sky-1: #1a1830; --sky-2: #42284a; --sky-3: #a04a62; --sky-4: #e88a5a; --sky-5: #f4c27a;
+  --hill-bg: #45605a;
+}
+html[lang="es"] {
+  --sky-1: #181a34; --sky-2: #3c2446; --sky-3: #9a3e44; --sky-4: #ec7a32; --sky-5: #f9be58;
+  --hill-es: #8c5630;
 }
 
 .embers {
@@ -558,8 +703,8 @@ h1 {
   width: 3px;
   height: 3px;
   border-radius: 50%;
-  background: #ffc06a;
-  box-shadow: 0 0 6px 2px rgba(255, 110, 20, 0.85);
+  background: #ffe2a0;
+  box-shadow: 0 0 6px 2px rgba(255, 190, 90, 0.75);
   opacity: 0;
   animation: rise var(--t) linear var(--d) infinite;
 }
@@ -658,8 +803,8 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   border: 1px solid var(--iron);
   background:
     radial-gradient(ellipse 50% 60% at 50% 50%, rgba(255, 106, 20, 0.1), transparent 70%),
-    linear-gradient(to bottom, #120d09, #0a0705);
-  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 4px #17110b, inset 0 0 0 5px rgba(122, 98, 64, 0.5);
+    linear-gradient(to bottom, #251910, #1d140c);
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 4px #2c1e12, inset 0 0 0 5px rgba(122, 98, 64, 0.5);
 }
 .diagram svg { display: block; width: 100%; max-width: 44rem; height: auto; margin: 0 auto; overflow: visible; }
 .diagram figcaption {
@@ -669,7 +814,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   font-size: 0.95rem;
   text-align: center;
 }
-.d-fill { fill: #17110b; }
+.d-fill { fill: #2c1e12; }
 .d-ln { fill: none; stroke: var(--trim); stroke-width: 2; stroke-linejoin: round; }
 .d-lit { fill: #ffa040; filter: drop-shadow(0 0 3px #ff7a1a); }
 .d-gold { fill: none; stroke: var(--unique); stroke-width: 2; }
@@ -700,7 +845,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 }
 .d-label { fill: var(--text); font-family: var(--gothic); font-weight: 700; font-size: 17px; text-anchor: middle; }
 .d-center { fill: var(--gold); }
-.d-plate { fill: #0e0a07; stroke: var(--iron); }
+.d-plate { fill: #20160d; stroke: var(--iron); }
 .d-note { fill: var(--amber); font-family: var(--mono); font-size: 19px; text-anchor: middle; }
 .d-legend { fill: var(--muted); font-family: var(--sans); font-size: 16px; }
 @media (max-width: 520px) {
@@ -726,8 +871,8 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   position: relative;
   padding: 0 1.1rem 1.1rem;
   border: 1px solid var(--iron);
-  background: linear-gradient(to bottom, #15100b, #0a0705);
-  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 4px #120d09, inset 0 0 0 5px rgba(122, 98, 64, 0.45);
+  background: linear-gradient(to bottom, #2b1d11, #1d140c);
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 4px #251910, inset 0 0 0 5px rgba(122, 98, 64, 0.45);
 }
 .tree-engineering { --tree: var(--waypoint); --tree-glow: rgba(90, 168, 255, 0.55); }
 .tree-bard { --tree: #4be07a; --tree-glow: rgba(60, 224, 110, 0.5); }
@@ -739,7 +884,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   padding: 0.45rem 1.4rem 0.5rem;
   border: 1px solid var(--iron);
   border-top: 0;
-  background: linear-gradient(to bottom, #241a10, #120d09);
+  background: linear-gradient(to bottom, #241a10, #251910);
   box-shadow: 0 0 0 1px #000;
   font-family: var(--gothic);
   font-size: 1.1rem;
@@ -801,7 +946,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   border: 1px solid var(--iron);
   background:
     radial-gradient(ellipse 40% 90% at 8% 50%, rgba(60, 224, 110, 0.08), transparent 70%),
-    linear-gradient(to bottom, #15100b, #0a0705);
+    linear-gradient(to bottom, #2b1d11, #1d140c);
   box-shadow: inset 0 0 0 1px #000;
 }
 @media (min-width: 700px) {
@@ -841,7 +986,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   max-width: 40rem;
   margin: 0 0 2.5rem;
   padding: 0.25rem 0 0.25rem 1.25rem;
-  border-left: 2px solid var(--trim);
+  border-left: 2px solid var(--tile);
 }
 .quote p {
   margin: 0 0 0.35rem;
@@ -962,7 +1107,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   margin-top: 1.25rem;
   padding: 0.75rem;
   border: 1px solid var(--iron);
-  background: linear-gradient(to bottom, #17110b, #0b0806);
+  background: linear-gradient(to bottom, #2c1e12, #0b0806);
   box-shadow: inset 0 0 0 1px #000;
   color: var(--text);
   text-decoration: none;
@@ -1070,7 +1215,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 .traveller { fill: #ffe0a0; filter: drop-shadow(0 0 6px #ff8a2a); }
 
 .pin-halo { fill: rgba(255, 122, 26, 0.18); }
-.pin-ring { fill: #120d09; stroke: var(--amber); stroke-width: 2; filter: drop-shadow(0 0 4px rgba(255, 140, 0, 0.8)); }
+.pin-ring { fill: #251910; stroke: var(--amber); stroke-width: 2; filter: drop-shadow(0 0 4px rgba(255, 140, 0, 0.8)); }
 .pin-num { fill: var(--amber); font-family: var(--mono); font-size: 16px; text-anchor: middle; }
 .pin-label {
   fill: var(--text);
@@ -1127,7 +1272,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   height: 2.4rem;
   border: 2px solid var(--amber);
   border-radius: 50%;
-  background: #120d09;
+  background: #251910;
   box-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
   font-family: var(--mono);
   font-size: 1.3rem;
@@ -1215,6 +1360,51 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 .more { margin: 1.75rem 0 0; }
 .more a::after { content: " \2192"; }
 
+/* Inventory: GitHub projects as items */
+
+.inventory {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.item {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: center;
+  height: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--iron);
+  background: linear-gradient(to bottom, #2b1d11, #1d140c);
+  box-shadow: inset 0 0 0 1px #000;
+  color: var(--text);
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.item-slot {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border: 1px solid #2a3a5a;
+  background: radial-gradient(circle at 50% 40%, #121a2c, #05070c 80%);
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 12px rgba(0, 0, 0, 0.9);
+  font-family: var(--mono);
+  font-size: 1.25rem;
+  color: var(--unique);
+}
+.item-tool .item-slot { color: var(--magic); }
+.item-body { display: grid; gap: 0.1rem; }
+.item-name { font-family: var(--gothic); font-weight: 700; color: var(--unique); }
+.item-tool .item-name { color: var(--magic); }
+.item-desc { color: var(--muted); font-size: 0.93rem; line-height: 1.45; }
+.item-meta { font-family: var(--mono); font-size: 1.1rem; color: #8f7a55; }
+/* Hovering an item lights its slot, like picking it up in an old inventory. */
+.item:hover { color: var(--text); border-color: var(--trim); box-shadow: inset 0 0 0 1px #000, 0 0 22px rgba(90, 120, 200, 0.18); }
+.item:hover .item-slot { background: radial-gradient(circle at 50% 40%, #22345a, #0a1020 80%); border-color: #4f6fa8; }
+
 /* Waypoints */
 
 .tiles {
@@ -1234,7 +1424,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   height: 100%;
   padding: 1rem 1.15rem 1rem 3.7rem;
   border: 1px solid var(--iron);
-  background: linear-gradient(to bottom, #17110b, #0e0a07);
+  background: linear-gradient(to bottom, #2c1e12, #20160d);
   box-shadow: inset 0 0 0 1px #000, inset 0 1px 0 rgba(255, 220, 160, 0.06);
   color: var(--text);
   text-decoration: none;
@@ -1424,9 +1614,9 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 
 /* Konami code: hell difficulty. */
 .turbo .embers i { animation-duration: 2.6s; background: #ff6a4a; box-shadow: 0 0 8px 3px rgba(255, 40, 10, 0.9); }
-.turbo .windows { fill: #ff3b1f; }
+.turbo .skyline .lit { fill: #ff3b1f; }
 .turbo .cyr { color: #ff6a5a; animation: none; text-shadow: 0 0 4px #ff2a1a, 0 0 16px rgba(255, 20, 0, 0.9), 0 0 40px rgba(200, 0, 0, 0.7); }
-.turbo .hero { background-color: #120403; }
+.turbo .hero { --sky-3: #6a1a1a; --sky-4: #b0301a; --sky-5: #e05a2a; }
 
 /* ---------- 404 ---------- */
 

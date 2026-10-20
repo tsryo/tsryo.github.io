@@ -1,5 +1,11 @@
 // Progressive extras. The page works fully without this file.
 
+// Per-language strings, written into the page by tools/build.py.
+const STRINGS = (() => {
+  try { return JSON.parse(document.getElementById('strings').textContent); } catch { return {}; }
+})();
+const t = (key, fallback) => STRINGS[key] || fallback;
+
 // One level for every year since the first PC, in 2001.
 document.querySelectorAll('[data-level]').forEach((el) => {
   el.textContent = new Date().getFullYear() - 2001;
@@ -45,7 +51,7 @@ if (scButton && scPlayer) {
     const src = 'https://w.soundcloud.com/player/?url=' + encodeURIComponent('https://soundcloud.com/trycep') +
       '&color=%23ff7a1a&auto_play=true&hide_related=true&show_comments=false&show_reposts=false&visual=false';
     const frame = document.createElement('iframe');
-    frame.title = 'CQ on SoundCloud';
+    frame.title = t('sc_title', 'CQ on SoundCloud');
     frame.allow = 'autoplay';
     frame.src = src;
     scPlayer.replaceChildren(frame);
@@ -82,6 +88,6 @@ document.addEventListener('keydown', (event) => {
   if (pos === code.length) {
     pos = 0;
     const on = document.documentElement.classList.toggle('turbo');
-    say(on ? 'Cheat code accepted. +1000 XP. Some habits never die.' : 'Cheat mode off. Back to honest grinding.');
+    say(on ? t('cheat_on', 'Cheat code accepted. +1000 XP. Some habits never die.') : t('cheat_off', 'Cheat mode off. Back to honest grinding.'));
   }
 });

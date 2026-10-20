@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tseko · Ingeniero de investigación, IA en medicina</title>
+  <meta name="description" content="Tsvetan R. Yordanov (Tseko) es ingeniero de investigación en Amsterdam UMC y trabaja en aprendizaje automático para la medicina clínica: predicción de riesgo, análisis de texto clínico y aprendizaje federado.">
+  <meta name="author" content="Tsvetan R. Yordanov">
+  <meta name="theme-color" content="#0b0806">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://tsryo.github.io/es/">
+  <link rel="alternate" hreflang="en" href="https://tsryo.github.io/">
+  <link rel="alternate" hreflang="bg" href="https://tsryo.github.io/bg/">
+  <link rel="alternate" hreflang="es" href="https://tsryo.github.io/es/">
+  <link rel="alternate" hreflang="x-default" href="https://tsryo.github.io/">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Tseko (Tsvetan R. Yordanov)">
+  <meta property="og:description" content="Trabajo donde la inteligencia artificial se cruza con la medicina clínica.">
+  <meta property="og:url" content="https://tsryo.github.io/es/">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:image" content="https://tsryo.github.io/assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preload" href="../assets/fonts/plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/cinzel-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../assets/fonts/ruslan-tseko.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Tsvetan R. Yordanov",
+    "alternateName": ["Tseko", "Цеко", "Цветан Р. Йорданов"],
+    "honorificSuffix": "PhD",
+    "url": "https://tsryo.github.io/",
+    "jobTitle": "Research Engineer",
+    "worksFor": { "@type": "Organization", "name": "Amsterdam UMC", "url": "https://www.amsterdamumc.org/" },
+    "alumniOf": [
+      { "@type": "CollegeOrUniversity", "name": "University of Amsterdam" },
+      { "@type": "CollegeOrUniversity", "name": "University of Glasgow" }
+    ],
+    "knowsAbout": ["Machine learning", "Natural language processing", "Federated learning", "Biostatistics", "Medical informatics"],
+    "sameAs": [
+      "https://scholar.google.com/citations?user=qqIazjAAAAAJ",
+      "https://orcid.org/0000-0003-0554-6646",
+      "https://www.amsterdamumc.org/en/research/researchers/tsvetan-yordanov.htm",
+      "https://www.researchgate.net/profile/Tsvetan-Yordanov",
+      "https://www.linkedin.com/in/tsvetan-yordanov-998bb766/",
+      "https://github.com/tsryo",
+      "https://soundcloud.com/trycep"
+    ]
+  }
+  </script>
+  <script id="strings" type="application/json">{"music_name": "Ambiente", "music_on": "sí", "music_off": "no", "music_title_on": "Apagar el ambiente", "music_title_off": "Reproducir una melodía ambiental original", "cheat_on": "Truco aceptado. +1000 XP. Hay costumbres que nunca mueren.", "cheat_off": "Truco desactivado. De vuelta a subir de nivel honradamente.", "sc_title": "CQ en SoundCloud"}</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="mark" href="#top" aria-label="Tseko, volver arriba">C:\TSEKO&gt;<span class="cursor" aria-hidden="true">_</span></a>
+      <nav aria-label="Secciones">
+        <ul>
+          <li><a href="#about">sobre mí</a></li>
+          <li><a href="#skills">habilidades</a></li>
+          <li><a href="#story">historia</a></li>
+          <li><a href="#experience">misiones</a></li>
+          <li><a href="#publications">artículos</a></li>
+          <li><a href="#code">código</a></li>
+          <li><a href="#links">portales</a></li>
+          <li><a class="nav-cta" href="../assets/pdf/resume.pdf" target="_blank" rel="noopener">cv.pdf</a></li>
+        </ul>
+      </nav>
+      <svg class="banner-defs" aria-hidden="true" focusable="false">
+        <clipPath id="banner-cloth"><path d="M4 4.5 H24 V30 L22 33 L20 30.5 L17.5 36 L14.5 31.5 L12 37 L9.5 32 L7 35 L4 31.5 Z"/></clipPath>
+        <linearGradient id="banner-folds" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#000" stop-opacity="0.45"/>
+          <stop offset="0.3" stop-color="#000" stop-opacity="0"/>
+          <stop offset="0.5" stop-color="#fff" stop-opacity="0.12"/>
+          <stop offset="0.72" stop-color="#000" stop-opacity="0"/>
+          <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
+        </linearGradient>
+        <linearGradient id="banner-age" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#000" stop-opacity="0.1"/>
+          <stop offset="1" stop-color="#2a1205" stop-opacity="0.55"/>
+        </linearGradient>
+      </svg>
+      <ul class="langs" aria-label="Idioma">
+        <li><a href="../" hreflang="en" lang="en" title="English"><svg class="banner" viewBox="0 0 28 40" aria-hidden="true" focusable="false"><g clip-path="url(#banner-cloth)"><rect x='4' y='4' width='20' height='34' fill='#22407a'/><path d='M4 4 L24 38 M24 4 L4 38' stroke='#e8e2d0' stroke-width='4'/><path d='M4 4 L24 38 M24 4 L4 38' stroke='#b3261e' stroke-width='1.4'/><path d='M14 4 V38 M4 21 H24' stroke='#e8e2d0' stroke-width='6'/><path d='M14 4 V38 M4 21 H24' stroke='#b3261e' stroke-width='3.4'/><rect x="4" y="4" width="20" height="34" fill="url(#banner-folds)"/><rect x="4" y="4" width="20" height="34" fill="url(#banner-age)"/></g><path class="banner-edge" d="M4 4.5 H24 V30 L22 33 L20 30.5 L17.5 36 L14.5 31.5 L12 37 L9.5 32 L7 35 L4 31.5 Z"/><rect class="banner-rod" x="1" y="2" width="26" height="2.6" rx="1.3"/><circle class="banner-knob" cx="1.6" cy="3.3" r="1.7"/><circle class="banner-knob" cx="26.4" cy="3.3" r="1.7"/></svg><span class="visually-hidden">English</span></a></li>
+        <li><a href="../bg/" hreflang="bg" lang="bg" title="Български"><svg class="banner" viewBox="0 0 28 40" aria-hidden="true" focusable="false"><g clip-path="url(#banner-cloth)"><rect x='4' y='4' width='20' height='11.4' fill='#e8e2d0'/><rect x='4' y='15.4' width='20' height='11.3' fill='#2f7a4a'/><rect x='4' y='26.7' width='20' height='11.3' fill='#b3261e'/><rect x="4" y="4" width="20" height="34" fill="url(#banner-folds)"/><rect x="4" y="4" width="20" height="34" fill="url(#banner-age)"/></g><path class="banner-edge" d="M4 4.5 H24 V30 L22 33 L20 30.5 L17.5 36 L14.5 31.5 L12 37 L9.5 32 L7 35 L4 31.5 Z"/><rect class="banner-rod" x="1" y="2" width="26" height="2.6" rx="1.3"/><circle class="banner-knob" cx="1.6" cy="3.3" r="1.7"/><circle class="banner-knob" cx="26.4" cy="3.3" r="1.7"/></svg><span class="visually-hidden">Български</span></a></li>
+        <li><a href="../es/" hreflang="es" lang="es" title="Español" aria-current="true"><svg class="banner" viewBox="0 0 28 40" aria-hidden="true" focusable="false"><g clip-path="url(#banner-cloth)"><rect x='4' y='4' width='20' height='8.5' fill='#b3261e'/><rect x='4' y='12.5' width='20' height='17' fill='#e0b030'/><rect x='4' y='29.5' width='20' height='8.5' fill='#b3261e'/><rect x="4" y="4" width="20" height="34" fill="url(#banner-folds)"/><rect x="4" y="4" width="20" height="34" fill="url(#banner-age)"/></g><path class="banner-edge" d="M4 4.5 H24 V30 L22 33 L20 30.5 L17.5 36 L14.5 31.5 L12 37 L9.5 32 L7 35 L4 31.5 Z"/><rect class="banner-rod" x="1" y="2" width="26" height="2.6" rx="1.3"/><circle class="banner-knob" cx="1.6" cy="3.3" r="1.7"/><circle class="banner-knob" cx="26.4" cy="3.3" r="1.7"/></svg><span class="visually-hidden">Español</span></a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top" aria-labelledby="name">
+      <div class="crt" aria-hidden="true"></div>
+
+      <div class="wrap hero-inner">
+        <div class="hero-text">
+          <p class="prompt"><span class="prompt-path">C:\&gt;</span> whoami<span class="cursor" aria-hidden="true">&#9608;</span></p>
+
+          <h1 id="name"><span class="metal">Tseko</span> <span class="cyr" lang="bg">Цеко</span></h1>
+          <p class="fullname">Tsvetan R. Yordanov</p>
+
+          <p class="class-line">
+            <span class="level" title="Un nivel por cada año desde mi primer PC">Nivel <span data-level>25</span></span>
+            Ingeniero de investigación <span class="sep" aria-hidden="true">·</span> <span class="nowrap">IA en medicina</span>
+          </p>
+
+          <p class="lede">Trabajo donde la inteligencia artificial se cruza con la medicina clínica.</p>
+
+          <div class="actions">
+            <a class="btn btn-primary" href="../assets/pdf/resume.pdf" target="_blank" rel="noopener">CV <span class="btn-meta">PDF</span></a>
+            <a class="btn" href="https://scholar.google.com/citations?user=qqIazjAAAAAJ">Google Scholar</a>
+            <a class="btn" href="https://www.linkedin.com/in/tsvetan-yordanov-998bb766/">LinkedIn</a>
+            <a class="btn" href="https://github.com/tsryo">GitHub</a>
+          </div>
+        </div>
+
+        <figure class="hero-visual memory">
+          <div class="memory-art">
+            <picture class="m-real" aria-hidden="true">
+              <source srcset="../assets/img/first-pc-2001.webp" type="image/webp">
+              <img src="../assets/img/first-pc-2001.jpg" width="640" height="640" alt="">
+            </picture>
+            <picture class="m-toned">
+              <source srcset="../assets/img/first-pc-2001-toned.webp" type="image/webp">
+              <img src="../assets/img/first-pc-2001-toned.jpg" width="640" height="640" alt="Tseko de niño en 2001, con camiseta amarilla y gorra, girándose desde el escritorio con su primer PC y su monitor CRT.">
+            </picture>
+          </div>
+          <div class="embers memory-embers" aria-hidden="true">
+            <i style="--x: 18%; --d: 0.6s; --t: 7s"></i>
+            <i style="--x: 41%; --d: 3.2s; --t: 8.5s"></i>
+            <i style="--x: 63%; --d: 1.8s; --t: 7.5s"></i>
+            <i style="--x: 82%; --d: 4.6s; --t: 9s"></i>
+          </div>
+          <figcaption class="tooltip memory-caption">
+            <span class="t-unique">El pequeño Tseko</span>
+            <span class="t-base">2001</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="skyline" aria-hidden="true">
+        <div class="embers">
+          <i style="--x: 6%;  --d: 0s;   --t: 9s"></i>
+          <i style="--x: 14%; --d: 3.1s; --t: 7s"></i>
+          <i style="--x: 22%; --d: 5.4s; --t: 10s"></i>
+          <i style="--x: 31%; --d: 1.2s; --t: 8s"></i>
+          <i style="--x: 39%; --d: 6.8s; --t: 9.5s"></i>
+          <i style="--x: 46%; --d: 2.5s; --t: 7.5s"></i>
+          <i style="--x: 54%; --d: 0.8s; --t: 8.5s"></i>
+          <i style="--x: 61%; --d: 5.9s; --t: 9s"></i>
+          <i style="--x: 68%; --d: 3.6s; --t: 7s"></i>
+          <i style="--x: 76%; --d: 1.9s; --t: 10s"></i>
+          <i style="--x: 83%; --d: 7.2s; --t: 8s"></i>
+          <i style="--x: 90%; --d: 4.9s; --t: 9s"></i>
+        </div>
+        <svg viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice" focusable="false">
+          <defs>
+            <radialGradient id="sk-sun" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#fff3c8"/>
+              <stop offset="0.45" stop-color="#ffc867"/>
+              <stop offset="0.8" stop-color="#ff8a3a" stop-opacity="0.9"/>
+              <stop offset="1" stop-color="#ff8a3a" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="sk-hills" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" class="sk-hill-bg"/>
+              <stop offset="0.5" class="sk-hill-es"/>
+              <stop offset="1" class="sk-hill-sc"/>
+            </linearGradient>
+            <linearGradient id="sk-ground" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#4a2c17"/>
+              <stop offset="1" class="sk-ground-end"/>
+            </linearGradient>
+            <linearGradient id="sk-white" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#f6e6c6"/>
+              <stop offset="1" stop-color="#d4ae80"/>
+            </linearGradient>
+            <linearGradient id="sk-sand" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#d9a466"/>
+              <stop offset="1" stop-color="#8a5a34"/>
+            </linearGradient>
+            <linearGradient id="sk-tile" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#5fd0d8"/>
+              <stop offset="0.55" stop-color="#2496a8"/>
+              <stop offset="1" stop-color="#135a68"/>
+            </linearGradient>
+            <linearGradient id="sk-stone" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stop-color="#9a90a0"/>
+              <stop offset="1" stop-color="#5a5262"/>
+            </linearGradient>
+          </defs>
+
+          <circle class="sk-sun-glow" cx="700" cy="210" r="210" fill="url(#sk-sun)" opacity="0.35"/>
+          <circle cx="700" cy="214" r="112" fill="url(#sk-sun)"/>
+
+          <path class="sk-hills" d="M0 186 C110 146 200 154 300 166 C380 176 450 136 540 156 C620 174 700 182 780 178 C880 170 960 184 1060 180 C1160 176 1220 136 1300 146 C1360 154 1400 136 1440 146 V260 H0 Z"/>
+
+          <!-- Bulgaria: Revival-era village house under a walnut tree -->
+          <g class="sk-bg">
+            <path class="sk-wall" d="M80 222 V206 Q90 200 100 206 Q110 200 120 206 Q130 200 140 206 Q150 200 160 206 Q170 200 180 206 Q190 200 200 206 Q210 200 220 206 Q230 200 240 206 V222 Z"/>
+            <rect class="sk-trunk" x="150" y="150" width="8" height="72"/>
+            <circle class="sk-leaf" cx="154" cy="138" r="38"/>
+            <circle class="sk-leaf sk-leaf-2" cx="126" cy="154" r="28"/>
+            <circle class="sk-leaf sk-leaf-2" cx="184" cy="150" r="30"/>
+            <rect class="sk-stonewall" x="270" y="170" width="170" height="52"/>
+            <path class="sk-door" d="M298 222 V198 Q311 184 324 198 V222 Z"/>
+            <rect fill="url(#sk-white)" x="255" y="120" width="200" height="50"/>
+            <path class="sk-timber" d="M255 120 h200 v4 h-200 Z M255 165 h200 v5 h-200 Z M255 120 h4 v50 h-4 Z M302 120 h4 v50 h-4 Z M355 120 h4 v50 h-4 Z M408 120 h4 v50 h-4 Z M451 120 h4 v50 h-4 Z"/>
+            <path class="sk-brace" d="M272 188 L258 170 M438 188 L452 170"/>
+            <g class="lit">
+              <rect x="316" y="132" width="20" height="24"/>
+              <rect x="371" y="132" width="20" height="24"/>
+              <rect x="422" y="132" width="20" height="24"/>
+              <rect x="372" y="188" width="14" height="16"/>
+            </g>
+            <path class="sk-mullion" d="M326 132 v24 M316 144 h20 M381 132 v24 M371 144 h20 M432 132 v24 M422 144 h20"/>
+            <path class="sk-shutter" d="M308 130 h7 v28 h-7 Z M337 130 h7 v28 h-7 Z M363 130 h7 v28 h-7 Z M392 130 h7 v28 h-7 Z M414 130 h7 v28 h-7 Z M443 130 h7 v28 h-7 Z"/>
+            <path class="sk-roof" d="M238 122 L472 122 L420 84 L290 84 Z"/>
+            <path class="sk-tiles" d="M279 92 H431 M268 100 H442 M257 108 H453 M246 116 H464"/>
+            <rect class="sk-eave" x="250" y="122" width="210" height="4"/>
+            <rect class="sk-chimney" x="398" y="68" width="14" height="22"/>
+            <rect class="sk-chimney-cap" x="395" y="64" width="20" height="5"/>
+          </g>
+
+          <!-- Spain / Lut Gholein: walled city with a blue-tiled dome and palms -->
+          <g class="sk-es">
+            <g class="palm" transform="translate(790 222) scale(1.05 1.05)"><path class="palm-trunk" d="M0 0 Q4 -36 14 -66"/><path class="palm-frond" d="M14 -66 q-30 -6 -48 12 M14 -66 q-26 -22 -52 -14 M14 -66 q2 -30 -14 -46 M14 -66 q24 -22 50 -12 M14 -66 q32 -2 46 22 M14 -66 q10 -28 30 -34"/></g>
+            <rect fill="url(#sk-sand)" x="928" y="128" width="164" height="52"/>
+            <rect fill="url(#sk-sand)" x="964" y="110" width="92" height="20"/>
+            <path fill="url(#sk-tile)" d="M962 112 C962 56 1058 56 1058 112 Z"/>
+            <path class="sk-ribs" d="M1010 70 Q988 82 978 112 M1010 70 Q1000 86 996 112 M1010 70 Q1020 86 1024 112 M1010 70 Q1032 82 1042 112"/>
+            <path class="sk-gold" d="M1010 62 V46"/>
+            <circle class="sk-goldfill" cx="1010" cy="43" r="3.5"/>
+            <rect fill="url(#sk-sand)" x="866" y="70" width="20" height="152"/>
+            <rect fill="url(#sk-sand)" x="1134" y="76" width="20" height="146"/>
+            <rect class="sk-band" x="862" y="98" width="28" height="6"/>
+            <rect class="sk-band" x="1130" y="104" width="28" height="6"/>
+            <path fill="url(#sk-tile)" d="M864 72 C864 52 888 52 888 72 Z M1132 78 C1132 58 1156 58 1156 78 Z"/>
+            <path class="sk-gold" d="M876 56 V42 M1144 62 V48"/>
+            <rect fill="url(#sk-sand)" x="820" y="176" width="360" height="46"/>
+            <path class="sk-merlons" d="M820 168 h9 v8 h-9 Z M836 168 h9 v8 h-9 Z M852 168 h9 v8 h-9 Z M868 168 h9 v8 h-9 Z M884 168 h9 v8 h-9 Z M900 168 h9 v8 h-9 Z M916 168 h9 v8 h-9 Z M932 168 h9 v8 h-9 Z M948 168 h9 v8 h-9 Z M964 168 h9 v8 h-9 Z M980 168 h9 v8 h-9 Z M996 168 h9 v8 h-9 Z M1012 168 h9 v8 h-9 Z M1028 168 h9 v8 h-9 Z M1044 168 h9 v8 h-9 Z M1060 168 h9 v8 h-9 Z M1076 168 h9 v8 h-9 Z M1092 168 h9 v8 h-9 Z M1108 168 h9 v8 h-9 Z M1124 168 h9 v8 h-9 Z M1140 168 h9 v8 h-9 Z M1156 168 h9 v8 h-9 Z M1172 168 h9 v8 h-9 Z "/>
+            <path class="sk-gate" d="M990 222 V198 Q990 182 1010 180 Q1030 182 1030 198 V222 Z"/>
+            <g class="lit">
+              <path d="M872 120 v-8 q4 -6 8 0 v8 Z M872 150 v-8 q4 -6 8 0 v8 Z M1140 126 v-8 q4 -6 8 0 v8 Z M1140 156 v-8 q4 -6 8 0 v8 Z"/>
+              <path d="M948 160 v-12 q6 -8 12 0 v12 Z M1060 160 v-12 q6 -8 12 0 v12 Z M984 160 v-12 q6 -8 12 0 v12 Z M1024 160 v-12 q6 -8 12 0 v12 Z"/>
+              <path d="M996 222 V200 Q996 188 1010 186 Q1024 188 1024 200 V222 Z" opacity="0.55"/>
+            </g>
+            <g class="palm" transform="translate(1196 222) scale(-0.9 0.9)"><path class="palm-trunk" d="M0 0 Q4 -36 14 -66"/><path class="palm-frond" d="M14 -66 q-30 -6 -48 12 M14 -66 q-26 -22 -52 -14 M14 -66 q2 -30 -14 -46 M14 -66 q24 -22 50 -12 M14 -66 q32 -2 46 22 M14 -66 q10 -28 30 -34"/></g>
+            <g class="palm" transform="translate(1214 222) scale(0.75 0.75)"><path class="palm-trunk" d="M0 0 Q4 -36 14 -66"/><path class="palm-frond" d="M14 -66 q-30 -6 -48 12 M14 -66 q-26 -22 -52 -14 M14 -66 q2 -30 -14 -46 M14 -66 q24 -22 50 -12 M14 -66 q32 -2 46 22 M14 -66 q10 -28 30 -34"/></g>
+          </g>
+
+          <!-- Scotland: tower house with turrets on a heather crag -->
+          <g class="sk-sc">
+            <path class="sk-crag" d="M1228 222 L1262 198 L1288 186 L1302 172 L1362 170 L1392 186 L1440 198 V222 Z"/>
+            <path class="sk-heather" d="M1262 206 a3 3 0 1 0 0.1 0 M1280 198 a3 3 0 1 0 0.1 0 M1300 192 a2.6 2.6 0 1 0 0.1 0 M1372 186 a3 3 0 1 0 0.1 0 M1394 196 a3 3 0 1 0 0.1 0 M1414 204 a3 3 0 1 0 0.1 0 M1340 178 a2.4 2.4 0 1 0 0.1 0"/>
+            <rect fill="url(#sk-stone)" x="1304" y="108" width="54" height="66"/>
+            <path class="sk-merlons sk-merlons-stone" d="M1304 100 h7 v8 h-7 Z M1316 100 h7 v8 h-7 Z M1328 100 h7 v8 h-7 Z M1340 100 h7 v8 h-7 Z M1352 100 h7 v8 h-7 Z "/>
+            <rect fill="url(#sk-stone)" x="1288" y="96" width="16" height="78"/>
+            <path class="sk-slate" d="M1286 96 L1296 70 L1306 96 Z M1352 110 L1360 90 L1368 110 Z"/>
+            <rect fill="url(#sk-stone)" x="1352" y="110" width="16" height="22"/>
+            <path class="sk-pole" d="M1331 100 V76"/>
+            <path class="sk-saltire" d="M1331 76 h16 v10 h-16 Z"/>
+            <path class="sk-saltire-x" d="M1331 76 L1347 86 M1347 76 L1331 86"/>
+            <g class="lit">
+              <rect x="1316" y="124" width="7" height="10"/>
+              <rect x="1338" y="124" width="7" height="10"/>
+              <rect x="1327" y="148" width="7" height="10"/>
+              <rect x="1293" y="118" width="5" height="9"/>
+            </g>
+          </g>
+
+          <path fill="url(#sk-ground)" d="M0 220 Q200 208 400 218 T800 214 T1200 220 T1440 212 V260 H0 Z"/>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> cd about</p>
+          <h2 id="about-title">Hola, soy Tseko.</h2>
+        </header>
+
+        <div class="about-grid">
+          <div class="prose">
+            <p>En <strong>Amsterdam UMC</strong> desarrollo modelos de riesgo de pacientes para la medicina de familia y flujos de datos seguros para el <strong>Registro Cardíaco de los Países Bajos</strong>.</p>
+            <p>Doctor en informática médica, tras una década de ingeniería de software. Me gusta usar la curiosidad para mejorar el día a día, paso a paso.</p>
+          </div>
+
+          <figure class="diagram">
+          <svg viewBox="0 0 560 380" role="img" aria-labelledby="fl-title fl-desc">
+            <title id="fl-title">Aprendizaje federado en cuatro hospitales</title>
+            <desc id="fl-desc">Cuatro hospitales entrenan cada uno con sus propios pacientes. Solo las actualizaciones del modelo viajan al modelo compartido del centro, que las combina y las devuelve. Los datos de los pacientes nunca salen de su hospital.</desc>
+            <defs>
+              <g id="hosp">
+                <path class="d-fill" d="M0 26 L35 0 L70 26 V64 H0 Z"/>
+                <path class="d-ln" d="M0 26 L35 0 L70 26 M5 26 V64 H65 V26"/>
+                <path class="d-ln" d="M28 64 V50 Q35 40 42 50 V64"/>
+                <rect class="d-lit" x="33" y="8" width="4" height="13"/>
+                <rect class="d-lit" x="29" y="12" width="12" height="4"/>
+                <path class="d-lit" d="M13 46 v-8 l4 -5 l4 5 v8 Z M49 46 v-8 l4 -5 l4 5 v8 Z"/>
+                <g transform="translate(28 50)">
+                  <path class="d-gold" d="M3 5 V3 a4 4 0 0 1 8 0 V5"/>
+                  <rect class="d-goldfill" x="1" y="5" width="12" height="9" rx="1"/>
+                </g>
+              </g>
+            </defs>
+
+            <g class="d-links">
+              <path id="l1" d="M112 92 Q190 112 248 168"/>
+              <path id="l2" d="M448 92 Q370 112 312 168"/>
+              <path id="l3" d="M112 288 Q190 268 248 212"/>
+              <path id="l4" d="M448 288 Q370 268 312 212"/>
+            </g>
+            <g class="d-flow">
+              <use href="#l1"/><use href="#l2"/><use href="#l3"/><use href="#l4"/>
+            </g>
+
+            <circle class="d-ring" cx="280" cy="190" r="40"/>
+            <circle class="d-orb" cx="280" cy="190" r="30"/>
+            <ellipse cx="270" cy="178" rx="11" ry="6" fill="#fff6e0" opacity=".45" transform="rotate(-25 270 178)"/>
+            <rect class="d-plate" x="188" y="230" width="184" height="26" rx="3"/>
+            <text class="d-label d-center" x="280" y="249">modelo compartido</text>
+
+            <use href="#hosp" x="40" y="40"/>
+            <use href="#hosp" x="450" y="40"/>
+            <use href="#hosp" x="40" y="236"/>
+            <use href="#hosp" x="450" y="236"/>
+            <text class="d-label" x="75" y="128">Hospital A</text>
+            <text class="d-label" x="485" y="128">Hospital B</text>
+            <text class="d-label" x="75" y="324">Hospital C</text>
+            <text class="d-label" x="485" y="324">Hospital D</text>
+
+            <text class="d-note" x="186" y="100" transform="rotate(28 186 100)">actualizaciones</text>
+            <text class="d-note" x="374" y="100" transform="rotate(-28 374 100)">modelo combinado</text>
+
+            <g transform="translate(134 352)">
+              <path class="d-gold" d="M3 5 V3 a4 4 0 0 1 8 0 V5"/>
+              <rect class="d-goldfill" x="1" y="5" width="12" height="9" rx="1"/>
+              <text class="d-legend" x="22" y="14">los datos de los pacientes no salen del hospital</text>
+            </g>
+          </svg>
+            <figcaption>Aprendizaje federado, como en mi trabajo sobre TAVI.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> skills /tree</p>
+          <h2 id="skills-title">Árbol de habilidades</h2>
+          <p class="section-sub motto">En lugar de enumerar frameworks y lenguajes, prefiero elegir el instrumento adecuado para cada tarea.</p>
+        </header>
+
+        <div class="trees">
+          <section class="tree tree-research" aria-labelledby="tree-research">
+            <h3 class="tree-tab" id="tree-research">Investigación</h3>
+            <ol class="nodes">
+              <li class="node"><span class="node-gem" aria-hidden="true">ML</span><span class="node-body"><span class="node-name">Aprendizaje automático</span><span class="node-desc">aprendizaje profundo, recomendadores</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">NLP</span><span class="node-body"><span class="node-name">PLN y LLM</span><span class="node-desc">texto clínico libre</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">FL</span><span class="node-body"><span class="node-name">Aprendizaje federado</span><span class="node-desc">modelos sin compartir datos</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">&sigma;</span><span class="node-body"><span class="node-name">Bioestadística</span><span class="node-desc">modelos de riesgo y supervivencia</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">VAL</span><span class="node-body"><span class="node-name">Validación de modelos</span><span class="node-desc">entre hospitales y en el tiempo</span></span></li>
+            </ol>
+          </section>
+          <section class="tree tree-engineering" aria-labelledby="tree-engineering">
+            <h3 class="tree-tab" id="tree-engineering">Ingeniería</h3>
+            <ol class="nodes">
+              <li class="node"><span class="node-gem" aria-hidden="true">OPS</span><span class="node-body"><span class="node-name">DevOps</span><span class="node-desc">CI/CD, contenedores</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">&#9729;</span><span class="node-body"><span class="node-name">Nube</span><span class="node-desc">AWS, Azure</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">&#8644;</span><span class="node-body"><span class="node-name">Flujos de datos</span><span class="node-desc">registros, ETL, streaming</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">SEC</span><span class="node-body"><span class="node-name">Ciberseguridad</span><span class="node-desc">OWASP, bastionado, pruebas de penetración</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">GxP</span><span class="node-body"><span class="node-name">Software regulado</span><span class="node-desc">GxP, FDA, PMDA</span></span></li>
+            </ol>
+          </section>
+          <section class="tree tree-bard" aria-labelledby="tree-bard">
+            <h3 class="tree-tab" id="tree-bard">Bardo</h3>
+            <ol class="nodes">
+              <li class="node"><span class="node-gem" aria-hidden="true">&#9733;</span><span class="node-body"><span class="node-name">Presentaciones <span class="tag">premio</span></span><span class="node-desc">KiK Choice Award a la mejor presentación</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">&#8853;</span><span class="node-body"><span class="node-name">Compartir conocimiento</span><span class="node-desc">organicé las reuniones KiK-AI</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">&#10022;</span><span class="node-body"><span class="node-name">Docencia</span><span class="node-desc">prácticas, becarios, mentoría</span></span></li>
+            </ol>
+          </section>
+        </div>
+
+        <div class="tavern">
+          <svg class="eq" viewBox="0 0 120 64" aria-hidden="true" focusable="false">
+            <rect x="4" y="8" width="10" height="56"/><rect x="20" y="8" width="10" height="56"/><rect x="36" y="8" width="10" height="56"/><rect x="52" y="8" width="10" height="56"/><rect x="68" y="8" width="10" height="56"/><rect x="84" y="8" width="10" height="56"/><rect x="100" y="8" width="10" height="56"/>
+          </svg>
+          <div class="tavern-text">
+            <p class="t-unique">Fuera de horario: CQ</p>
+            <p>Música electrónica, por diversión, escuchada sobre todo por mí.</p>
+          </div>
+          <div class="tavern-actions">
+            <button class="btn btn-primary" id="sc-load" type="button" title="Carga el reproductor de SoundCloud">&#9654; Escuchar aquí</button>
+            <a class="btn" href="https://soundcloud.com/trycep">SoundCloud &#8599;</a>
+          </div>
+          <div class="sc-player" id="sc-player" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STORY ============ -->
+    <section class="section" id="story" aria-labelledby="story-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> type story.txt</p>
+          <h2 id="story-title">Quédate un rato y escucha.</h2>
+        </header>
+
+        <blockquote class="quote">
+          <p>Contar historias revela el significado sin cometer el error de definirlo.</p>
+          <footer>Hannah Arendt</footer>
+        </blockquote>
+
+        <ol class="acts">
+          <li class="act" style="--xp: 20%">
+            <div class="act-badge" aria-hidden="true">
+              <span class="act-icon"><svg viewBox="0 0 64 64"><rect x="11" y="10" width="42" height="31" rx="4"/><rect x="16" y="15" width="32" height="21" rx="2"/><rect class="f" x="22" y="20" width="6" height="6"/><rect class="f" x="36" y="20" width="6" height="6"/><path d="M25 31 h14"/><path d="M28 41 v7 M36 41 v7 M21 50 h22"/></svg></span>
+              <span class="act-num">Acto I</span>
+              <span class="xp"><span></span></span>
+            </div>
+            <div class="act-body">
+              <h3>El bot</h3>
+              <p>El colegio no me dejaba jugar a un MMORPG, así que escribí un bot que jugara mientras yo estaba en clase. Subía de nivel más rápido que yo, y me enseñó cómo funcionan los ordenadores.</p>
+              <a class="sidequest" href="../electron-to-pixel/">
+                <picture>
+                  <source srcset="../assets/img/electron-to-pixel-thumb.webp" type="image/webp">
+                  <img src="../assets/img/electron-to-pixel-thumb.jpg" width="640" height="415" alt="" loading="lazy">
+                </picture>
+                <span class="sq-body">
+                  <span class="sq-kicker">Misión secundaria</span>
+                  <span class="sq-title">Del electrón al píxel</span>
+                  <span class="sq-text">Cómo funciona un ordenador, en ocho niveles de zoom.</span>
+                  <span class="sq-meta">interactivo &middot; en inglés &middot; con Claude &rarr;</span>
+                </span>
+              </a>
+            </div>
+          </li>
+          <li class="act" style="--xp: 40%">
+            <div class="act-badge" aria-hidden="true">
+              <span class="act-icon"><svg viewBox="0 0 64 64"><path d="M22 12 q-7 0 -7 7 v7 q0 5 -5 6 q5 1 5 6 v7 q0 7 7 7"/><path d="M42 12 q7 0 7 7 v7 q0 5 5 6 q-5 1 -5 6 v7 q0 7 -7 7"/><text class="t" x="32" y="41">C</text><rect class="f caret" x="38" y="42" width="6" height="3"/></svg></span>
+              <span class="act-num">Acto II</span>
+              <span class="xp"><span></span></span>
+            </div>
+            <div class="act-body">
+              <h3>Programación competitiva</h3>
+              <p>Concursos en C, donde el código tiene que ser correcto y rápido.</p>
+            </div>
+          </li>
+          <li class="act" style="--xp: 60%">
+            <div class="act-badge" aria-hidden="true">
+              <span class="act-icon"><svg viewBox="0 0 64 64"><circle cx="32" cy="12" r="4"/><path d="M32 6 V2"/><path d="M29.5 15 L17 52 M34.5 15 L47 52"/><path d="M22 38 H42"/><path class="dash" d="M10 50 Q32 62 54 50"/><path class="f" d="M45.5 52 l3 0 l-1.5 6 Z"/></svg></span>
+              <span class="act-num">Acto III</span>
+              <span class="xp"><span></span></span>
+            </div>
+            <div class="act-body">
+              <h3>Olimpiadas de matemáticas</h3>
+              <p>Los mismos acertijos, con lápiz.</p>
+            </div>
+          </li>
+          <li class="act" style="--xp: 80%">
+            <div class="act-badge" aria-hidden="true">
+              <span class="act-icon"><svg viewBox="0 0 64 64"><path d="M12 36 L40 19 L44 26 L16 43 Z"/><path d="M40 19 L46 15 L50 22 L44 26"/><path d="M28 34 L20 54 M28 34 L36 54 M28 34 V54"/><path class="f" d="M52 6 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 Z"/><circle class="f" cx="57" cy="28" r="1.6"/><circle class="f" cx="44" cy="8" r="1.3"/></svg></span>
+              <span class="act-num">Acto IV</span>
+              <span class="xp"><span></span></span>
+            </div>
+            <div class="act-body">
+              <h3>Universidad <span class="when-inline">2011 – 2015</span></h3>
+              <p>Informática, matemáticas y astronomía en Glasgow. Primer artículo en SIGIR 2014.</p>
+            </div>
+          </li>
+          <li class="act act-continue" style="--xp: 100%">
+            <div class="act-badge" aria-hidden="true">
+              <span class="act-icon"><svg viewBox="0 0 64 64"><path d="M32 53 C14 41 7 31 13 21 C18 13 28 14 32 22 C36 14 46 13 51 21 C57 31 50 41 32 53 Z"/><path class="ecg" d="M6 34 H21 L25 26 L29 42 L33 29 L36 34 H58"/></svg></span>
+              <span class="act-num">Acto V</span>
+              <span class="xp"><span></span></span>
+            </div>
+            <div class="act-body">
+              <h3>Industria, investigación, medicina</h3>
+              <p>En el mapa de abajo. <a class="continue" href="#journey">&#9654; ¿Continuar?</a></p>
+            </div>
+          </li>
+        </ol>
+
+        <div class="journey" id="journey">
+          <figure class="map">
+            <img class="map-base" src="../assets/img/map-europe.svg" width="800" height="710" alt="" loading="lazy">
+            <svg class="map-overlay" viewBox="0 0 800 710" role="img" aria-labelledby="map-title map-desc">
+              <title id="map-title">Mapa del camino recorrido</title>
+              <desc id="map-desc">Un mapa antiguo de Europa con una ruta desde Pleven, en Bulgaria, hasta Glasgow, en Escocia, un desvío a Valencia y, de ahí, a Ámsterdam, en los Países Bajos.</desc>
+
+              <text class="sea" x="50" y="385" transform="rotate(-90 50 385)">Oceanus Atlanticus</text>
+              <text class="sea" x="322" y="90">Mare Germanicum</text>
+              <text class="sea" x="300" y="628">Mare Mediterraneum</text>
+
+              <g class="compass" transform="translate(135 418)">
+                <circle r="25"/>
+                <circle r="17"/>
+                <path class="c-star" d="M0 -31 L5 -5 L0 0 L-5 -5 Z M0 31 L5 5 L0 0 L-5 5 Z M-31 0 L-5 5 L0 0 L-5 -5 Z M31 0 L5 5 L0 0 L5 -5 Z"/>
+                <path class="c-north" d="M0 -31 L5 -5 L0 0 Z"/>
+                <text class="c-n" y="-36">N</text>
+              </g>
+
+              <path class="route-glow" d="M688 473 Q430 110 138 122 M212 584 Q350 420 312 221"/>
+              <path class="route" d="M688 473 Q430 110 138 122"/>
+              <path class="route route-detour" d="M138 122 Q40 380 212 584"/>
+              <path class="route" d="M212 584 Q350 420 312 221"/>
+
+              <circle class="traveller" r="4">
+                <animateMotion dur="12s" repeatCount="indefinite" rotate="auto" path="M688 473 Q430 110 138 122 Q40 380 212 584 Q350 420 312 221"/>
+              </circle>
+
+              <g class="pin pin-pleven" data-stop="pleven" transform="translate(688 473)">
+                <g class="pin-body"><circle class="pin-halo" r="15"/><circle class="pin-ring" r="10"/><text class="pin-num" y="5">1</text></g>
+                <text class="pin-label" x="0" y="30" text-anchor="middle">Pleven</text>
+              </g>
+              <g class="pin pin-glasgow" data-stop="glasgow" transform="translate(138 122)">
+                <g class="pin-body"><circle class="pin-halo" r="15"/><circle class="pin-ring" r="10"/><text class="pin-num" y="5">2</text></g>
+                <text class="pin-label" x="0" y="-20" text-anchor="middle">Glasgow</text>
+              </g>
+              <g class="pin pin-valencia" data-stop="valencia" transform="translate(212 584)">
+                <g class="pin-body"><circle class="pin-halo" r="15"/><circle class="pin-ring" r="10"/><text class="pin-num" y="5">3</text></g>
+                <text class="pin-label" x="-16" y="6" text-anchor="end">Valencia</text>
+              </g>
+              <g class="pin pin-amsterdam" data-stop="amsterdam" transform="translate(312 221)">
+                <g class="pin-body"><circle class="pin-halo" r="15"/><circle class="pin-ring" r="10"/><text class="pin-num" y="5">4</text></g>
+                <text class="pin-label" x="18" y="6" text-anchor="start">Ámsterdam</text>
+              </g>
+            </svg>
+          </figure>
+
+          <ol class="stops">
+            <li data-stop="pleven"><span class="stop-pin" aria-hidden="true">1</span><div><p class="stop-when">Bulgaria</p><h4>Pleven</h4><p>Donde todo empezó.</p></div></li>
+            <li data-stop="glasgow"><span class="stop-pin" aria-hidden="true">2</span><div><p class="stop-when">2011 &middot; Escocia</p><h4>Glasgow</h4><p>La universidad y después JPMorgan Chase. Siete años, bastantes paraguas.</p></div></li>
+            <li class="stop-detour" data-stop="valencia"><span class="stop-pin" aria-hidden="true">3</span><div><p class="stop-when">2018 &middot; España</p><h4>Valencia</h4><p>Un desvío por DevOps, con mejor tiempo.</p></div></li>
+            <li class="stop-here" data-stop="amsterdam"><span class="stop-pin" aria-hidden="true">4</span><div><p class="stop-when">2019 &middot; Países Bajos</p><h4>Ámsterdam</h4><p>Máster, doctorado y, de momento, aquí sigo.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> dir quests</p>
+          <h2 id="experience-title">Diario de misiones</h2>
+        </header>
+
+        <ol class="log">
+          <li class="current"><span class="when">2025 – hoy</span><div><h3>Ingeniero de investigación</h3><p class="where">Departamento de Medicina de Familia, Amsterdam UMC</p></div></li>
+          <li class="current"><span class="when">2020 – hoy</span><div><h3>Ingeniero de software</h3><p class="where">Registro Cardíaco de los Países Bajos, Amsterdam UMC</p></div></li>
+          <li><span class="when">2020 – 2021</span><div><h3>Ingeniero de software</h3><p class="where">Amsterdam UMC &middot; portal de apoyo a la decisión clínica</p></div></li>
+          <li><span class="when">2018 – 2019</span><div><h3>Ingeniero DevOps</h3><p class="where">Flowable – Mimacom, Valencia</p></div></li>
+          <li><span class="when">2015 – 2018</span><div><h3>Analista tecnológico</h3><p class="where">JPMorgan Chase &amp; Co., Glasgow</p></div></li>
+          <li><span class="when">2013 – 2015</span><div><h3>Ingeniero DevOps <span class="tag">media jornada</span></h3><p class="where">Formedix &middot; automatización de ensayos clínicos</p></div></li>
+        </ol>
+
+        <h3 class="subhead">Formación</h3>
+        <ol class="log log-compact">
+          <li><span class="when">2021 – 2026</span><div><h3>Doctorado, Informática Médica</h3><p class="where">Amsterdam UMC / Universidad de Ámsterdam</p><p><em>Machine Learning in Cardiovascular Disease: Modelling, Prediction, and Phenotyping</em></p></div></li>
+          <li><span class="when">2019 – 2021</span><div><h3>Máster, Informática Médica</h3><p class="where">Universidad de Ámsterdam</p></div></li>
+          <li><span class="when">2011 – 2015</span><div><h3>Grado (Hons), Informática</h3><p class="where">Universidad de Glasgow</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ PUBLICATIONS ============ -->
+    <section class="section" id="publications" aria-labelledby="publications-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> dir papers /o-d</p>
+          <h2 id="publications-title">Publicaciones seleccionadas</h2>
+        </header>
+
+        <ol class="pubs" lang="en">
+          <li><span class="when">2026</span><div><a class="pub-title" href="https://doi.org/10.1007/s12471-025-02006-6">Incidence and trends of patient MACE outcomes after Transcatheter Aortic Valve Implantation (TAVI): analysis by age and sex</a><p class="venue">Netherlands Heart Journal <span class="tag" lang="es">destacado</span></p></div></li>
+          <li><span class="when">2025</span><div><a class="pub-title" href="https://doi.org/10.3233/shti250621">Medication Recommender System for ICU Patients Using Autoencoders</a><p class="venue">Medical Informatics Europe (MIE 2025) <span class="tag" lang="es">presentación oral</span></p></div></li>
+          <li><span class="when">2024</span><div><a class="pub-title" href="https://doi.org/10.3389/fcvm.2024.1399138">Performance of federated learning-based models in the Dutch TAVI population was comparable to central strategies and outperformed local strategies</a><p class="venue">Frontiers in Cardiovascular Medicine</p></div></li>
+          <li><span class="when">2023</span><div><a class="pub-title" href="https://doi.org/10.1007/978-3-031-34344-5_8">Autoencoder-Based Prediction of ICU Clinical Codes</a><p class="venue">Artificial Intelligence in Medicine (AIME 2023) <span class="tag" lang="es">presentación oral</span></p></div></li>
+          <li><span class="when">2023</span><div><a class="pub-title" href="https://doi.org/10.1016/j.jclinepi.2023.02.021">An integrated approach to geographic validation helped scrutinize prediction model performance and its variability</a><p class="venue">Journal of Clinical Epidemiology</p></div></li>
+        </ol>
+
+        <p class="more"><a href="https://scholar.google.com/citations?user=qqIazjAAAAAJ">Lista completa en Google Scholar</a></p>
+      </div>
+    </section>
+
+    <!-- ============ CODE ============ -->
+    <section class="section" id="code" aria-labelledby="code-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> dir /s github</p>
+          <h2 id="code-title">Inventario</h2>
+        </header>
+
+        <ul class="inventory">
+          <li><a class="item" href="https://github.com/tsryo/evalFL"><span class="item-slot" aria-hidden="true">FL</span><span class="item-body"><span class="item-name">evalFL</span><span class="item-desc">Modelos federados, centrales y locales para TAVI</span><span class="item-meta">R &middot; investigación</span></span></a></li>
+          <li><a class="item" href="https://github.com/tsryo/lcoa"><span class="item-slot" aria-hidden="true">LCO</span><span class="item-body"><span class="item-name">lcoa</span><span class="item-desc">Validación dejando un hospital fuera</span><span class="item-meta">R &middot; investigación</span></span></a></li>
+          <li><a class="item" href="https://github.com/tsryo/aae-recommender"><span class="item-slot" aria-hidden="true">AE</span><span class="item-body"><span class="item-name">aae-recommender</span><span class="item-desc">Autoencoders que predicen códigos clínicos en la UCI</span><span class="item-meta">Python &middot; investigación &middot; fork</span></span></a></li>
+          <li><a class="item item-tool" href="https://github.com/tsryo/SQLDifftool"><span class="item-slot" aria-hidden="true">SQL</span><span class="item-body"><span class="item-name">SQLDifftool</span><span class="item-desc">Compara los esquemas de dos bases SQL Server en el navegador</span><span class="item-meta">Python &middot; herramienta</span></span></a></li>
+          <li><a class="item item-tool" href="https://github.com/tsryo/win-utils"><span class="item-slot" aria-hidden="true">&gt;_</span><span class="item-body"><span class="item-name">win-utils</span><span class="item-desc">Pequeñas utilidades de línea de comandos para Windows</span><span class="item-meta">Python &middot; herramienta</span></span></a></li>
+          <li><a class="item item-tool" href="https://github.com/tsryo/gline"><span class="item-slot" aria-hidden="true">GPX</span><span class="item-body"><span class="item-name">GLine</span><span class="item-desc">Rutas de Google Maps a GPX para Beeline</span><span class="item-meta">Kotlin &middot; herramienta</span></span></a></li>
+        </ul>
+
+        <p class="more"><a href="https://github.com/tsryo">Todos los repositorios en GitHub</a></p>
+      </div>
+    </section>
+
+    <!-- ============ LINKS ============ -->
+    <section class="section" id="links" aria-labelledby="links-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> cd waypoints</p>
+          <h2 id="links-title">Portales</h2>
+        </header>
+
+        <ul class="tiles">
+          <li><a class="tile" href="https://scholar.google.com/citations?user=qqIazjAAAAAJ"><span class="tile-label">Google Scholar</span><span class="tile-meta">artículos y citas</span></a></li>
+          <li><a class="tile" href="https://orcid.org/0000-0003-0554-6646"><span class="tile-label">ORCID</span><span class="tile-meta">0000-0003-0554-6646</span></a></li>
+          <li><a class="tile" href="https://www.amsterdamumc.org/en/research/researchers/tsvetan-yordanov.htm"><span class="tile-label">Amsterdam UMC</span><span class="tile-meta">perfil de investigación</span></a></li>
+          <li><a class="tile" href="https://www.researchgate.net/profile/Tsvetan-Yordanov"><span class="tile-label">ResearchGate</span><span class="tile-meta">perfil</span></a></li>
+          <li><a class="tile" href="https://www.linkedin.com/in/tsvetan-yordanov-998bb766/"><span class="tile-label">LinkedIn</span><span class="tile-meta">la mejor forma de contactarme</span></a></li>
+          <li><a class="tile" href="https://github.com/tsryo"><span class="tile-label">GitHub</span><span class="tile-meta">@tsryo</span></a></li>
+          <li><a class="tile" href="https://soundcloud.com/trycep"><span class="tile-label">SoundCloud</span><span class="tile-meta">CQ</span></a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p class="copyright">&copy; 2026 Tsvetan R. Yordanov</p>
+      <ul class="badges" aria-label="Sobre este sitio">
+        <li class="badge"><b>HTML</b><span>hecho a mano</span></li>
+        <li class="badge"><b>0</b><span>rastreadores</span></li>
+        <li class="badge"><b>CRT</b><span>800&times;600</span></li>
+      </ul>
+      <p class="hint" title="Ya sabes qué hacer."><span class="visually-hidden">Pista del huevo de pascua: </span>&uarr;&uarr;&darr;&darr;&larr;&rarr;&larr;&rarr;BA</p>
+    </div>
+  </footer>
+
+  <button class="music" id="music" type="button" aria-pressed="false" hidden>
+    <span class="music-orb" aria-hidden="true"></span>
+    <span class="music-label"><span class="music-name"></span> <span class="music-state"></span></span>
+  </button>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="../js/main.js" defer></script>
+  <script src="../js/ambience.js" defer></script>
+</body>
+</html>
