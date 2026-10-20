@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>From Electron to Pixel · Tseko</title>
+  <meta name="description" content="An interactive zoom through eight levels of a computer, from electrons in silicon to a pixel lighting up on screen, following one Hello, world.">
+  <meta name="author" content="Tsvetan R. Yordanov">
+  <meta name="theme-color" content="#0b1017">
+  <link rel="canonical" href="https://tsryo.github.io/electron-to-pixel/">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <meta property="og:title" content="From Electron to Pixel">
+  <meta property="og:description" content="Eight zoom levels of one event: a program printing Hello, world.">
+  <meta property="og:url" content="https://tsryo.github.io/electron-to-pixel/">
+  <meta property="og:image" content="https://tsryo.github.io/assets/img/electron-to-pixel.png">
+  <style>
+    /* Self-hosted fonts (SIL Open Font License 1.1), so the page makes no third-party requests. */
+    @font-face { font-family: "Bricolage Grotesque"; src: url("../assets/fonts/bricolage-var.woff2") format("woff2"); font-weight: 500 700; font-display: swap; }
+    @font-face { font-family: "IBM Plex Mono"; src: url("../assets/fonts/plex-mono-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+    @font-face { font-family: "IBM Plex Mono"; src: url("../assets/fonts/plex-mono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+    @font-face { font-family: "IBM Plex Mono"; src: url("../assets/fonts/plex-mono-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+    @font-face { font-family: "IBM Plex Sans"; src: url("../assets/fonts/plex-sans-var.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+    :root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+    *, *::before, *::after { box-sizing: inherit; }
+    body { margin: 0; padding: 0; }
+    img { max-width: 100%; }
+    [hidden]:not([hidden=until-found i]) { display: none !important; }
+    .back { max-width: 1200px; margin: 0 auto; padding: 14px max(16px, env(safe-area-inset-left, 0px)) 0; font: 500 13px "IBM Plex Mono", ui-monospace, monospace; }
+    .back a { color: #e39256; text-decoration: none; }
+    .back a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<nav class="back" aria-label="Site"><a href="../#story">&larr; Back to Tseko&rsquo;s site</a></nav>
+<style>
+/* Layout: a microscope "stage" (zooming canvas) beside a specimen card; level ladder below. Deliberately single dark theme: the subject is light and current in the dark. */
+:root{
+  color-scheme: dark;
+  --bg:#0b1017; --bg-deep:#070b10; --panel:#111923; --line:#243040;
+  --text:#e8ecf2; --muted:#8c99ab;
+  --copper:#e39256; --electron:#5ccaff; --ptype:#b8679a; --ntype:#3f74ad;
+  --lattice:#3b4b61; --zero:#475264; --gate:#3a414d; --oxide:#26384c; --metal:#5d6878;
+  --f-display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:15px;line-height:1.55}
+.wrap{max-width:1200px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:grid;gap:22px}
+header{display:grid;gap:6px}
+.kicker{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,5vw,52px);line-height:1.02;margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1 span{color:var(--electron)}
+header p{margin:0;color:var(--muted);max-width:62ch}
+.stage{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:880px){.stage{grid-template-columns:minmax(0,1fr)}}
+.left{display:grid;gap:12px;min-width:0}
+.screen{position:relative;aspect-ratio:800/520;max-width:100%;background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.screen canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.readout{position:absolute;left:10px;top:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}
+.readout span{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:color-mix(in srgb,var(--bg-deep) 78%,transparent);border:1px solid var(--line);border-radius:4px;padding:3px 7px;color:var(--muted);font-variant-numeric:tabular-nums}
+.readout b{color:var(--text);font-weight:500}
+.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 14px;font-weight:500;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--copper);border-color:var(--copper);color:#1b0f06;font-weight:600}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn:focus-visible,.rung:focus-visible{outline:2px solid var(--electron);outline-offset:2px}
+.btn:disabled{opacity:.4;cursor:default}
+.dwell{flex:1;min-width:80px;height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+.dwell i{display:block;height:100%;width:0;background:var(--copper)}
+.ladder{list-style:none;margin:0;padding:0 0 4px;display:grid;grid-template-columns:repeat(8,minmax(92px,1fr));gap:6px;overflow-x:auto}
+.rung{width:100%;text-align:left;background:transparent;border:1px solid var(--line);border-radius:8px;padding:8px 9px;display:grid;gap:1px}
+.rung small{font-family:var(--f-mono);font-size:10px;color:var(--muted);letter-spacing:.04em}
+.rung span{font-size:13px;font-weight:500;line-height:1.25}
+.rung[aria-current="step"]{border-color:var(--copper);background:color-mix(in srgb,var(--copper) 12%,transparent)}
+.rung[aria-current="step"] small{color:var(--copper)}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px;display:grid;gap:14px;min-width:0}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--copper)}
+aside h2{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.05;margin:0;letter-spacing:-.01em;text-wrap:balance}
+dl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0}
+dl div{border-top:1px solid var(--line);padding-top:7px}
+dt{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+dd{margin:0;font-family:var(--f-mono);font-size:15px;font-variant-numeric:tabular-nums}
+aside p{margin:0;max-width:62ch}
+.watch{border-left:2px solid var(--electron);padding:2px 0 2px 12px;color:var(--muted);font-size:14px}
+.watch strong{color:var(--text);font-weight:600}
+.foot{color:var(--muted);font-size:12.5px;max-width:80ch;margin:0}
+@media (prefers-reduced-motion: reduce){ .dwell i{transition:none} }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">Powers of ten, for a computer</div>
+    <h1>From electron to <span>pixel</span></h1>
+    <p>Eight zoom levels of one event: a program printing <code style="font-family:var(--f-mono)">Hello, world</code>. Start inside the silicon and zoom out until the letter H lights up on a screen.</p>
+  </header>
+
+  <section class="stage">
+    <div class="left">
+      <div class="screen">
+        <canvas id="cv" aria-label="Animated zoom through the layers of a computer"></canvas>
+        <div class="readout"><span>Field of view <b id="roField">5 nm</b></span><span>Timescale <b id="roTime">0.1 ps</b></span></div>
+      </div>
+      <div class="controls">
+        <button class="btn" id="prev" aria-label="Zoom in one level">◀ Zoom in</button>
+        <button class="btn primary" id="play">▶ Play the zoom</button>
+        <button class="btn" id="next" aria-label="Zoom out one level">Zoom out ▶</button>
+        <div class="dwell" aria-hidden="true"><i id="dwellBar"></i></div>
+      </div>
+      <ol class="ladder" id="ladder"></ol>
+    </div>
+
+    <aside aria-live="polite">
+      <div class="eyebrow" id="pEyebrow">Level 1 of 8</div>
+      <h2 id="pTitle">Electrons in silicon</h2>
+      <dl>
+        <div><dt>Field of view</dt><dd id="pSize">5 nm</dd></div>
+        <div><dt>Timescale</dt><dd id="pTime">0.1 ps</dd></div>
+      </dl>
+      <p id="pBody"></p>
+      <div class="watch" id="pWatch"></div>
+    </aside>
+  </section>
+
+  <p class="foot">Simplified for clarity: modern transistors are 3D (FinFET or gate-all-around) rather than the flat cross-section shown, and real CPU cores are deeper, out-of-order and superscalar. The dashed copper box in each scene marks where the previous level lives. Arrow keys also move between levels.</p>
+</div>
+
+<script>
+(() => {
+const W = 800, H = 520;
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const css = getComputedStyle(document.documentElement);
+const tok = n => css.getPropertyValue('--' + n).trim();
+const C = {};
+['bg','bg-deep','panel','line','text','muted','copper','electron','ptype','ntype','lattice','zero','gate','oxide','metal'].forEach(n => C[n.replace('-','')] = tok(n));
+const FM = '"IBM Plex Mono", ui-monospace, Menlo, monospace';
+const FS = '"IBM Plex Sans", system-ui, sans-serif';
+const FD = '"Bricolage Grotesque", system-ui, sans-serif';
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function A(hex, a){ const h = hex.replace('#',''); const r=parseInt(h.slice(0,2),16), g=parseInt(h.slice(2,4),16), b=parseInt(h.slice(4,6),16); return `rgba(${r},${g},${b},${a})`; }
+function T(s, x, y, o = {}){ ctx.font = `${o.w || 500} ${o.s || 16}px ${o.f || FM}`; ctx.fillStyle = o.c || C.text; ctx.textAlign = o.a || 'left'; ctx.textBaseline = o.b || 'alphabetic'; ctx.fillText(s, x, y); }
+function L(x1,y1,x2,y2){ ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); }
+function RR(x,y,w,h,r){ ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(x,y,w,h,r); else ctx.rect(x,y,w,h); }
+function dot(x,y,r,col){ ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fillStyle=col; ctx.fill(); }
+function glow(x,y,a){ dot(x,y,9,A(C.electron,0.18*a)); dot(x,y,4,A(C.electron,a)); }
+function bg(){ ctx.fillStyle = C.bgdeep; ctx.fillRect(0,0,W,H); }
+function stepDt(o,t){ const d = o.last == null ? 0.016 : Math.max(0, Math.min(0.05, t - o.last)); o.last = t; return d; }
+const ease = p => p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p+2,3)/2;
+const smooth = (a,b,x) => { const u = Math.max(0,Math.min(1,(x-a)/(b-a))); return u*u*(3-2*u); };
+function polyPoint(pts, s){ // s in [0,1]
+  let tot = 0; const seg = [];
+  for (let i=1;i<pts.length;i++){ const d = Math.hypot(pts[i][0]-pts[i-1][0], pts[i][1]-pts[i-1][1]); seg.push(d); tot += d; }
+  let k = s*tot;
+  for (let i=0;i<seg.length;i++){ if (k <= seg[i]){ const u = k/seg[i]; return [pts[i][0]+(pts[i+1][0]-pts[i][0])*u, pts[i][1]+(pts[i+1][1]-pts[i][1])*u]; } k -= seg[i]; }
+  return pts[pts.length-1];
+}
+function chip(x,y,w,h,label){
+  ctx.strokeStyle = C.metal; ctx.lineWidth = 2;
+  const n = 5;
+  for (let i=1;i<=n;i++){ const px = x + w*i/(n+1), py = y + h*i/(n+1); L(px,y-6,px,y); L(px,y+h,px,y+h+6); L(x-6,py,x,py); L(x+w,py,x+w+6,py); }
+  RR(x,y,w,h,4); ctx.fillStyle = C.panel; ctx.fill(); ctx.strokeStyle = C.copper; ctx.stroke();
+  if (label) T(label, x+w/2, y+h/2+5, {a:'center', s:14, c:C.text});
+}
+
+/* ---------------- Scenes ---------------- */
+const scenes = [];
+
+/* 1 · Electrons in silicon */
+scenes.push({
+  name:'Electrons in silicon', short:'Electrons', field:5e-9, time:1e-13,
+  init(){ this.p = []; for (let i=0;i<120;i++) this.p.push({x:Math.random()*W, y:80+Math.random()*400, ph:Math.random()*100, a:i<10?1:0, base:i<10}); this.g = 0; },
+  draw(t){
+    const dt = stepDt(this,t);
+    const on = (t % 6) < 3.4 ? 1 : 0;
+    this.g += (on - this.g) * Math.min(1, dt*2.5); const g = this.g;
+    bg();
+    // lattice
+    const sp = 48;
+    ctx.strokeStyle = A(C.lattice, .55); ctx.lineWidth = 2;
+    for (let r=0; 84 + r*sp < H+sp; r++){
+      const y = 84 + r*sp;
+      for (let c=-1; c*sp < W+sp; c++){
+        const x = c*sp + (r%2 ? 24 : 0);
+        L(x,y,x+24,y+sp); L(x,y,x-24,y+sp);
+      }
+    }
+    for (let r=0; 84 + r*sp < H+20; r++){
+      const y = 84 + r*sp;
+      for (let c=-1; c*sp < W+sp; c++){ const x = c*sp + (r%2 ? 24 : 0); dot(x,y,8,C.lattice); }
+    }
+    // inversion layer glow
+    const gr = ctx.createLinearGradient(0,52,0,250); gr.addColorStop(0, A(C.electron,.22*g)); gr.addColorStop(1, A(C.electron,0));
+    ctx.fillStyle = gr; ctx.fillRect(0,52,W,200);
+    // electrons
+    for (const p of this.p){
+      const target = p.base ? 1 : g;
+      p.a += (target - p.a) * Math.min(1, dt*(target > p.a ? 3 : 1.6));
+      const yT = 70 + (p.ph*37) % 170;
+      const vx = 190*g + 70*Math.sin(t*3.1 + p.ph);
+      const vy = 70*Math.cos(t*2.7 + p.ph*1.3) + (yT - p.y)*1.4*g;
+      p.x += vx*dt; p.y += vy*dt;
+      if (p.y < 60) p.y = 60; if (p.y > 470) p.y = 470;
+      if (p.x > W+10) p.x = -10; if (p.x < -10) p.x = W+10;
+      if (p.a > .01) glow(p.x, p.y, p.a);
+    }
+    // field arrows
+    if (g > .05){
+      ctx.strokeStyle = A(C.copper, .55*g); ctx.lineWidth = 2;
+      for (let i=0;i<6;i++){ const x = ((t*90 + i*140) % 840) - 20, y = 270; L(x,y,x+34,y); L(x+34,y,x+26,y-6); L(x+34,y,x+26,y+6); }
+    }
+    // gate + oxide
+    ctx.fillStyle = C.gate; ctx.fillRect(0,0,W,36);
+    ctx.fillStyle = A(C.copper, .55*g); ctx.fillRect(0,0,W,36);
+    ctx.fillStyle = C.oxide; ctx.fillRect(0,36,W,16);
+    T(`GATE  ${(0.7*g).toFixed(2)} V`, W/2, 25, {a:'center', s:16, w:600});
+    T('insulator, about 1 nm thick', W-16, 48, {a:'right', s:11, c:C.muted});
+    // legend
+    ctx.fillStyle = A(C.bgdeep,.85); ctx.fillRect(0,478,W,42);
+    T('← from source', 16, 505, {s:14, c:C.muted});
+    T('to drain →', W-16, 505, {a:'right', s:14, c:C.muted});
+    dot(300,500,8,C.lattice); T('silicon atom', 314, 505, {s:13, c:C.muted});
+    glow(440,500,1); T('free electron', 454, 505, {s:13, c:C.muted});
+  }
+});
+
+/* 2 · One transistor */
+scenes.push({
+  name:'One transistor', short:'Transistor', field:6e-8, time:1e-12,
+  focus:{x:360, y:252, w:80},
+  init(){ this.g = 0; this.p = Array.from({length:30},(_,i)=>({s:i/30}));
+    this.wellDots = []; for (let i=0;i<70;i++){ const left = i<35; this.wellDots.push([ (left?110:490) + 20 + Math.random()*170, 272 + Math.random()*82 ]); } },
+  draw(t){
+    const dt = stepDt(this,t);
+    const on = (t % 6) < 3.4 ? 1 : 0;
+    this.g += (on - this.g) * Math.min(1, dt*2.5); const g = this.g;
+    bg();
+    // substrate
+    ctx.fillStyle = A(C.ptype,.2); ctx.fillRect(0,260,W,260);
+    T('p-type silicon: few free electrons', W/2, 470, {a:'center', s:14, c:C.muted, f:FS});
+    // wells
+    RR(100,230,220,138,28); ctx.fillStyle = A(C.ntype,.6); ctx.fill();
+    RR(480,230,220,138,28); ctx.fill();
+    ctx.fillStyle = C.bgdeep; ctx.fillRect(90,226,640,34); // flatten top of wells
+    for (const [x,y] of this.wellDots) dot(x,y,2.4,A(C.electron,.75));
+    T('SOURCE  (n-type)', 210, 350, {a:'center', s:13, c:C.text});
+    T('DRAIN  (n-type)', 590, 350, {a:'center', s:13, c:C.text});
+    // channel
+    ctx.fillStyle = A(C.electron,.75*g); ctx.fillRect(320,260,160,14);
+    // contacts
+    ctx.fillStyle = C.metal; ctx.fillRect(192,92,36,164); ctx.fillRect(572,92,36,164); ctx.fillRect(386,92,28,80);
+    // oxide + gate
+    ctx.fillStyle = C.oxide; ctx.fillRect(320,246,160,14);
+    ctx.fillStyle = C.gate; ctx.fillRect(320,170,160,76);
+    ctx.fillStyle = A(C.copper,.6*g); ctx.fillRect(320,170,160,76);
+    T('GATE', 400, 214, {a:'center', s:16, w:600});
+    // terminals
+    T('ground', 210, 80, {a:'center', s:14, c:C.muted, f:FS});
+    T(`input = ${g>.5?1:0}`, 400, 80, {a:'center', s:15, c:g>.5?C.copper:C.muted});
+    T('output', 590, 80, {a:'center', s:14, c:C.muted, f:FS});
+    // flowing electrons
+    const path = [[210,96],[210,300],[322,267],[478,267],[590,300],[590,96]];
+    for (const p of this.p){ p.s = (p.s + dt*0.16*g) % 1; if (g > .05){ const [x,y] = polyPoint(path,p.s); glow(x,y,g); } }
+    T(g>.5 ? 'input 1: channel forms, electrons flow' : 'input 0: no channel, switch is off', W/2, 505, {a:'center', s:15, c:g>.5?C.electron:C.muted, f:FS, w:500});
+  }
+});
+
+/* 3 · NAND gate */
+function mos(x, yc, p, on, label, inp, val){
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = C.metal; ctx.lineWidth = 3;
+  L(x,yc-34,x,yc-14); L(x,yc-14,x-14,yc-14); L(x-14,yc+14,x,yc+14); L(x,yc+14,x,yc+34);
+  ctx.strokeStyle = on ? C.electron : C.zero; ctx.lineWidth = on ? 6 : 3; L(x-14,yc-20,x-14,yc+20);
+  ctx.strokeStyle = C.text; ctx.lineWidth = 3; L(x-24,yc-18,x-24,yc+18);
+  if (p){ ctx.beginPath(); ctx.arc(x-30,yc,5,0,Math.PI*2); ctx.stroke(); L(x-35,yc,x-52,yc); } else L(x-24,yc,x-52,yc);
+  dot(x-66, yc, 14, val ? C.copper : C.zero);
+  T(inp, x-66, yc+5, {a:'center', s:14, w:600, c: val ? '#1b0f06' : C.text});
+  T(label, x+10, yc+5, {s:13, c:on?C.electron:C.muted});
+}
+scenes.push({
+  name:'A logic gate', short:'Logic gate', field:3e-7, time:1e-11,
+  focus:{x:368, y:234, w:80},
+  init(){ this.p = Array.from({length:12},(_,i)=>({s:i/12})); },
+  draw(t){
+    bg();
+    const combos = [[0,0],[0,1],[1,0],[1,1]];
+    const idx = Math.floor(t/2.6) % 4, tc = t % 2.6;
+    const [a,b] = combos[idx], out = (a&&b) ? 0 : 1;
+    const [pa,pb] = combos[(idx+3)%4], prevOut = (pa&&pb) ? 0 : 1;
+    const burst = out !== prevOut ? Math.max(0, 1 - tc/1.1) : 0;
+    // rails
+    ctx.strokeStyle = C.copper; ctx.lineWidth = 4; L(250,60,590,60);
+    T('supply  0.7 V', 240, 65, {a:'right', s:13, c:C.muted});
+    ctx.strokeStyle = C.metal; L(350,440,490,440); ctx.lineWidth = 3; L(370,450,470,450); L(395,460,445,460);
+    T('ground', 340, 445, {a:'right', s:13, c:C.muted});
+    // wiring
+    ctx.strokeStyle = C.metal; ctx.lineWidth = 3;
+    L(320,60,320,86); L(520,60,520,86);
+    L(320,154,320,200); L(520,154,520,200); L(320,200,640,200);
+    L(420,200,420,226); L(420,294,420,326); L(420,394,420,440);
+    dot(420,200,5,out?C.copper:C.zero);
+    mos(320,120,true,!a,'P1','A',a); mos(520,120,true,!b,'P2','B',b);
+    mos(420,260,false,!!a,'N1','A',a); mos(420,360,false,!!b,'N2','B',b);
+    // output
+    dot(668,200,16,out?C.copper:C.zero); T(String(out), 668, 206, {a:'center', s:16, w:600, c:out?'#1b0f06':C.text});
+    T('OUT', 668, 240, {a:'center', s:13, c:C.muted});
+    // current burst
+    if (burst > 0){
+      const path = out ? (a ? [[520,60],[520,200],[652,200]] : [[320,60],[320,200],[652,200]]) : [[652,200],[420,200],[420,440]];
+      for (const p of this.p){ p.s = (p.s + 0.02) % 1; const [x,y] = polyPoint(path,p.s); glow(x,y,burst); }
+    }
+    // truth table
+    const tx = 600, ty = 300;
+    T('A   B   OUT', tx, ty, {s:14, c:C.muted});
+    combos.forEach(([ca,cb],i) => {
+      const y = ty + 28 + i*26, cur = i === idx;
+      if (cur){ RR(tx-8, y-18, 150, 24, 4); ctx.fillStyle = A(C.copper,.18); ctx.fill(); }
+      T(`${ca}   ${cb}    ${(ca&&cb)?0:1}`, tx, y, {s:15, c:cur?C.text:C.muted, w:cur?600:400});
+    });
+    T('NAND = "not both"', tx, ty+140, {s:12, c:C.muted, f:FS});
+    T(burst > 0 ? 'output changes: brief burst of current' : 'output holds steady: almost no current', W/2, 505, {a:'center', s:15, c:burst>0?C.electron:C.muted, f:FS});
+  }
+});
+
+/* 4 · 8-bit adder */
+const A8 = 0x47, B8 = 0x01;
+const carries = (() => { const c=[0]; for (let i=0;i<8;i++){ const s=((A8>>i)&1)+((B8>>i)&1)+c[i]; c.push(s>>1); } return c; })();
+function gateBox(x,y,label,lit){ RR(x,y,28,20,3); ctx.fillStyle = lit ? A(C.copper,.3) : C.panel; ctx.fill(); ctx.strokeStyle = lit ? C.copper : C.zero; ctx.lineWidth = 1.5; ctx.stroke(); T(label, x+14, y+14, {a:'center', s:10, c:C.text}); }
+scenes.push({
+  name:'Adding two bytes', short:'Adder', field:5e-6, time:1e-10,
+  focus:{x:404, y:238, w:44},
+  init(){},
+  draw(t){
+    bg();
+    const tt = t % 7.5;
+    const settle = i => 0.9 + i*0.5;
+    const done = tt > settle(7) + 0.2;
+    T('0x47 (\'G\')  +  0x01  =', 300, 62, {a:'right', s:24, f:FD, w:700});
+    T(done ? '0x48  (\'H\')' : '…', 316, 62, {s:24, f:FD, w:700, c:done?C.copper:C.muted});
+    T('A', 14, 117, {s:13, c:C.muted}); T('B', 14, 143, {s:13, c:C.muted}); T('S', 14, 357, {s:13, c:C.muted});
+    for (let i=7;i>=0;i--){
+      const x = 36 + (7-i)*92, y = 150;
+      const ab = (A8>>i)&1, bb = (B8>>i)&1, s = ab ^ bb ^ carries[i];
+      const settled = tt > settle(i), working = tt > settle(i)-0.5 && !settled;
+      T(String(ab), x+40, 117, {a:'center', s:20, c:ab?C.copper:C.muted});
+      T(String(bb), x+40, 143, {a:'center', s:20, c:bb?C.copper:C.muted});
+      RR(x,y,80,160,8); ctx.fillStyle = A(C.panel,1); ctx.fill(); ctx.strokeStyle = working ? C.copper : C.line; ctx.lineWidth = working ? 2 : 1.5; ctx.stroke();
+      T('full adder', x+40, y+18, {a:'center', s:10, c:C.muted, f:FS});
+      gateBox(x+8,y+32,'=1',working); gateBox(x+46,y+32,'=1',working);
+      gateBox(x+8,y+92,'&',working); gateBox(x+46,y+92,'&',working); gateBox(x+46,y+128,'≥1',working);
+      ctx.strokeStyle = C.zero; ctx.lineWidth = 1.2; L(x+36,y+42,x+46,y+42); L(x+36,y+102,x+46,y+138); L(x+60,y+112,x+60,y+128);
+      if (settled) T(String(s), x+40, 357, {a:'center', s:22, w:600, c:s?C.copper:C.muted});
+      else T('·', x+40, 357, {a:'center', s:22, c:C.zero});
+      T(`bit ${i}`, x+40, 382, {a:'center', s:11, c:C.muted});
+      // carry out to the left
+      if (i < 7){
+        const cx = x - 6, cOut = carries[i+1];
+        if (settled && cOut){ dot(cx, 230, 6, C.electron); dot(cx,230,12,A(C.electron,.2)); }
+        else dot(cx, 230, 3, C.zero);
+      }
+    }
+    T('the carry ripples right to left, one adder at a time', W/2, 430, {a:'center', s:15, c:C.muted, f:FS});
+    glow(250,470,1); T('carry = 1', 264, 475, {s:13, c:C.muted});
+    RR(400,461,28,20,3); ctx.strokeStyle = C.zero; ctx.lineWidth=1.5; ctx.stroke(); T('&', 414, 475, {a:'center', s:10});
+    T('gate inside each adder', 438, 475, {s:13, c:C.muted});
+  }
+});
+
+/* 5 · CPU core pipeline */
+const PROG = ['mov rax,1','mov rdi,1','lea rsi,[msg]','mov rdx,13','syscall'];
+const PROG_LONG = ['mov  rax, 1        ; 1 = write','mov  rdi, 1        ; 1 = stdout','lea  rsi, [msg]    ; text address','mov  rdx, 13       ; length','syscall'];
+const REGS = [['rax','0x1'],['rdi','0x1'],['rsi','0x402010'],['rdx','0xd  (13)']];
+scenes.push({
+  name:'A CPU core', short:'CPU core', field:2e-3, time:1e-9,
+  focus:{x:362, y:186, w:84},
+  init(){},
+  draw(t){
+    bg();
+    const tick = 1.0, n = Math.floor(t/tick) % 12, fr = (t % tick)/tick;
+    // clock
+    ctx.strokeStyle = C.electron; ctx.lineWidth = 2;
+    const per = 60, off = (fr*per);
+    ctx.save(); ctx.beginPath(); ctx.rect(30,30,750,44); ctx.clip();
+    ctx.beginPath();
+    for (let x = 30 - per*2; x < 800; x += per){ const x0 = x + per - off; ctx.moveTo(x0,66); ctx.lineTo(x0,40); ctx.lineTo(x0+per/2,40); ctx.lineTo(x0+per/2,66); ctx.lineTo(x0+per,66); }
+    ctx.stroke(); ctx.restore();
+    T('clock: 5 GHz, one tick every 0.2 ns (slowed down ×5,000,000,000)', 30, 90, {s:12, c:C.muted});
+    // stages
+    const names = ['Fetch','Decode','Execute','Memory','Write back'];
+    const subs = ['instruction cache','into micro-ops','','data cache','register file'];
+    for (let s=0;s<5;s++){
+      const x = 30 + s*152;
+      RR(x,104,140,200,8); ctx.fillStyle = C.panel; ctx.fill(); ctx.strokeStyle = C.line; ctx.lineWidth = 1.5; ctx.stroke();
+      T(names[s], x+70, 130, {a:'center', s:16, f:FS, w:600});
+      if (subs[s]) T(subs[s], x+70, 150, {a:'center', s:11, c:C.muted, f:FS});
+    }
+    // ALU
+    RR(362,186,84,54.6,6); ctx.fillStyle = A(C.copper,.12); ctx.fill();
+    T('ALU', 404, 160, {a:'center', s:12, c:C.copper});
+    T('+  −', 404, 219, {a:'center', s:15, c:C.text});
+    // tokens
+    for (let s=0;s<5;s++){
+      const k = n - s; if (k < 0 || k > 4) continue;
+      const mv = Math.min(1, fr/0.25), e = ease(mv);
+      const x1 = 30 + s*152, x0 = s === 0 ? x1 - 40 : x1 - 152;
+      const x = x0 + (x1 - x0)*e;
+      RR(x+8, 262, 124, 30, 6); ctx.fillStyle = k===4 ? A(C.copper,.85) : A(C.electron,.85); ctx.fill();
+      T(PROG[k], x+70, 282, {a:'center', s:13, w:600, c:'#08121b'});
+      if (k === 4 && s === 2) T('trap to kernel', 404, 176, {a:'center', s:11, c:C.copper, w:600});
+    }
+    // program listing
+    T('program', 30, 334, {s:11, c:C.muted});
+    PROG_LONG.forEach((l,i) => {
+      const y = 360 + i*28, cur = n === i;
+      if (cur){ RR(26, y-19, 400, 26, 4); ctx.fillStyle = A(C.electron,.14); ctx.fill(); }
+      T(l, 34, y, {s:14, c:cur?C.text:C.muted});
+    });
+    // registers
+    T('registers', 480, 334, {s:11, c:C.muted});
+    REGS.forEach(([r,v],i) => {
+      const y = 360 + i*30, wrote = n - 4 >= i, fresh = n - 4 === i;
+      if (fresh){ RR(476, y-20, 290, 28, 4); ctx.fillStyle = A(C.copper,.18); ctx.fill(); }
+      T(r, 486, y, {s:15, c:C.muted}); T(wrote ? v : '—', 540, y, {s:15, c:wrote?C.text:C.zero});
+    });
+    if (n >= 7) T('syscall → the kernel takes over', 486, 490, {s:13, c:C.copper});
+  }
+});
+
+/* 6 · System call */
+const ULINES = ['printf("Hello, world\\n");','libc → write(1, msg, 13)','mov  rax, 1','mov  rdi, 1','lea  rsi, [msg]','mov  rdx, 13','syscall','← write() returns 13'];
+const KLINES = ['entry_SYSCALL_64','do_syscall_64','ksys_write(fd 1)','vfs_write','tty_write → pty','copy 13 bytes to terminal','wake the terminal app','sysret → back to user'];
+scenes.push({
+  name:'Into the kernel', short:'System call', field:1.2e-2, time:1e-6,
+  focus:{x:340, y:20, w:120},
+  init(){},
+  draw(t){
+    bg();
+    const steps = [...[0,1,2,3,4,5,6].map(i=>['u',i]), ...[0,1,2,3,4,5,6,7].map(i=>['k',i]), ['u',7], ['p',0], ['p',0]];
+    const si = Math.floor(t/0.6) % steps.length, [col,li] = steps[si];
+    const kernel = col === 'k';
+    // core chip
+    chip(352, 30, 96, 58, 'core 0');
+    // ring badge
+    const badge = kernel ? 'RING 0 · KERNEL MODE' : 'RING 3 · USER MODE';
+    RR(300,110,200,26,13); ctx.fillStyle = kernel ? A(C.copper,.25) : A(C.electron,.14); ctx.fill();
+    T(badge, 400, 128, {a:'center', s:12, w:600, c:kernel?C.copper:C.electron});
+    // columns
+    T('your program · user space', 30, 170, {s:12, c:C.electron});
+    T('Linux kernel · kernel space', 420, 170, {s:12, c:C.copper});
+    ctx.setLineDash([5,5]); ctx.strokeStyle = C.line; ctx.lineWidth = 2; L(400,150,400,460); ctx.setLineDash([]);
+    T('privilege boundary', 400, 482, {a:'center', s:12, c:C.muted, f:FS});
+    const ly = i => 200 + i*34;
+    ULINES.forEach((l,i) => {
+      const cur = col==='u' && li===i;
+      if (cur){ RR(24, ly(i)-21, 364, 28, 4); ctx.fillStyle = A(C.electron,.18); ctx.fill(); }
+      T(l, 32, ly(i), {s:14, c:cur?C.text:(i===6?C.copper:C.muted), w:i===6?600:400});
+    });
+    KLINES.forEach((l,i) => {
+      const cur = col==='k' && li===i;
+      if (cur){ RR(414, ly(i)-21, 368, 28, 4); ctx.fillStyle = A(C.copper,.2); ctx.fill(); }
+      T(l, 422, ly(i), {s:14, c:cur?C.text:C.muted});
+    });
+    // crossings
+    const into = col==='k' && li===0, back = col==='u' && li===7;
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = into ? C.copper : A(C.copper,.25);
+    ctx.beginPath(); ctx.moveTo(250, ly(6)-6); ctx.quadraticCurveTo(400, ly(6)-6, 414, ly(0)-6); ctx.stroke();
+    ctx.strokeStyle = back ? C.electron : A(C.electron,.2);
+    ctx.beginPath(); ctx.moveTo(600, ly(7)+8); ctx.quadraticCurveTo(400, ly(7)+30, 220, ly(7)+4); ctx.stroke();
+    T('round trip ≈ 1 µs', 780, 505, {a:'right', s:12, c:C.muted});
+  }
+});
+
+/* 7 · Bytes to pixels */
+const GLYPH = ['X.....X','X.....X','X.....X','X.....X','XXXXXXX','X.....X','X.....X','X.....X','X.....X'];
+function box(x,y,w,h,title,lit){ RR(x,y,w,h,8); ctx.fillStyle = C.panel; ctx.fill(); ctx.strokeStyle = lit ? C.copper : C.line; ctx.lineWidth = lit ? 2 : 1.5; ctx.stroke(); T(title, x, y-10, {s:13, f:FS, w:600, c:lit?C.text:C.muted}); }
+function arrow(x1,y1,x2,y2,lit){ ctx.strokeStyle = lit ? C.copper : C.line; ctx.lineWidth = 2; L(x1,y1,x2,y2); const a = Math.atan2(y2-y1,x2-x1); L(x2,y2,x2-9*Math.cos(a-0.45),y2-9*Math.sin(a-0.45)); L(x2,y2,x2-9*Math.cos(a+0.45),y2-9*Math.sin(a+0.45)); }
+scenes.push({
+  name:'Bytes become pixels', short:'Bytes → pixels', field:0.1, time:1.67e-2,
+  focus:{x:40, y:72, w:150},
+  init(){},
+  draw(t){
+    bg();
+    const tt = t % 9;
+    const seg = (a,b) => Math.max(0, Math.min(1, (tt-a)/(b-a)));
+    const ph = {kt:seg(0,1), read:seg(1,2), tf:seg(2,2.6), glyph:seg(2.6,4.4), fg:seg(4.4,5), gfb:seg(5,5.6), fb:seg(5.6,7), fbd:seg(7,7.6)};
+    // kernel box (focus)
+    box(40,72,150,97.5,'Linux kernel', ph.kt>0 && ph.kt<1);
+    T('pty buffer', 115, 110, {a:'center', s:12, c:C.muted});
+    for (let i=0;i<13;i++){ ctx.fillStyle = A(C.copper, ph.kt<1 ? .8 : .25); ctx.fillRect(52 + i*10, 124, 8, 14); }
+    // terminal
+    box(300,72,180,97.5,'Terminal app', ph.read>0 && ph.read<1);
+    const hex = ['48','65','6C','6C','6F','2C','20','77','6F','72','6C','64','0A'];
+    const nb = Math.floor(ph.read*13);
+    T(hex.slice(0, Math.min(nb,7)).join(' '), 312, 102, {s:12, c:C.text});
+    T(hex.slice(7, Math.max(7,nb)).join(' '), 312, 120, {s:12, c:C.text});
+    T('Hello, world'.slice(0, Math.min(12,nb)), 312, 152, {s:18, w:600, c:C.electron});
+    if (nb >= 1) T('0x48 = H', 470, 152, {a:'right', s:11, c:C.copper});
+    // font rasterizer
+    box(590,46,170,170,'Font rasterizer', ph.glyph>0 && ph.glyph<1);
+    const cells = 63, lit = Math.floor(ph.glyph*cells);
+    for (let r=0;r<9;r++) for (let c=0;c<7;c++){
+      const i = r*7+c, on = GLYPH[r][c]==='X', x = 633 + c*12, y = 72 + r*14;
+      ctx.fillStyle = i < lit ? (on ? C.text : A(C.zero,.5)) : A(C.zero,.18);
+      ctx.fillRect(x, y, 11, 13);
+    }
+    T('glyph "H"', 675, 206, {a:'center', s:11, c:C.muted});
+    // GPU
+    box(590,300,170,130,'Compositor + GPU', (ph.fg>0&&ph.fg<1)||(ph.gfb>0&&ph.gfb<1));
+    RR(608,318,134,92,4); ctx.strokeStyle = C.zero; ctx.lineWidth=1.5; ctx.stroke(); ctx.fillStyle = C.zero; ctx.fillRect(608,318,134,12);
+    if (ph.fg >= 1) T('Hello, world', 616, 352, {s:13, c:C.text});
+    T('blend window', 675, 400, {a:'center', s:11, c:C.muted});
+    // framebuffer
+    box(315,300,150,130,'Framebuffer in RAM', ph.fb>0 && ph.fb<1);
+    const scan = Math.floor(ph.fb*12);
+    for (let r=0;r<12;r++) for (let c=0;c<14;c++){
+      const gx = c-3, gy = r-1;
+      const on = gx>=0 && gx<7 && gy>=0 && gy<9 && GLYPH[gy][gx]==='X';
+      ctx.fillStyle = (r < scan || ph.fb>=1) && on ? C.text : A(C.zero, r===scan && ph.fb<1 ? .7 : .25);
+      ctx.fillRect(327 + c*9.4, 314 + r*9.3, 8, 8);
+    }
+    // display
+    box(40,300,150,130,'Display', ph.fbd>=1);
+    RR(58,318,114,74,4); ctx.fillStyle = '#05070a'; ctx.fill(); ctx.strokeStyle = C.metal; ctx.lineWidth = 2; ctx.stroke();
+    if (ph.fbd >= 1) T('Hello, world', 66, 352, {s:11, c:C.text});
+    T('scanned out 60×/s', 115, 416, {a:'center', s:11, c:C.muted});
+    // arrows + packets
+    arrow(192,120,298,120,ph.kt>0&&ph.kt<1); arrow(482,120,588,120,ph.tf>0&&ph.tf<1);
+    arrow(675,218,675,298,ph.fg>0&&ph.fg<1); arrow(588,365,467,365,ph.gfb>0&&ph.gfb<1); arrow(313,365,192,365,ph.fbd>0&&ph.fbd<1);
+    const pk = (p,x1,y1,x2,y2) => { if (p>0 && p<1) glow(x1+(x2-x1)*p, y1+(y2-y1)*p, 1); };
+    pk(ph.kt,192,120,298,120); pk(ph.tf,482,120,588,120); pk(ph.fg,675,218,675,298); pk(ph.gfb,588,365,467,365); pk(ph.fbd,313,365,192,365);
+    T('one screen refresh at 60 Hz = 16.7 ms. The bytes arrived in microseconds.', W/2, 490, {a:'center', s:14, c:C.muted, f:FS});
+  }
+});
+
+/* 8 · The screen */
+scenes.push({
+  name:'Hello, world', short:'Screen', field:0.45, time:0.1,
+  focus:{x:365, y:356, w:70},
+  init(){},
+  draw(t){
+    bg();
+    const tt = t % 10;
+    // laptop base
+    ctx.beginPath(); ctx.moveTo(140,340); ctx.lineTo(660,340); ctx.lineTo(712,428); ctx.lineTo(88,428); ctx.closePath(); ctx.fillStyle = '#1a222d'; ctx.fill(); ctx.strokeStyle = C.line; ctx.lineWidth = 1.5; ctx.stroke();
+    for (let r=0;r<4;r++){
+      const y = 348 + r*18, inset = 140 - r*12 - 6;
+      for (let k=0;k<14;k++){ const x0 = inset + 14 + k*((W - 2*inset - 28)/14); ctx.fillStyle = '#242e3b'; ctx.fillRect(x0, y, (W-2*inset-28)/14 - 5, 12); }
+    }
+    // x-ray window to the chip
+    RR(365,356,70,45.5,4); ctx.fillStyle = C.bgdeep; ctx.fill();
+    chip(384,365,32,27,'');
+    T('chip', 400, 416, {a:'center', s:11, c:C.copper});
+    // screen
+    RR(160,24,480,312,14); ctx.fillStyle = '#18202a'; ctx.fill(); ctx.strokeStyle = C.line; ctx.stroke();
+    ctx.fillStyle = '#05080c'; ctx.fillRect(176,40,448,280);
+    // terminal
+    const lh = 30, x0 = 196;
+    T('$ gcc hello.c -o hello', x0, 82, {s:17, c:C.muted});
+    const cmd = './hello', typed = Math.max(0, Math.min(cmd.length, Math.floor((tt-0.6)/0.14)));
+    T('$ ' + cmd.slice(0,typed), x0, 82+lh, {s:17, c:C.text});
+    const shown = tt > 2.2;
+    ctx.font = `500 17px ${FM}`;
+    if (shown){ T('Hello, world', x0, 82+2*lh, {s:17, c:C.text, w:600}); T('$ ', x0, 82+3*lh, {s:17, c:C.muted}); }
+    const blink = Math.floor(t*2) % 2 === 0;
+    if (blink){
+      ctx.font = `500 17px ${FM}`;
+      const cx = shown ? x0 + ctx.measureText('$ ').width : x0 + ctx.measureText('$ ' + cmd.slice(0,typed)).width;
+      ctx.fillStyle = C.electron; ctx.fillRect(cx+1, (shown ? 82+3*lh : 82+lh) - 14, 9, 17);
+    }
+    // magnifier
+    const mx = 724, my = 176, mr = 62;
+    ctx.strokeStyle = A(C.copper, shown ? .8 : .3); ctx.lineWidth = 1.5; L(x0+4, 82+2*lh-8, mx-mr, my);
+    ctx.save(); ctx.beginPath(); ctx.arc(mx,my,mr,0,Math.PI*2); ctx.fillStyle = '#05080c'; ctx.fill(); ctx.clip();
+    const cs = 36;
+    for (let r=-2;r<=2;r++) for (let c=-2;c<=2;c++){
+      const px = mx - cs/2 + c*cs, py = my - cs/2 + r*cs, on = shown && c === -1;
+      ['#ff4d4d','#46e07a','#4d8dff'].forEach((col,k) => { ctx.fillStyle = on ? col : A(col,.08); ctx.fillRect(px + 3 + k*11, py + 3, 9, cs-6); });
+    }
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(mx,my,mr,0,Math.PI*2); ctx.strokeStyle = C.copper; ctx.lineWidth = 3; ctx.stroke();
+    T('one pixel of the H:', mx, my+mr+22, {a:'center', s:12, c:C.muted, f:FS});
+    T('red + green + blue', mx, my+mr+38, {a:'center', s:12, c:C.muted, f:FS});
+    T('switches controlling switches, all the way down', W/2, 480, {a:'center', s:16, c:C.text, f:FD, w:500});
+  }
+});
+
+scenes.forEach(s => { if (s.focus) s.focus.h = s.focus.w * H / W; s.init(); });
+
+/* ---------------- Panel copy ---------------- */
+const COPY = [
+  { body: 'Silicon atoms sit in a crystal, each sharing its four outer electrons with its neighbours, so few electrons are free to move. When the gate above gets a positive voltage, its electric field pulls free electrons into a thin layer just under the surface. With a voltage between the two ends, they drift across from source to drain. That flow is all a transistor ever does.',
+    watch: 'The gate switches on, a crowd of electrons gathers under it and streams right. Switch off, and the crowd thins out. Electrons cross a channel this size in about a tenth of a picosecond.' },
+  { body: 'Zoom out and that thin layer is the channel of a MOSFET, the switch every CPU is built from. Source and drain are silicon doped to have spare electrons (n-type); the silicon between them is p-type and blocks current. The gate is a conductor sitting on an insulator only about a nanometre thick. Voltage on the gate opens the channel. A modern chip holds tens of billions of these.',
+    watch: 'Input 1 opens the channel and electrons flow from source to drain. Input 0 closes it. The dashed box is the patch you just zoomed out of.' },
+  { body: 'Four transistors make a NAND gate. Two p-type transistors (on when their input is 0) connect the output to the supply. Two n-type transistors in series (on when their input is 1) connect it to ground. Only when A and B are both 1 does the bottom path open and pull the output to 0. Every kind of logic, a whole CPU included, can be built from NAND gates.',
+    watch: 'Current flows only at the moment the output changes. CMOS logic draws almost nothing while it holds still; the switching is what costs energy and makes chips hot.' },
+  { body: 'Gates combine into a full adder: two bits in, plus a carry, out comes a sum bit and a new carry. Chain eight and you can add bytes. Here the adder computes 0x47 + 0x01. 0x47 is the code for the letter G, so the answer, 0x48, is H. Each "&" box is an AND gate, which in CMOS is the NAND you just saw followed by an inverter.',
+    watch: 'The carry moving one adder at a time until it lands on a 0. Real 64-bit adders use carry-lookahead, so the answer is ready in a fraction of a 0.2 ns clock tick.' },
+  { body: 'The adder lives in the ALU of a CPU core. A clock ticks billions of times a second, and each tick moves every instruction one step down a pipeline: fetch from cache, decode, execute, touch memory, write the result to a register. Our program is five instructions: put the number for "write" in rax, the output channel (1 = standard output) in rdi, the text’s address in rsi, its length in rdx, then call syscall.',
+    watch: 'Instructions overlap: while one executes, the next is decoding and a third is being fetched. Real cores have 15 to 20 stages, run instructions out of order and finish several per tick. This is the textbook version.' },
+  { body: 'syscall is special. It switches the core from user mode (ring 3) to kernel mode (ring 0) and jumps to a fixed entry point in the operating system. Your program can’t touch hardware or other programs; the kernel does that for it. Linux looks up file descriptor 1, finds a pseudo-terminal, copies the 13 bytes of "Hello, world\\n" into the terminal’s buffer, wakes the terminal app and returns 13 to your program.',
+    watch: 'The jump across the privilege boundary and back. The round trip is about a microsecond: a few thousand instructions, each one millions of transistor switches.' },
+  { body: 'The terminal app reads the bytes. 0x48 means H, so it asks the font rasterizer for the H glyph, a small grid of pixel values. The updated window goes to the compositor and GPU, which write colours into a framebuffer in memory. The display controller reads that framebuffer row by row and sends it down the cable 60 or more times a second.',
+    watch: 'The H filling in pixel by pixel, then the framebuffer being scanned out. Getting the bytes here took microseconds; waiting for the next screen refresh can take up to 16.7 ms.' },
+  { body: 'Hello, world. Each pixel on the panel is three subpixels, red, green and blue, each controlled by its own thin-film transistor. For a white pixel in the H, all three are on. Underneath every layer you zoomed through is the same move: a voltage on one switch decides whether current flows through another.',
+    watch: 'The magnified pixel. Press ◀ Zoom in to retrace the path back down to the electrons.' }
+];
+
+/* ---------------- Formatting ---------------- */
+const nf = v => v >= 10 ? String(Math.round(v)) : String(Math.round(v*10)/10);
+function fmtLen(m){ if (m < 1e-6) return nf(m*1e9) + ' nm'; if (m < 1e-3) return nf(m*1e6) + ' µm'; if (m < 1e-2) return nf(m*1e3) + ' mm'; if (m < 1) return nf(m*100) + ' cm'; return nf(m) + ' m'; }
+function fmtTime(s){ if (s < 1e-9) return nf(s*1e12) + ' ps'; if (s < 1e-6) return nf(s*1e9) + ' ns'; if (s < 1e-3) return nf(s*1e6) + ' µs'; if (s < 1) return nf(s*1e3) + ' ms'; return nf(s) + ' s'; }
+const logLerp = (a,b,z) => Math.exp(Math.log(a) + (Math.log(b)-Math.log(a))*z);
+
+/* ---------------- UI ---------------- */
+const $ = id => document.getElementById(id);
+const ladder = $('ladder');
+scenes.forEach((s,i) => {
+  const li = document.createElement('li');
+  li.innerHTML = `<button class="rung" id="rung${i}"><small>${String(i+1).padStart(2,'0')} · ${fmtLen(s.field)}</small><span>${s.short}</span></button>`;
+  li.firstChild.addEventListener('click', () => { state.playing = false; go(i); syncPlay(); });
+  ladder.appendChild(li);
+});
+function setPanel(i){
+  const s = scenes[i];
+  $('pEyebrow').textContent = `Level ${i+1} of 8`;
+  $('pTitle').textContent = s.name;
+  $('pSize').textContent = '≈ ' + fmtLen(s.field);
+  $('pTime').textContent = '≈ ' + fmtTime(s.time);
+  $('pBody').textContent = COPY[i].body;
+  $('pWatch').innerHTML = '<strong>Watch for: </strong>' + COPY[i].watch.replace(/</g,'&lt;');
+  scenes.forEach((_,j) => $('rung'+j).toggleAttribute('aria-current', false));
+  $('rung'+i).setAttribute('aria-current','step');
+  $('rung'+i).scrollIntoView({block:'nearest', inline:'nearest'});
+  $('prev').disabled = i === 0; $('next').disabled = i === 7;
+}
+
+const state = { cur:0, target:0, trans:null, playing:false, dwell:0 };
+const DWELL = 10;
+function go(n){ state.target = Math.max(0, Math.min(7, n)); state.dwell = 0; if (!state.trans) setPanel(state.target); }
+function syncPlay(){ $('play').textContent = state.playing ? '❚❚ Pause' : (state.cur === 7 && !state.trans ? '↺ Play again' : '▶ Play the zoom'); }
+$('prev').addEventListener('click', () => { state.playing = false; go(state.target-1); syncPlay(); });
+$('next').addEventListener('click', () => { state.playing = false; go(state.target+1); syncPlay(); });
+$('play').addEventListener('click', () => {
+  if (state.playing){ state.playing = false; }
+  else { if (state.cur === 7 && state.target === 7){ state.cur = 0; state.target = 0; state.trans = null; setPanel(0); } state.playing = true; state.dwell = 0; }
+  syncPlay();
+});
+addEventListener('keydown', e => { if (e.key === 'ArrowRight'){ state.playing=false; go(state.target+1); syncPlay(); } if (e.key === 'ArrowLeft'){ state.playing=false; go(state.target-1); syncPlay(); } });
+
+/* ---------------- Render ---------------- */
+function renderScene(i, z, t){
+  const s = scenes[i], f = s.focus;
+  ctx.save();
+  let S = 1;
+  if (f && z < 1){
+    const k = f.w / W; S = Math.exp(Math.log(1/k)*(1-z));
+    const g = (1/S - k)/(1 - k);
+    const fcx = f.x + f.w/2, fcy = f.y + f.h/2;
+    const Px = fcx + (W/2 - fcx)*g, Py = fcy + (H/2 - fcy)*g;
+    ctx.translate(W/2, H/2); ctx.scale(S,S); ctx.translate(-Px,-Py);
+  }
+  s.draw(t);
+  if (f){
+    if (z < 1){
+      const a = 1 - smooth(0.5, 0.92, z);
+      if (a > 0){
+        ctx.save(); ctx.beginPath(); ctx.rect(f.x, f.y, f.w, f.h); ctx.clip();
+        ctx.globalAlpha = a; ctx.translate(f.x, f.y); ctx.scale(f.w/W, f.w/W);
+        scenes[i-1].draw(t);
+        ctx.restore();
+      }
+    }
+    ctx.setLineDash([6/S, 4/S]); ctx.lineWidth = 1.6/S; ctx.strokeStyle = C.copper;
+    ctx.strokeRect(f.x, f.y, f.w, f.h); ctx.setLineDash([]);
+  }
+  ctx.restore();
+  return S;
+}
+
+let lastNow = performance.now(), clock = 0;
+function frame(now){
+  const dt = Math.min(0.05, (now - lastNow)/1000); lastNow = now; clock += dt;
+  // size
+  const r = cv.getBoundingClientRect(), dpr = Math.min(2, devicePixelRatio || 1);
+  const pw = Math.round(r.width*dpr), ph = Math.round(r.height*dpr);
+  if (cv.width !== pw || cv.height !== ph){ cv.width = pw; cv.height = ph; }
+  ctx.setTransform(pw/W, 0, 0, ph/H, 0, 0);
+  // state
+  if (!state.trans && state.target !== state.cur){
+    const dir = Math.sign(state.target - state.cur);
+    state.trans = { from:state.cur, to:state.cur+dir, p:0, dur: reduced ? 0.01 : (Math.abs(state.target - state.cur) > 1 ? 0.8 : 1.9) };
+    setPanel(state.target);
+  }
+  let shown, z;
+  if (state.trans){
+    const tr = state.trans; tr.p += dt/tr.dur;
+    if (tr.p >= 1){ state.cur = tr.to; state.trans = null; shown = state.cur; z = 1; syncPlay(); }
+    else { const e = ease(tr.p); if (tr.to > tr.from){ shown = tr.to; z = e; } else { shown = tr.from; z = 1 - e; } }
+  } else { shown = state.cur; z = 1; }
+  if (state.playing && !state.trans && state.target === state.cur){
+    state.dwell += dt;
+    if (state.dwell >= DWELL){ if (state.cur < 7) go(state.cur+1); else { state.playing = false; syncPlay(); } state.dwell = 0; }
+  }
+  $('dwellBar').style.width = state.playing ? (Math.min(1, state.dwell/DWELL)*100).toFixed(1) + '%' : '0%';
+  ctx.clearRect(0,0,W,H);
+  renderScene(shown, z, clock);
+  const prevS = shown > 0 ? scenes[shown-1] : scenes[0];
+  const field = shown > 0 ? logLerp(prevS.field, scenes[shown].field, z) : scenes[0].field;
+  const time = shown > 0 ? logLerp(prevS.time, scenes[shown].time, z) : scenes[0].time;
+  $('roField').textContent = fmtLen(field); $('roTime').textContent = fmtTime(time);
+  requestAnimationFrame(frame);
+}
+setPanel(0); syncPlay();
+requestAnimationFrame(frame);
+})();
+</script>
+
+</body></html>
