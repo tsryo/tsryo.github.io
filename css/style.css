@@ -311,6 +311,7 @@ p { margin: 0 0 1em; }
 }
 .langs li:nth-child(2) .banner { animation-delay: -1.4s; }
 .langs li:nth-child(3) .banner { animation-delay: -2.8s; }
+.langs li:nth-child(4) .banner { animation-delay: -0.7s; }
 @keyframes sway {
   0%, 100% { transform: rotate(-3deg); }
   50% { transform: rotate(3deg); }
@@ -321,6 +322,13 @@ p { margin: 0 0 1em; }
 .banner-edge { fill: none; stroke: #120b05; stroke-width: 1; stroke-linejoin: round; }
 .banner-rod { fill: #8a6a38; }
 .banner-knob { fill: #e0bb6c; }
+
+/* Small phones: a tighter bar, so the section links keep some room beside the banners. */
+@media (max-width: 480px) {
+  .topbar-inner { gap: 0.6rem; }
+  .mark { font-size: 1.35rem; padding-block: 0.2rem; }
+  .langs { gap: 0.05rem; padding-left: 0.4rem; }
+}
 
 /* ---------- Hero ---------- */
 
@@ -643,7 +651,8 @@ h1 {
 .sk-glow.sk-nl { opacity: 0.55; }  /* home now: lit in every language */
 html[lang="en"] .sk-glow.sk-sc,
 html[lang="bg"] .sk-glow.sk-bg,
-html[lang="es"] .sk-glow.sk-es { opacity: 0.75; }
+html[lang="es"] .sk-glow.sk-es,
+html[lang="nl"] .sk-glow.sk-nl { opacity: 0.75; }
 
 /* The windmill's sails, in the hazy tones of the distance; they turn slowly (SMIL). */
 .sk-sails { opacity: 0.85; }
@@ -670,7 +679,8 @@ html[lang="es"] .sk-glow.sk-es { opacity: 0.75; }
 .sk-flag { fill: #1f4f9a; stroke: #12305c; stroke-width: 0.8; }
 .sk-flag-x { fill: none; stroke: #f2efe6; stroke-width: 2.4; }
 
-/* Each language leans the sky toward home: heather for Scotland, rose for Bulgaria, amber for Spain. */
+/* Each language leans the sky toward home: heather for Scotland, rose for Bulgaria, amber for Spain,
+   the silver blue of a Dutch sky for the Netherlands. */
 html[lang="en"] {
   --sky-1: #141c33; --sky-2: #2e2f55; --sky-3: #6a4a72; --sky-4: #c9784a; --sky-5: #ebb066;
 }
@@ -679,6 +689,9 @@ html[lang="bg"] {
 }
 html[lang="es"] {
   --sky-1: #181a34; --sky-2: #3c2446; --sky-3: #9a3e44; --sky-4: #ec7a32; --sky-5: #f9be58;
+}
+html[lang="nl"] {
+  --sky-1: #121b31; --sky-2: #2a3c60; --sky-3: #66708f; --sky-4: #c99070; --sky-5: #f0cc92;
 }
 
 .embers {
@@ -1346,6 +1359,8 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   line-height: 1.4;
 }
 .pub-title:hover { color: var(--orange); text-decoration: underline; }
+/* External links wear an arrow; screen readers hear "opens in a new tab" instead (aria-describedby). */
+.pub-title::after { content: "\00a0\2197"; content: "\00a0\2197" / ""; color: var(--orange); }
 .venue { margin: 0.3rem 0 0; color: var(--muted); font-size: 0.98rem; }
 
 .more { margin: 1.75rem 0 0; }
@@ -1447,7 +1462,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   color: var(--unique);
 }
 .tile:hover .tile-label { color: #d6e9ff; }
-.tile-label::after { content: " \2197"; color: var(--orange); }
+.tile-label::after { content: "\00a0\2197"; content: "\00a0\2197" / ""; color: var(--orange); }
 .tile-meta {
   font-family: var(--mono);
   font-size: 1.2rem;
@@ -1545,13 +1560,16 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   line-height: 1;
 }
 .music:hover { color: var(--amber); border-color: var(--orange); }
-@media (max-width: 640px), (max-height: 500px) {
+/* Fixed in the corner only where the margin can hold it; elsewhere it would cover the start of
+   text lines, so it sits in the hero's top corner instead. */
+@media (max-width: 1419px), (max-height: 500px) {
   .music {
     position: absolute;
     top: calc(var(--topbar-h) + 0.75rem);
     right: max(12px, env(safe-area-inset-right, 0px));
     left: auto;
     bottom: auto;
+    z-index: 40;  /* scrolls away under the top bar */
   }
 }
 /* On phones, just the orb: the label stays for screen readers. */

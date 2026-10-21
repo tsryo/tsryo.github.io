@@ -74,7 +74,7 @@
           <li><a href="#publications">{{nav_papers}}</a></li>
           <li><a href="#code">{{nav_code}}</a></li>
           <li><a href="#links">{{nav_links}}</a></li>
-          <li><a class="nav-cta" href="{{root}}assets/pdf/resume.pdf" target="_blank" rel="noopener">{{nav_resume}}</a></li>
+          <li><a class="nav-cta" href="{{root}}assets/pdf/resume.pdf" target="_blank" rel="noopener" aria-describedby="new-tab">{{nav_resume}}</a></li>
         </ul>
       </nav>
       <svg class="banner-defs" aria-hidden="true" focusable="false">
@@ -118,10 +118,10 @@
           <p class="lede">{{lede}}</p>
 
           <div class="actions">
-            <a class="btn btn-primary" href="{{root}}assets/pdf/resume.pdf" target="_blank" rel="noopener">{{btn_resume}} <span class="btn-meta">PDF</span></a>
-            <a class="btn" href="https://scholar.google.com/citations?user=qqIazjAAAAAJ">Google Scholar</a>
-            <a class="btn" href="https://www.linkedin.com/in/tsvetan-yordanov-998bb766/">LinkedIn</a>
-            <a class="btn" href="https://github.com/tsryo">GitHub</a>
+            <a class="btn btn-primary" href="{{root}}assets/pdf/resume.pdf" target="_blank" rel="noopener" aria-describedby="new-tab">{{btn_resume}} <span class="btn-meta">PDF</span></a>
+            <a class="btn" href="https://scholar.google.com/citations?user=qqIazjAAAAAJ" target="_blank" rel="noopener" aria-describedby="new-tab">Google Scholar</a>
+            <a class="btn" href="https://www.linkedin.com/in/tsvetan-yordanov-998bb766/" target="_blank" rel="noopener" aria-describedby="new-tab">LinkedIn</a>
+            <a class="btn" href="https://github.com/tsryo" target="_blank" rel="noopener" aria-describedby="new-tab">GitHub</a>
           </div>
         </div>
 
@@ -280,7 +280,7 @@
           </div>
           <div class="tavern-actions">
             <button class="btn btn-primary" id="sc-load" type="button" title="{{music_play_title}}">&#9654; {{music_play}}</button>
-            <a class="btn" href="https://soundcloud.com/trycep">SoundCloud &#8599;</a>
+            <a class="btn" href="https://soundcloud.com/trycep" target="_blank" rel="noopener" aria-describedby="new-tab">SoundCloud &#8599;</a>
           </div>
           <div class="sc-player" id="sc-player" hidden></div>
         </div>
@@ -431,7 +431,7 @@
     <section class="section" id="experience" aria-labelledby="experience-title">
       <div class="wrap">
         <header class="section-head">
-          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> dir quests</p>
+          <p class="kicker"><span class="path">C:\TSEKO&gt;</span> type xp.log</p>
           <h2 id="experience-title">{{quests_title}}</h2>
         </header>
 
@@ -462,14 +462,14 @@
         </header>
 
         <ol class="pubs" lang="en">
-          <li><span class="when">2026</span><div><a class="pub-title" href="https://doi.org/10.1007/s12471-025-02006-6">Incidence and trends of patient MACE outcomes after Transcatheter Aortic Valve Implantation (TAVI): analysis by age and sex</a><p class="venue">Netherlands Heart Journal <span class="tag" lang="{{lang}}">{{tag_featured}}</span></p></div></li>
-          <li><span class="when">2025</span><div><a class="pub-title" href="https://doi.org/10.3233/shti250621">Medication Recommender System for ICU Patients Using Autoencoders</a><p class="venue">Medical Informatics Europe (MIE 2025) <span class="tag" lang="{{lang}}">{{tag_oral}}</span></p></div></li>
-          <li><span class="when">2024</span><div><a class="pub-title" href="https://doi.org/10.3389/fcvm.2024.1399138">Performance of federated learning-based models in the Dutch TAVI population was comparable to central strategies and outperformed local strategies</a><p class="venue">Frontiers in Cardiovascular Medicine</p></div></li>
-          <li><span class="when">2023</span><div><a class="pub-title" href="https://doi.org/10.1007/978-3-031-34344-5_8">Autoencoder-Based Prediction of ICU Clinical Codes</a><p class="venue">Artificial Intelligence in Medicine (AIME 2023) <span class="tag" lang="{{lang}}">{{tag_oral}}</span></p></div></li>
-          <li><span class="when">2023</span><div><a class="pub-title" href="https://doi.org/10.1016/j.jclinepi.2023.02.021">An integrated approach to geographic validation helped scrutinize prediction model performance and its variability</a><p class="venue">Journal of Clinical Epidemiology</p></div></li>
+          <li><span class="when">2026</span><div><a class="pub-title" href="https://doi.org/10.1007/s12471-025-02006-6" target="_blank" rel="noopener" aria-describedby="new-tab">Incidence and trends of patient MACE outcomes after Transcatheter Aortic Valve Implantation (TAVI): analysis by age and sex</a><p class="venue">Netherlands Heart Journal <span class="tag" lang="{{lang}}">{{tag_featured}}</span></p></div></li>
+          <li><span class="when">2025</span><div><a class="pub-title" href="https://doi.org/10.3233/shti250621" target="_blank" rel="noopener" aria-describedby="new-tab">Medication Recommender System for ICU Patients Using Autoencoders</a><p class="venue">Medical Informatics Europe (MIE 2025) <span class="tag" lang="{{lang}}">{{tag_oral}}</span></p></div></li>
+          <li><span class="when">2024</span><div><a class="pub-title" href="https://doi.org/10.3389/fcvm.2024.1399138" target="_blank" rel="noopener" aria-describedby="new-tab">Performance of federated learning-based models in the Dutch TAVI population was comparable to central strategies and outperformed local strategies</a><p class="venue">Frontiers in Cardiovascular Medicine</p></div></li>
+          <li><span class="when">2023</span><div><a class="pub-title" href="https://doi.org/10.1007/978-3-031-34344-5_8" target="_blank" rel="noopener" aria-describedby="new-tab">Autoencoder-Based Prediction of ICU Clinical Codes</a><p class="venue">Artificial Intelligence in Medicine (AIME 2023) <span class="tag" lang="{{lang}}">{{tag_oral}}</span></p></div></li>
+          <li><span class="when">2023</span><div><a class="pub-title" href="https://doi.org/10.1016/j.jclinepi.2023.02.021" target="_blank" rel="noopener" aria-describedby="new-tab">An integrated approach to geographic validation helped scrutinize prediction model performance and its variability</a><p class="venue">Journal of Clinical Epidemiology</p></div></li>
         </ol>
 
-        <p class="more"><a href="https://scholar.google.com/citations?user=qqIazjAAAAAJ">{{pubs_more}}</a></p>
+        <p class="more"><a href="https://scholar.google.com/citations?user=qqIazjAAAAAJ" target="_blank" rel="noopener" aria-describedby="new-tab">{{pubs_more}}</a></p>
       </div>
     </section>
 
@@ -482,15 +482,15 @@
         </header>
 
         <ul class="inventory">
-          <li><a class="item" href="https://github.com/tsryo/evalFL"><span class="item-slot" aria-hidden="true">FL</span><span class="item-body"><span class="item-name">evalFL</span><span class="item-desc">{{repo_evalfl}}</span><span class="item-meta">R &middot; {{kind_research}}</span></span></a></li>
-          <li><a class="item" href="https://github.com/tsryo/lcoa"><span class="item-slot" aria-hidden="true">LCO</span><span class="item-body"><span class="item-name">lcoa</span><span class="item-desc">{{repo_lcoa}}</span><span class="item-meta">R &middot; {{kind_research}}</span></span></a></li>
-          <li><a class="item" href="https://github.com/tsryo/aae-recommender"><span class="item-slot" aria-hidden="true">AE</span><span class="item-body"><span class="item-name">aae-recommender</span><span class="item-desc">{{repo_aae}}</span><span class="item-meta">Python &middot; {{kind_research}} &middot; {{kind_fork}}</span></span></a></li>
-          <li><a class="item item-tool" href="https://github.com/tsryo/SQLDifftool"><span class="item-slot" aria-hidden="true">SQL</span><span class="item-body"><span class="item-name">SQLDifftool</span><span class="item-desc">{{repo_sql}}</span><span class="item-meta">Python &middot; {{kind_tool}}</span></span></a></li>
-          <li><a class="item item-tool" href="https://github.com/tsryo/win-utils"><span class="item-slot" aria-hidden="true">&gt;_</span><span class="item-body"><span class="item-name">win-utils</span><span class="item-desc">{{repo_win}}</span><span class="item-meta">Python &middot; {{kind_tool}}</span></span></a></li>
-          <li><a class="item item-tool" href="https://github.com/tsryo/gline"><span class="item-slot" aria-hidden="true">GPX</span><span class="item-body"><span class="item-name">GLine</span><span class="item-desc">{{repo_gline}}</span><span class="item-meta">Kotlin &middot; {{kind_tool}}</span></span></a></li>
+          <li><a class="item" href="https://github.com/tsryo/evalFL" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="item-slot" aria-hidden="true">FL</span><span class="item-body"><span class="item-name">evalFL</span><span class="item-desc">{{repo_evalfl}}</span><span class="item-meta">R &middot; {{kind_research}}</span></span></a></li>
+          <li><a class="item" href="https://github.com/tsryo/lcoa" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="item-slot" aria-hidden="true">LCO</span><span class="item-body"><span class="item-name">lcoa</span><span class="item-desc">{{repo_lcoa}}</span><span class="item-meta">R &middot; {{kind_research}}</span></span></a></li>
+          <li><a class="item" href="https://github.com/tsryo/aae-recommender" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="item-slot" aria-hidden="true">AE</span><span class="item-body"><span class="item-name">aae-recommender</span><span class="item-desc">{{repo_aae}}</span><span class="item-meta">Python &middot; {{kind_research}} &middot; {{kind_fork}}</span></span></a></li>
+          <li><a class="item item-tool" href="https://github.com/tsryo/SQLDifftool" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="item-slot" aria-hidden="true">SQL</span><span class="item-body"><span class="item-name">SQLDifftool</span><span class="item-desc">{{repo_sql}}</span><span class="item-meta">Python &middot; {{kind_tool}}</span></span></a></li>
+          <li><a class="item item-tool" href="https://github.com/tsryo/win-utils" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="item-slot" aria-hidden="true">&gt;_</span><span class="item-body"><span class="item-name">win-utils</span><span class="item-desc">{{repo_win}}</span><span class="item-meta">Python &middot; {{kind_tool}}</span></span></a></li>
+          <li><a class="item item-tool" href="https://github.com/tsryo/gline" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="item-slot" aria-hidden="true">GPX</span><span class="item-body"><span class="item-name">GLine</span><span class="item-desc">{{repo_gline}}</span><span class="item-meta">Kotlin &middot; {{kind_tool}}</span></span></a></li>
         </ul>
 
-        <p class="more"><a href="https://github.com/tsryo">{{code_more}}</a></p>
+        <p class="more"><a href="https://github.com/tsryo" target="_blank" rel="noopener" aria-describedby="new-tab">{{code_more}}</a></p>
       </div>
     </section>
 
@@ -503,13 +503,13 @@
         </header>
 
         <ul class="tiles">
-          <li><a class="tile" href="https://scholar.google.com/citations?user=qqIazjAAAAAJ"><span class="tile-label">Google Scholar</span><span class="tile-meta">{{tile_scholar}}</span></a></li>
-          <li><a class="tile" href="https://orcid.org/0000-0003-0554-6646"><span class="tile-label">ORCID</span><span class="tile-meta">0000-0003-0554-6646</span></a></li>
-          <li><a class="tile" href="https://www.amsterdamumc.org/en/research/researchers/tsvetan-yordanov.htm"><span class="tile-label">Amsterdam UMC</span><span class="tile-meta">{{tile_aumc}}</span></a></li>
-          <li><a class="tile" href="https://www.researchgate.net/profile/Tsvetan-Yordanov"><span class="tile-label">ResearchGate</span><span class="tile-meta">{{tile_rg}}</span></a></li>
-          <li><a class="tile" href="https://www.linkedin.com/in/tsvetan-yordanov-998bb766/"><span class="tile-label">LinkedIn</span><span class="tile-meta">{{tile_linkedin}}</span></a></li>
-          <li><a class="tile" href="https://github.com/tsryo"><span class="tile-label">GitHub</span><span class="tile-meta">@tsryo</span></a></li>
-          <li><a class="tile" href="https://soundcloud.com/trycep"><span class="tile-label">SoundCloud</span><span class="tile-meta">CQ</span></a></li>
+          <li><a class="tile" href="https://scholar.google.com/citations?user=qqIazjAAAAAJ" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="tile-label">Google Scholar</span><span class="tile-meta">{{tile_scholar}}</span></a></li>
+          <li><a class="tile" href="https://orcid.org/0000-0003-0554-6646" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="tile-label">ORCID</span><span class="tile-meta">0000-0003-0554-6646</span></a></li>
+          <li><a class="tile" href="https://www.amsterdamumc.org/en/research/researchers/tsvetan-yordanov.htm" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="tile-label">Amsterdam UMC</span><span class="tile-meta">{{tile_aumc}}</span></a></li>
+          <li><a class="tile" href="https://www.researchgate.net/profile/Tsvetan-Yordanov" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="tile-label">ResearchGate</span><span class="tile-meta">{{tile_rg}}</span></a></li>
+          <li><a class="tile" href="https://www.linkedin.com/in/tsvetan-yordanov-998bb766/" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="tile-label">LinkedIn</span><span class="tile-meta">{{tile_linkedin}}</span></a></li>
+          <li><a class="tile" href="https://github.com/tsryo" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="tile-label">GitHub</span><span class="tile-meta">@tsryo</span></a></li>
+          <li><a class="tile" href="https://soundcloud.com/trycep" target="_blank" rel="noopener" aria-describedby="new-tab"><span class="tile-label">SoundCloud</span><span class="tile-meta">CQ</span></a></li>
         </ul>
       </div>
     </section>
@@ -533,6 +533,7 @@
   </button>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <span id="new-tab" hidden>{{new_tab}}</span>
 
   <script src="{{root}}js/main.js" defer></script>
   <script src="{{root}}js/ambience.js" defer></script>

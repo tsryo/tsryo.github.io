@@ -2,11 +2,11 @@
 
 Personal website of Tsvetan R. Yordanov (Tseko), served by GitHub Pages at https://tsryo.github.io/.
 
-Static files, in English, Bulgarian and Spanish:
+Static files, in English, Bulgarian, Spanish and Dutch:
 
 - `src/index.html`: the page template. Text is `{{key}}` placeholders.
-- `src/i18n/<lang>.json`: the strings for each language (`en`, `bg`, `es`).
-- `tools/build.py`: builds `index.html`, `bg/index.html` and `es/index.html` from the two above (`{{> name}}` includes `src/partials/name.html`). Standard library only.
+- `src/i18n/<lang>.json`: the strings for each language (`en`, `bg`, `es`, `nl`).
+- `tools/build.py`: builds `index.html` and `<lang>/index.html` for the other languages from the two above (`{{> name}}` includes `src/partials/name.html`). Standard library only.
 - `css/style.css`: all styles. Colours are tokens at the top.
 - `js/main.js`, `js/ambience.js`: optional extras (active nav link, Konami code, click-to-load SoundCloud, generative ambience). The page works without them.
 - `404.html`: served by GitHub Pages for unknown URLs, so it uses root-absolute paths.
@@ -28,6 +28,9 @@ The build stops if a language is missing a key or has one the template doesn't u
 1. Copy `src/i18n/en.json` to `src/i18n/<code>.json`.
 2. Translate the values and set `_name`, `_code`, `_locale`, `_path` (`"<code>/"`) and `_flag` (the flag painted on its banner in the language switcher).
 3. Run the build. The language switcher and `hreflang` links update themselves.
+4. Optionally, give it a home: a sky tint and its lit windows under `html[lang="<code>"]` in `css/style.css`, and a music flavour in `FLAVOURS` in `js/ambience.js` (otherwise the English one plays).
+
+Long compound words, as in Dutch, may need `&shy;` where space is tight, such as the skill tree. Check the top bar on a 320 px phone too: every banner takes room from the section links.
 
 Fonts cover Latin and Cyrillic. A language in another script needs a font for it in `css/style.css`.
 

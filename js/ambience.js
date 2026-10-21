@@ -4,6 +4,7 @@
 //   es  Lut Gholein / Spain: Hijaz mode, oud-like plucks, darbuka in maqsum
 //   bg  Bulgaria: the same mode in a 7/8 ruchenitsa, tambura-like plucks, tapan
 //   en  Scotland: a Dorian air on a harp-like pluck over a pipe drone, soft bodhran
+//   nl  the Netherlands: a carillon air in 3/4, as from a church tower, over a soft drone and the wind
 
 (() => {
   const midiToHz = (m) => 440 * Math.pow(2, (m - 69) / 12);
@@ -11,18 +12,24 @@
 
   const HIJAZ = [0, 1, 4, 5, 7, 8, 10];
   const DORIAN = [0, 2, 3, 5, 7, 9, 10];
+  const IONIAN = [0, 2, 4, 5, 7, 9, 11];
 
   // D = dum (low), T = tek (high), k = ka (soft high), '' = rest.
+  // grace: chance of an oud-style grace note; fifth: a fifth over the bass, like pipes; weak: chance of
+  // a note between beats; bell: struck bells instead of plucked strings.
   const FLAVOURS = {
     es: { scale: HIJAZ, root: 62, step: 0.27, beats: ['D', 'T', '', 'T', 'D', '', 'T', ''], strong: [0, 4],
           pluck: { bright: 0.62, sustain: 0.4972, seconds: 2.6 }, drone: { gain: 0.032, cutoff: 260 },
-          drum: { dum: [118, 58], tek: 3400, gain: 1 }, wind: 0.018 },
+          drum: { dum: [118, 58], tek: 3400, gain: 1 }, wind: 0.018, grace: 0.18 },
     bg: { scale: HIJAZ, root: 62, step: 0.2, beats: ['D', '', 'T', '', 'D', '', 'k'], strong: [0, 4],
           pluck: { bright: 0.7, sustain: 0.4975, seconds: 2.4 }, drone: { gain: 0.03, cutoff: 300 },
-          drum: { dum: [96, 46], tek: 2600, gain: 1.1 }, wind: 0.016 },
+          drum: { dum: [96, 46], tek: 2600, gain: 1.1 }, wind: 0.016, grace: 0.18 },
     en: { scale: DORIAN, root: 62, step: 0.34, beats: ['D', '', 'k', 'T', '', 'k'], strong: [0, 3],
           pluck: { bright: 0.45, sustain: 0.4988, seconds: 4 }, drone: { gain: 0.05, cutoff: 620 },
-          drum: { dum: [80, 42], tek: 1800, gain: 0.7 }, wind: 0.026 },
+          drum: { dum: [80, 42], tek: 1800, gain: 0.7 }, wind: 0.026, fifth: true },
+    nl: { scale: IONIAN, root: 67, step: 0.3, beats: ['', '', '', '', '', ''], strong: [0, 2, 4], weak: 0.3,
+          bell: { seconds: 4.5 }, drone: { gain: 0.02, cutoff: 240 },
+          drum: { dum: [80, 42], tek: 1800, gain: 0 }, wind: 0.03 },
   };
 
   function impulse(ctx, seconds, decay) {
@@ -54,6 +61,41 @@
       idx = next;
     }
     const fade = Math.floor(sr * 0.2);
+    for (let i = 0; i < fade; i++) out[n - fade + i] *= 1 - i / fade;
+    return buf;
+  }
+
+  // Carillon bell: decaying partials at the ratios of a tuned bell (hum, prime, minor third, fifth,
+  // nominal and above), the higher ones dying sooner, and small bells sooner than big ones.
+  const BELL_PARTIALS = [[0.5, 0.11, 1], [1, 0.2, 0.6], [1.2, 0.125, 0.45], [1.5, 0.055, 0.35],
+                         [2, 0.15, 0.3], [2.5, 0.04, 0.2], [3, 0.03, 0.15], [4.2, 0.018, 0.08]];
+  function bellBuffer(ctx, freq, { seconds }) {
+    const sr = ctx.sampleRate;
+    const n = Math.floor(sr * seconds);
+    const buf = ctx.createBuffer(1, n, sr);
+    const out = buf.getChannelData(0);
+    const size = Math.min(1, Math.max(0.6, Math.sqrt(392 / freq)));
+    for (const [ratio, amp, life] of BELL_PARTIALS) {
+      const f = freq * ratio;
+      if (f > sr * 0.45) continue;
+      // Turn a phasor instead of calling Math.sin for every sample.
+      const cw = Math.cos((2 * Math.PI * f) / sr);
+      const sw = Math.sin((2 * Math.PI * f) / sr);
+      const decay = Math.exp(-1 / (sr * seconds * life * size));
+      let c = 1;
+      let s = 0;
+      let a = amp;
+      for (let i = 0; i < n; i++) {
+        out[i] += a * s;
+        const c2 = c * cw - s * sw;
+        s = s * cw + c * sw;
+        c = c2;
+        a *= decay;
+      }
+    }
+    const attack = Math.floor(sr * 0.003);
+    for (let i = 0; i < attack; i++) out[i] *= i / attack;
+    const fade = Math.floor(sr * 0.5);
     for (let i = 0; i < fade; i++) out[n - fade + i] *= 1 - i / fade;
     return buf;
   }
@@ -143,11 +185,13 @@
 
     const cache = new Map();
     const bufferFor = (midi) => {
-      if (!cache.has(midi)) cache.set(midi, pluckBuffer(ctx, midiToHz(midi), F.pluck));
+      if (!cache.has(midi)) {
+        cache.set(midi, F.bell ? bellBuffer(ctx, midiToHz(midi), F.bell) : pluckBuffer(ctx, midiToHz(midi), F.pluck));
+      }
       return cache.get(midi);
     };
 
-    function pluck(midi, time, gain, pan) {
+    function voice(midi, time, gain, pan) {
       const src = ctx.createBufferSource();
       src.buffer = bufferFor(midi);
       const amp = ctx.createGain();
@@ -211,22 +255,22 @@
 
       // Bass on the bar
       if (inBar === 0) {
-        pluck(F.root - 12, t + human, 0.2, -0.25);
-        if (lang === 'en') pluck(F.root - 5, t + human + 0.01, 0.12, 0.25);
+        voice(F.root - 12, t + human, 0.2, -0.25);
+        if (F.fifth) voice(F.root - 5, t + human + 0.01, 0.12, 0.25);
       }
 
       // Melody
       const strong = F.strong.includes(inBar);
-      if (!resting && Math.random() < (strong ? 0.85 : 0.5)) {
+      if (!resting && Math.random() < (strong ? 0.85 : F.weak ?? 0.5)) {
         const towardHome = inPhrase === phraseBars - 1 ? Math.sign(-deg) : 0;
         deg += pick([-2, -1, -1, 0, 1, 1, 2]) + towardHome;
         deg = Math.max(0, Math.min(degrees.length - 1, deg));
         const note = F.root + degrees[deg];
         // An oud-style grace note from the step above, now and then.
-        if (lang !== 'en' && Math.random() < 0.18 && deg + 1 < degrees.length) {
-          pluck(F.root + degrees[deg + 1], t + human - 0.05, 0.07, 0.2);
+        if (F.grace && Math.random() < F.grace && deg + 1 < degrees.length) {
+          voice(F.root + degrees[deg + 1], t + human - 0.05, 0.07, 0.2);
         }
-        pluck(note, t + human, (strong ? 0.17 : 0.12) * (0.85 + Math.random() * 0.3), 0.3 - Math.random() * 0.6);
+        voice(note, t + human, (strong ? 0.17 : 0.12) * (0.85 + Math.random() * 0.3), 0.3 - Math.random() * 0.6);
       }
       step += 1;
     }

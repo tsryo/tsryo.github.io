@@ -16,7 +16,7 @@
   "nav_about": "за мен",
   "nav_skills": "умения",
   "nav_story": "история",
-  "nav_quests": "мисии",
+  "nav_quests": "опит",
   "nav_papers": "статии",
   "nav_code": "код",
   "nav_links": "портали",
@@ -103,7 +103,7 @@
   "stop_valencia": "Отбивка към DevOps, с по-хубаво време.",
   "stop_amsterdam": "Магистратура, докторантура — и още съм тук.",
 
-  "quests_title": "Дневник на мисиите",
+  "quests_title": "Дневник на опита",
   "now": "досега",
   "job_research_engineer": "Инженер-изследовател",
   "job_software_engineer": "Софтуерен инженер",
@@ -152,6 +152,7 @@
   "badge_trackers": "тракери",
   "hint_title": "Знаете какво да правите.",
   "hint_sr": "Подсказка за скрита изненада:",
+  "new_tab": "отваря се в нов раздел",
 
   "js": {
     "music_name": "Атмосфера",

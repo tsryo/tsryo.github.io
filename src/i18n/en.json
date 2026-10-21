@@ -16,7 +16,7 @@
   "nav_about": "about",
   "nav_skills": "skills",
   "nav_story": "story",
-  "nav_quests": "quests",
+  "nav_quests": "experience",
   "nav_papers": "papers",
   "nav_code": "code",
   "nav_links": "waypoints",
@@ -103,7 +103,7 @@
   "stop_valencia": "A DevOps detour, with better weather.",
   "stop_amsterdam": "MSc, PhD, and still here.",
 
-  "quests_title": "Quest log",
+  "quests_title": "Experience log",
   "now": "now",
   "job_research_engineer": "Research Engineer",
   "job_software_engineer": "Software Engineer",
@@ -152,6 +152,7 @@
   "badge_trackers": "trackers",
   "hint_title": "You know what to do.",
   "hint_sr": "Easter egg hint:",
+  "new_tab": "opens in a new tab",
 
   "js": {
     "music_name": "Ambience",

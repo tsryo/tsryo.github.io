@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "src"
 SITE = "https://tsryo.github.io/"
-ORDER = ["en", "bg", "es"]  # switcher order; other languages follow alphabetically
+ORDER = ["en", "bg", "es", "nl"]  # switcher order; other languages follow alphabetically
 
 
 def load_langs():

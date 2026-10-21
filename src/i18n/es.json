@@ -16,7 +16,7 @@
   "nav_about": "sobre mí",
   "nav_skills": "habilidades",
   "nav_story": "historia",
-  "nav_quests": "misiones",
+  "nav_quests": "experiencia",
   "nav_papers": "artículos",
   "nav_code": "código",
   "nav_links": "portales",
@@ -103,7 +103,7 @@
   "stop_valencia": "Un desvío por DevOps, con mejor tiempo.",
   "stop_amsterdam": "Máster, doctorado y, de momento, aquí sigo.",
 
-  "quests_title": "Diario de misiones",
+  "quests_title": "Registro de experiencia",
   "now": "actualidad",
   "job_research_engineer": "Ingeniero de investigación",
   "job_software_engineer": "Ingeniero de software",
@@ -152,6 +152,7 @@
   "badge_trackers": "rastreadores",
   "hint_title": "Ya sabes qué hacer.",
   "hint_sr": "Pista del huevo de pascua:",
+  "new_tab": "se abre en una pestaña nueva",
 
   "js": {
     "music_name": "Ambiente",
