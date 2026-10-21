@@ -1,0 +1,8 @@
+# Editor settings
+.vscode/
+
+# The original, full-size photo; the site uses the resized copies
+assets/img/little-tseko.png
+
+# Scratch pages from local testing
+__*.html

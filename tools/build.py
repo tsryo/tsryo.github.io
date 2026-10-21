@@ -3,6 +3,8 @@
     python tools/build.py
 
 Writes index.html (English) and <lang>/index.html for every other strings file.
+{{> name}} in the template includes src/partials/name.html (the skyline, drawn by
+tools/draw_skyline.py).
 To add a language, copy src/i18n/en.json to src/i18n/<code>.json, translate the
 values, set "_path" to "<code>/", draw its flag in "_flag" (SVG shapes in the
 box x 4–24, y 4–38, clipped to a torn banner), and run the build. It stops with an error if a
@@ -105,6 +107,7 @@ def main():
     codes, langs = load_langs()
     check_keys(codes, langs)
     template = (SRC / "index.html").read_text(encoding="utf-8")
+    template = re.sub(r"\{\{> *(\w+) *\}\}\n?", lambda m: (SRC / "partials" / f"{m.group(1)}.html").read_text(encoding="utf-8"), template)
     for code in codes:
         out_dir = ROOT / langs[code]["_path"]
         out_dir.mkdir(parents=True, exist_ok=True)

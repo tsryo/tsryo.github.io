@@ -104,9 +104,7 @@
   --sky-3: #8a3f4e;
   --sky-4: #e0763a;
   --sky-5: #f6b45a;
-  --hill-bg: #3e4f58;
-  --hill-es: #7a4c2c;
-  --hill-sc: #4a3a58;
+
   --on-accent: #140904;
 
   --sans: "Plex", "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -120,6 +118,7 @@
   --tilework: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56' fill='none' stroke='%23d4af6e' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M18 18H38V38H18Z'/%3E%3Cpath d='M28 13.9 42.1 28 28 42.1 13.9 28Z'/%3E%3Cpath d='M0 0 13.9 13.9M56 0 42.1 13.9M0 56 13.9 42.1M56 56 42.1 42.1'/%3E%3C/svg%3E");
   --corner: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M4 4H37L32 10H10V32L4 37Z' fill='%23241b12' stroke='%23c79a4a' stroke-width='1.5'/%3E%3Cpath d='M0 0 14 5H5V14Z' fill='%23e0bb6c'/%3E%3Ccircle cx='8.5' cy='8.5' r='2.7' fill='%23ff8a2a'/%3E%3Ccircle cx='23' cy='7' r='1.3' fill='%23e0bb6c'/%3E%3Ccircle cx='7' cy='23' r='1.3' fill='%23e0bb6c'/%3E%3C/svg%3E");
   --rune: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke-width='2'%3E%3Cpath d='M16 1.5 30.5 16 16 30.5 1.5 16Z' stroke='%23ff9a3c'/%3E%3Ccircle cx='16' cy='16' r='6' stroke='%23ffb000'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23ffd27a' stroke='none'/%3E%3Cpath d='M16 5v4M16 23v4M5 16h4M23 16h4' stroke='%23ff9a3c'/%3E%3C/svg%3E");
+  --grain-bg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
   --wrap: 72rem;
@@ -146,7 +145,7 @@ html {
 body {
   position: relative;
   margin: 0;
-  background: var(--tilework) center top / 56px, var(--bg);
+  background: var(--grain-bg), var(--tilework) center top / 56px, var(--bg);
   color: var(--text);
   font-family: var(--sans);
   font-size: 1.0625rem;
@@ -154,18 +153,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Film grain over everything, like a dark painted backdrop. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 90;
-  pointer-events: none;
-  background-image: var(--grain);
-  opacity: 0.06;
-}
 
 img { max-width: 100%; height: auto; display: block; }
+
+a, button { -webkit-tap-highlight-color: rgba(255, 140, 0, 0.22); }
 
 @media (pointer: fine) {
   html { cursor: url("../assets/img/cursor.png") 2 1, auto; }
@@ -227,9 +218,7 @@ p { margin: 0 0 1em; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(8, 6, 4, 0.9);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
+  background: rgba(8, 6, 4, 0.95);
   border-bottom: 1px solid var(--iron);
   box-shadow: 0 1px 0 #000, 0 2px 0 rgba(199, 179, 119, 0.08);
 }
@@ -381,13 +370,23 @@ p { margin: 0 0 1em; }
   48% { opacity: 1; }
 }
 
+.hero {
+  /* Height of the skyline painting (2400 x 760 artwork). */
+  --sky-h: min(31.67vw, 640px);
+}
+@media (max-width: 640px) {
+  .hero { --sky-h: 202px; }
+  .hero-inner { padding-bottom: calc(var(--sky-h) * 0.72); }
+}
+
 .hero-inner {
   position: relative;
   z-index: 3;
   display: grid;
   gap: 2.5rem;
   align-items: center;
-  padding-bottom: 1rem;
+  /* Room for the buildings: they fill the lower 62% of the painting. */
+  padding-bottom: calc(var(--sky-h) * 0.62);
 }
 
 @media (min-width: 860px) {
@@ -440,11 +439,6 @@ h1 {
     0 0 4px #ff7a1a,
     0 0 14px rgba(255, 90, 0, 0.85),
     0 0 36px rgba(255, 60, 0, 0.55);
-  animation: fire 4s ease-in-out infinite;
-}
-@keyframes fire {
-  0%, 100% { text-shadow: 0 0 4px #ff7a1a, 0 0 14px rgba(255, 90, 0, 0.85), 0 0 36px rgba(255, 60, 0, 0.55); }
-  50% { text-shadow: 0 0 6px #ff8a2a, 0 0 20px rgba(255, 110, 0, 0.95), 0 0 48px rgba(255, 70, 0, 0.6); }
 }
 
 .fullname {
@@ -612,80 +606,79 @@ h1 {
 }
 .memory-caption span { display: block; }
 
-/* ---------- Skyline: Bulgaria, Spain / Lut Gholein and Scotland at dusk ---------- */
+/* ---------- Skyline: an ink-and-wash painting of a Bulgarian village, with Scotland, Valencia and the Netherlands on the horizon ---------- */
 
+/* Layers, back to front: the CSS sky (.hero), the sun, the painting (WebP, drawn by
+   tools/draw_skyline.py), then live details: window glow, the windmill's sails, smoke, the saltire. */
 .skyline {
-  position: relative;
-  z-index: 2;
-  height: clamp(130px, 17vw, 240px);
-  margin-top: -1.5rem;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--sky-h);
+  pointer-events: none;
 }
-.skyline svg {
+@media (max-width: 640px) {
+  /* Keep the scene readable on phones: wider than the screen, the Bulgarian village in view. */
+  .skyline { right: auto; left: calc(50% - 240px); width: 640px; }
+}
+.skyline > svg,
+.sk-art {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
-.sk-hills { fill: url(#sk-hills); opacity: 0.85; }
-.sk-hill-bg { stop-color: var(--hill-bg); }
-.sk-hill-es { stop-color: var(--hill-es); }
-.sk-hill-sc { stop-color: var(--hill-sc); }
-.sk-ground-end { stop-color: var(--bg); }
+.sk-art { object-fit: cover; object-position: 50% 100%; }
 
-.sk-wall { fill: #6e5a46; }
-.sk-trunk { fill: #2e1d12; }
-.sk-leaf { fill: #3f4d26; }
-.sk-leaf-2 { fill: #4d5c2e; }
-.sk-stonewall { fill: #6e5a48; }
-.sk-door, .sk-gate { fill: #2a170c; }
-.sk-timber, .sk-shutter { fill: #4a2c16; }
-.sk-brace, .sk-mullion { stroke: #4a2c16; stroke-width: 3.5; fill: none; }
-.sk-mullion { stroke-width: 1.6; }
-.sk-roof { fill: #a8462a; }
-.sk-tiles { stroke: #7a2e18; stroke-width: 1.6; fill: none; }
-.sk-eave { fill: #3a1e10; opacity: 0.55; }
-.sk-chimney { fill: #dcc8a4; }
-.sk-chimney-cap { fill: #7a2e18; }
-
-.sk-ribs { stroke: #a6eef2; stroke-opacity: 0.45; stroke-width: 1.4; fill: none; }
-.sk-gold { stroke: #e6c06a; stroke-width: 2.4; fill: none; }
-.sk-goldfill { fill: #f2d27e; }
-.sk-band { fill: #6a4426; }
-.sk-merlons { fill: #b9844e; }
-.palm-trunk { fill: none; stroke: #3a2414; stroke-width: 6; stroke-linecap: round; }
-.palm-frond { fill: none; stroke: #2f3d1c; stroke-width: 4.5; stroke-linecap: round; }
-
-.sk-crag { fill: #3a2e3c; }
-.sk-heather { fill: #a46ab8; opacity: 0.8; }
-.sk-merlons-stone { fill: #8a8090; }
-.sk-slate { fill: #3a4252; }
-.sk-pole { stroke: #2a2a30; stroke-width: 1.6; }
-.sk-saltire { fill: #1f4f9a; }
-.sk-saltire-x { stroke: #f2efe6; stroke-width: 1.8; }
-
-/* Lit windows. The home of the current language glows brightest. */
-.skyline .lit { fill: #ffcf6e; opacity: 0.75; transition: opacity 0.6s, filter 0.6s; animation: candle 3.2s ease-in-out infinite; }
-html[lang="en"] .sk-sc .lit,
-html[lang="bg"] .sk-bg .lit,
-html[lang="es"] .sk-es .lit { opacity: 1; filter: drop-shadow(0 0 3px #ffb347) drop-shadow(0 0 8px #ff8a2a); }
-@keyframes candle {
-  0%, 100% { fill-opacity: 1; }
-  30% { fill-opacity: 0.84; }
-  60% { fill-opacity: 0.95; }
+/* Lit windows glow; the home of the current language glows brightest. */
+.sk-glow ellipse { fill: #ffb24a; }
+.sk-glow {
+  opacity: 0.22;
+  filter: blur(6px);
+  mix-blend-mode: screen;
+  transition: opacity 0.8s;
 }
+.sk-glow.sk-nl { opacity: 0.55; }  /* home now: lit in every language */
+html[lang="en"] .sk-glow.sk-sc,
+html[lang="bg"] .sk-glow.sk-bg,
+html[lang="es"] .sk-glow.sk-es { opacity: 0.75; }
+
+/* The windmill's sails, in the hazy tones of the distance; they turn slowly (SMIL). */
+.sk-sails { opacity: 0.85; }
+.sk-sails .whip { stroke: #4a3e44; stroke-width: 4; stroke-linecap: round; }
+.sk-sails .sail { fill: #c4b4bc; fill-opacity: 0.45; stroke: #4a3e44; stroke-width: 1.4; }
+.sk-sails .lat { fill: none; stroke: #4a3e44; stroke-width: 1; }
+.sk-sails .hub { fill: #3a3036; }
+
+.sk-smoke circle {
+  fill: #d8ccd4;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: smoke 7s linear infinite;
+}
+.sk-smoke circle:nth-child(2) { animation-delay: -2.3s; }
+.sk-smoke circle:nth-child(3) { animation-delay: -4.6s; }
+@keyframes smoke {
+  0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+  12% { opacity: 0.55; }
+  100% { transform: translate(34px, -70px) scale(2.6); opacity: 0; }
+}
+
+.sk-flag { fill: #1f4f9a; stroke: #12305c; stroke-width: 0.8; }
+.sk-flag-x { fill: none; stroke: #f2efe6; stroke-width: 2.4; }
 
 /* Each language leans the sky toward home: heather for Scotland, rose for Bulgaria, amber for Spain. */
 html[lang="en"] {
   --sky-1: #141c33; --sky-2: #2e2f55; --sky-3: #6a4a72; --sky-4: #c9784a; --sky-5: #ebb066;
-  --hill-sc: #5a3f6a;
 }
 html[lang="bg"] {
   --sky-1: #1a1830; --sky-2: #42284a; --sky-3: #a04a62; --sky-4: #e88a5a; --sky-5: #f4c27a;
-  --hill-bg: #45605a;
 }
 html[lang="es"] {
   --sky-1: #181a34; --sky-2: #3c2446; --sky-3: #9a3e44; --sky-4: #ec7a32; --sky-5: #f9be58;
-  --hill-es: #8c5630;
 }
 
 .embers {
@@ -716,6 +709,12 @@ html[lang="es"] {
 }
 
 /* ---------- Sections ---------- */
+
+/* Offscreen sections skip rendering until the page has loaded; main.js then lays them out while idle. */
+.section > .wrap {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
 
 .section {
   padding-block: clamp(3.5rem, 8vw, 6rem);
@@ -779,7 +778,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   padding: 0.05rem 0.45rem;
   border: 1px solid rgba(255, 122, 26, 0.55);
   color: var(--orange);
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -820,17 +819,9 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 .d-gold { fill: none; stroke: var(--unique); stroke-width: 2; }
 .d-goldfill { fill: var(--unique); }
 .d-links path { fill: none; stroke: rgba(255, 176, 0, 0.18); stroke-width: 6; stroke-linecap: round; }
-.d-flow use {
-  fill: none;
-  stroke: var(--amber);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  stroke-dasharray: 2 12;
-  filter: drop-shadow(0 0 3px rgba(255, 140, 0, 0.9));
-  animation: flow 1.6s linear infinite;
-}
-.d-flow use:nth-child(2), .d-flow use:nth-child(4) { animation-direction: reverse; }
-@keyframes flow { to { stroke-dashoffset: -28; } }
+.d-dot { fill: #ffcf6e; filter: drop-shadow(0 0 3px rgba(255, 140, 0, 0.9)); }
+.fl-legend { display: block; margin: 0 0 0.35rem; color: var(--muted); }
+.fl-legend svg { display: inline-block; width: 12px; height: 14px; margin-right: 0.4rem; vertical-align: -1px; }
 .d-orb { fill: #ff7a1a; filter: drop-shadow(0 0 10px rgba(255, 110, 20, 0.9)); }
 .d-ring {
   fill: none;
@@ -847,12 +838,11 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 .d-center { fill: var(--gold); }
 .d-plate { fill: #20160d; stroke: var(--iron); }
 .d-note { fill: var(--amber); font-family: var(--mono); font-size: 19px; text-anchor: middle; }
-.d-legend { fill: var(--muted); font-family: var(--sans); font-size: 16px; }
+
 @media (max-width: 520px) {
   .diagram { padding: 0.75rem 0.25rem; }
   .d-label { font-size: 23px; }
   .d-note { font-size: 24px; }
-  .d-legend { font-size: 21px; }
 }
 
 /* Skill tree */
@@ -1132,6 +1122,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 
 .continue {
   display: inline-block;
+  padding: 0.3rem 0;
   margin-left: 0.5rem;
   text-decoration: none;
   font-family: var(--mono);
@@ -1204,13 +1195,11 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   stroke-linecap: round;
   stroke-dasharray: 8 7;
   filter: drop-shadow(0 0 3px rgba(255, 110, 20, 0.9));
-  animation: flow 1.6s linear infinite;
 }
 .route-detour {
   stroke: var(--amber);
   stroke-width: 2.2;
   stroke-dasharray: 1 8;
-  animation-duration: 2.4s;
 }
 .traveller { fill: #ffe0a0; filter: drop-shadow(0 0 6px #ff8a2a); }
 
@@ -1349,6 +1338,8 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 }
 
 .pub-title {
+  display: inline-block;
+  padding: 0.15rem 0;
   color: var(--text);
   font-weight: 600;
   text-decoration: none;
@@ -1358,6 +1349,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 .venue { margin: 0.3rem 0 0; color: var(--muted); font-size: 0.98rem; }
 
 .more { margin: 1.75rem 0 0; }
+.more a { display: inline-block; padding: 0.3rem 0; }
 .more a::after { content: " \2192"; }
 
 /* Inventory: GitHub projects as items */
@@ -1553,6 +1545,15 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   line-height: 1;
 }
 .music:hover { color: var(--amber); border-color: var(--orange); }
+@media (max-width: 640px), (max-height: 500px) {
+  .music {
+    position: absolute;
+    top: calc(var(--topbar-h) + 0.75rem);
+    right: max(12px, env(safe-area-inset-right, 0px));
+    left: auto;
+    bottom: auto;
+  }
+}
 /* On phones, just the orb: the label stays for screen readers. */
 @media (max-width: 520px) {
   .music { padding: 0.3rem; }
@@ -1614,7 +1615,7 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
 
 /* Konami code: hell difficulty. */
 .turbo .embers i { animation-duration: 2.6s; background: #ff6a4a; box-shadow: 0 0 8px 3px rgba(255, 40, 10, 0.9); }
-.turbo .skyline .lit { fill: #ff3b1f; }
+.turbo .sk-glow ellipse { fill: #ff3b1f; }
 .turbo .cyr { color: #ff6a5a; animation: none; text-shadow: 0 0 4px #ff2a1a, 0 0 16px rgba(255, 20, 0, 0.9), 0 0 40px rgba(200, 0, 0, 0.7); }
 .turbo .hero { --sky-3: #6a1a1a; --sky-4: #b0301a; --sky-5: #e05a2a; }
 
@@ -1648,6 +1649,10 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
   }
   .embers { display: none; }
 }
+.lite *, .lite *::before, .lite *::after { animation: none !important; transition: none !important; }
+/* Set by main.js on the hero and on each section while out of view. */
+.is-resting *, .is-resting *::before, .is-resting *::after { animation-play-state: paused !important; }
+.lite .embers { display: none; }
 
 @media (forced-colors: active) {
   .metal {
@@ -1656,11 +1661,12 @@ h3 { font-size: 1.15rem; font-weight: 600; color: #f5ecdc; }
     -webkit-text-fill-color: CanvasText;
     filter: none;
   }
-  .crt, .skyline, body::before { display: none; }
+  .crt, .skyline { display: none; }
 }
 
 @media print {
-  .topbar, .crt, .skyline, .site-footer, .toast, .music, body::before { display: none; }
+  .topbar, .crt, .skyline, .site-footer, .toast, .music { display: none; }
+  .section > .wrap { content-visibility: visible; }
   body { background: #fff; color: #000; }
   .metal { background: none; color: #000; -webkit-text-fill-color: #000; filter: none; }
   a, h2, h3, .t-mods, .t-unique, .t-base { color: #000; }

@@ -1,5 +1,8 @@
 // Progressive extras. The page works fully without this file.
 
+// Visitors who ask to save data get a still page (see .lite in style.css).
+if (navigator.connection && navigator.connection.saveData) document.documentElement.classList.add('lite');
+
 // Per-language strings, written into the page by tools/build.py.
 const STRINGS = (() => {
   try { return JSON.parse(document.getElementById('strings').textContent); } catch { return {}; }
@@ -37,9 +40,47 @@ stops.forEach((el) => {
   el.addEventListener('mouseenter', () => light(true));
   el.addEventListener('mouseleave', () => light(false));
 });
-// SMIL ignores CSS, so stop the map traveller by hand when motion is reduced.
+
+// Sections below the hero skip rendering at first (content-visibility in style.css), which brings the
+// first paint forward. Lay them out once the page has loaded and painted, so that in-page links land
+// where they should; following one sooner lays them out on the spot.
+const unlaid = [...document.querySelectorAll('.section > .wrap')];
+const layOutAll = () => unlaid.splice(0).forEach((wrap) => { wrap.style.contentVisibility = 'visible'; });
+const whenIdle = window.requestIdleCallback || ((fn) => setTimeout(fn, 100));
+addEventListener('load', () => requestAnimationFrame(() => setTimeout(() => whenIdle(layOutAll))), { once: true });
+document.addEventListener('click', (event) => {
+  if (event.target.closest('a[href^="#"]')) layOutAll();
+}, true);
+// Arriving at a section from elsewhere (the explainer links back to /#story): lay out now and land exactly.
+const linked = location.hash && document.getElementById(location.hash.slice(1));
+if (linked) {
+  layOutAll();
+  document.documentElement.style.scrollBehavior = 'auto';
+  linked.scrollIntoView();
+  document.documentElement.style.scrollBehavior = '';
+}
+
+// Rest what's out of sight: SVG animations (SMIL) in offscreen drawings, and CSS animations in the hero
+// and in each section while scrolled away (the XP bars fill when their section comes into view).
+if ('IntersectionObserver' in window) {
+  const resting = new IntersectionObserver((entries) => {
+    for (const { target, isIntersecting } of entries) {
+      if (target instanceof SVGSVGElement) {
+        if (isIntersecting) target.unpauseAnimations(); else target.pauseAnimations();
+      } else {
+        target.classList.toggle('is-resting', !isIntersecting);
+      }
+    }
+  }, { rootMargin: '120px' });
+  document.querySelectorAll('svg').forEach((svg) => {
+    if (svg.querySelector('animate, animateMotion, animateTransform')) resting.observe(svg);
+  });
+  document.querySelectorAll('.hero, .section').forEach((part) => resting.observe(part));
+}
+
+// SMIL ignores CSS, so stop SVG animations (map traveller, flag, windmill) by hand when motion is reduced.
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('.map-overlay animateMotion').forEach((a) => a.remove());
+  document.querySelectorAll('svg animate, svg animateMotion, svg animateTransform').forEach((a) => a.remove());
   document.querySelectorAll('.traveller').forEach((t) => t.remove());
 }
 
@@ -53,6 +94,9 @@ if (scButton && scPlayer) {
     const frame = document.createElement('iframe');
     frame.title = t('sc_title', 'CQ on SoundCloud');
     frame.allow = 'autoplay';
+    // Third-party player: sandboxed, and told only our origin.
+    frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox');
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
     frame.src = src;
     scPlayer.replaceChildren(frame);
     scPlayer.hidden = false;

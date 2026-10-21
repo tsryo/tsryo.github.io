@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; frame-src https://w.soundcloud.com; base-uri 'none'; form-action 'none'; require-trusted-types-for 'script'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>{{html_title}}</title>
   <meta name="description" content="{{meta_description}}">
   <meta name="author" content="Tsvetan R. Yordanov">
@@ -26,6 +28,7 @@
   <link rel="preload" href="{{root}}assets/fonts/plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{root}}assets/fonts/cinzel-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{root}}assets/fonts/ruslan-tseko.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{root}}assets/fonts/vt323.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{root}}css/style.css">
 
   <script type="application/ld+json">
@@ -42,7 +45,7 @@
       { "@type": "CollegeOrUniversity", "name": "University of Amsterdam" },
       { "@type": "CollegeOrUniversity", "name": "University of Glasgow" }
     ],
-    "knowsAbout": ["Machine learning", "Natural language processing", "Federated learning", "Biostatistics", "Medical informatics"],
+    "knowsAbout": ["Large language models", "Machine learning", "Natural language processing", "Federated learning", "Biostatistics", "Medical informatics"],
     "sameAs": [
       "https://scholar.google.com/citations?user=qqIazjAAAAAJ",
       "https://orcid.org/0000-0003-0554-6646",
@@ -126,7 +129,7 @@
           <div class="memory-art">
             <picture class="m-real" aria-hidden="true">
               <source srcset="{{root}}assets/img/first-pc-2001.webp" type="image/webp">
-              <img src="{{root}}assets/img/first-pc-2001.jpg" width="640" height="640" alt="">
+              <img src="{{root}}assets/img/first-pc-2001.jpg" width="640" height="640" alt="" fetchpriority="low">
             </picture>
             <picture class="m-toned">
               <source srcset="{{root}}assets/img/first-pc-2001-toned.webp" type="image/webp">
@@ -146,139 +149,7 @@
         </figure>
       </div>
 
-      <div class="skyline" aria-hidden="true">
-        <div class="embers">
-          <i style="--x: 6%;  --d: 0s;   --t: 9s"></i>
-          <i style="--x: 14%; --d: 3.1s; --t: 7s"></i>
-          <i style="--x: 22%; --d: 5.4s; --t: 10s"></i>
-          <i style="--x: 31%; --d: 1.2s; --t: 8s"></i>
-          <i style="--x: 39%; --d: 6.8s; --t: 9.5s"></i>
-          <i style="--x: 46%; --d: 2.5s; --t: 7.5s"></i>
-          <i style="--x: 54%; --d: 0.8s; --t: 8.5s"></i>
-          <i style="--x: 61%; --d: 5.9s; --t: 9s"></i>
-          <i style="--x: 68%; --d: 3.6s; --t: 7s"></i>
-          <i style="--x: 76%; --d: 1.9s; --t: 10s"></i>
-          <i style="--x: 83%; --d: 7.2s; --t: 8s"></i>
-          <i style="--x: 90%; --d: 4.9s; --t: 9s"></i>
-        </div>
-        <svg viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice" focusable="false">
-          <defs>
-            <radialGradient id="sk-sun" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stop-color="#fff3c8"/>
-              <stop offset="0.45" stop-color="#ffc867"/>
-              <stop offset="0.8" stop-color="#ff8a3a" stop-opacity="0.9"/>
-              <stop offset="1" stop-color="#ff8a3a" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="sk-hills" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" class="sk-hill-bg"/>
-              <stop offset="0.5" class="sk-hill-es"/>
-              <stop offset="1" class="sk-hill-sc"/>
-            </linearGradient>
-            <linearGradient id="sk-ground" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stop-color="#4a2c17"/>
-              <stop offset="1" class="sk-ground-end"/>
-            </linearGradient>
-            <linearGradient id="sk-white" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stop-color="#f6e6c6"/>
-              <stop offset="1" stop-color="#d4ae80"/>
-            </linearGradient>
-            <linearGradient id="sk-sand" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" stop-color="#d9a466"/>
-              <stop offset="1" stop-color="#8a5a34"/>
-            </linearGradient>
-            <linearGradient id="sk-tile" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0" stop-color="#5fd0d8"/>
-              <stop offset="0.55" stop-color="#2496a8"/>
-              <stop offset="1" stop-color="#135a68"/>
-            </linearGradient>
-            <linearGradient id="sk-stone" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" stop-color="#9a90a0"/>
-              <stop offset="1" stop-color="#5a5262"/>
-            </linearGradient>
-          </defs>
-
-          <circle class="sk-sun-glow" cx="700" cy="210" r="210" fill="url(#sk-sun)" opacity="0.35"/>
-          <circle cx="700" cy="214" r="112" fill="url(#sk-sun)"/>
-
-          <path class="sk-hills" d="M0 186 C110 146 200 154 300 166 C380 176 450 136 540 156 C620 174 700 182 780 178 C880 170 960 184 1060 180 C1160 176 1220 136 1300 146 C1360 154 1400 136 1440 146 V260 H0 Z"/>
-
-          <!-- Bulgaria: Revival-era village house under a walnut tree -->
-          <g class="sk-bg">
-            <path class="sk-wall" d="M80 222 V206 Q90 200 100 206 Q110 200 120 206 Q130 200 140 206 Q150 200 160 206 Q170 200 180 206 Q190 200 200 206 Q210 200 220 206 Q230 200 240 206 V222 Z"/>
-            <rect class="sk-trunk" x="150" y="150" width="8" height="72"/>
-            <circle class="sk-leaf" cx="154" cy="138" r="38"/>
-            <circle class="sk-leaf sk-leaf-2" cx="126" cy="154" r="28"/>
-            <circle class="sk-leaf sk-leaf-2" cx="184" cy="150" r="30"/>
-            <rect class="sk-stonewall" x="270" y="170" width="170" height="52"/>
-            <path class="sk-door" d="M298 222 V198 Q311 184 324 198 V222 Z"/>
-            <rect fill="url(#sk-white)" x="255" y="120" width="200" height="50"/>
-            <path class="sk-timber" d="M255 120 h200 v4 h-200 Z M255 165 h200 v5 h-200 Z M255 120 h4 v50 h-4 Z M302 120 h4 v50 h-4 Z M355 120 h4 v50 h-4 Z M408 120 h4 v50 h-4 Z M451 120 h4 v50 h-4 Z"/>
-            <path class="sk-brace" d="M272 188 L258 170 M438 188 L452 170"/>
-            <g class="lit">
-              <rect x="316" y="132" width="20" height="24"/>
-              <rect x="371" y="132" width="20" height="24"/>
-              <rect x="422" y="132" width="20" height="24"/>
-              <rect x="372" y="188" width="14" height="16"/>
-            </g>
-            <path class="sk-mullion" d="M326 132 v24 M316 144 h20 M381 132 v24 M371 144 h20 M432 132 v24 M422 144 h20"/>
-            <path class="sk-shutter" d="M308 130 h7 v28 h-7 Z M337 130 h7 v28 h-7 Z M363 130 h7 v28 h-7 Z M392 130 h7 v28 h-7 Z M414 130 h7 v28 h-7 Z M443 130 h7 v28 h-7 Z"/>
-            <path class="sk-roof" d="M238 122 L472 122 L420 84 L290 84 Z"/>
-            <path class="sk-tiles" d="M279 92 H431 M268 100 H442 M257 108 H453 M246 116 H464"/>
-            <rect class="sk-eave" x="250" y="122" width="210" height="4"/>
-            <rect class="sk-chimney" x="398" y="68" width="14" height="22"/>
-            <rect class="sk-chimney-cap" x="395" y="64" width="20" height="5"/>
-          </g>
-
-          <!-- Spain / Lut Gholein: walled city with a blue-tiled dome and palms -->
-          <g class="sk-es">
-            <g class="palm" transform="translate(790 222) scale(1.05 1.05)"><path class="palm-trunk" d="M0 0 Q4 -36 14 -66"/><path class="palm-frond" d="M14 -66 q-30 -6 -48 12 M14 -66 q-26 -22 -52 -14 M14 -66 q2 -30 -14 -46 M14 -66 q24 -22 50 -12 M14 -66 q32 -2 46 22 M14 -66 q10 -28 30 -34"/></g>
-            <rect fill="url(#sk-sand)" x="928" y="128" width="164" height="52"/>
-            <rect fill="url(#sk-sand)" x="964" y="110" width="92" height="20"/>
-            <path fill="url(#sk-tile)" d="M962 112 C962 56 1058 56 1058 112 Z"/>
-            <path class="sk-ribs" d="M1010 70 Q988 82 978 112 M1010 70 Q1000 86 996 112 M1010 70 Q1020 86 1024 112 M1010 70 Q1032 82 1042 112"/>
-            <path class="sk-gold" d="M1010 62 V46"/>
-            <circle class="sk-goldfill" cx="1010" cy="43" r="3.5"/>
-            <rect fill="url(#sk-sand)" x="866" y="70" width="20" height="152"/>
-            <rect fill="url(#sk-sand)" x="1134" y="76" width="20" height="146"/>
-            <rect class="sk-band" x="862" y="98" width="28" height="6"/>
-            <rect class="sk-band" x="1130" y="104" width="28" height="6"/>
-            <path fill="url(#sk-tile)" d="M864 72 C864 52 888 52 888 72 Z M1132 78 C1132 58 1156 58 1156 78 Z"/>
-            <path class="sk-gold" d="M876 56 V42 M1144 62 V48"/>
-            <rect fill="url(#sk-sand)" x="820" y="176" width="360" height="46"/>
-            <path class="sk-merlons" d="M820 168 h9 v8 h-9 Z M836 168 h9 v8 h-9 Z M852 168 h9 v8 h-9 Z M868 168 h9 v8 h-9 Z M884 168 h9 v8 h-9 Z M900 168 h9 v8 h-9 Z M916 168 h9 v8 h-9 Z M932 168 h9 v8 h-9 Z M948 168 h9 v8 h-9 Z M964 168 h9 v8 h-9 Z M980 168 h9 v8 h-9 Z M996 168 h9 v8 h-9 Z M1012 168 h9 v8 h-9 Z M1028 168 h9 v8 h-9 Z M1044 168 h9 v8 h-9 Z M1060 168 h9 v8 h-9 Z M1076 168 h9 v8 h-9 Z M1092 168 h9 v8 h-9 Z M1108 168 h9 v8 h-9 Z M1124 168 h9 v8 h-9 Z M1140 168 h9 v8 h-9 Z M1156 168 h9 v8 h-9 Z M1172 168 h9 v8 h-9 Z "/>
-            <path class="sk-gate" d="M990 222 V198 Q990 182 1010 180 Q1030 182 1030 198 V222 Z"/>
-            <g class="lit">
-              <path d="M872 120 v-8 q4 -6 8 0 v8 Z M872 150 v-8 q4 -6 8 0 v8 Z M1140 126 v-8 q4 -6 8 0 v8 Z M1140 156 v-8 q4 -6 8 0 v8 Z"/>
-              <path d="M948 160 v-12 q6 -8 12 0 v12 Z M1060 160 v-12 q6 -8 12 0 v12 Z M984 160 v-12 q6 -8 12 0 v12 Z M1024 160 v-12 q6 -8 12 0 v12 Z"/>
-              <path d="M996 222 V200 Q996 188 1010 186 Q1024 188 1024 200 V222 Z" opacity="0.55"/>
-            </g>
-            <g class="palm" transform="translate(1196 222) scale(-0.9 0.9)"><path class="palm-trunk" d="M0 0 Q4 -36 14 -66"/><path class="palm-frond" d="M14 -66 q-30 -6 -48 12 M14 -66 q-26 -22 -52 -14 M14 -66 q2 -30 -14 -46 M14 -66 q24 -22 50 -12 M14 -66 q32 -2 46 22 M14 -66 q10 -28 30 -34"/></g>
-            <g class="palm" transform="translate(1214 222) scale(0.75 0.75)"><path class="palm-trunk" d="M0 0 Q4 -36 14 -66"/><path class="palm-frond" d="M14 -66 q-30 -6 -48 12 M14 -66 q-26 -22 -52 -14 M14 -66 q2 -30 -14 -46 M14 -66 q24 -22 50 -12 M14 -66 q32 -2 46 22 M14 -66 q10 -28 30 -34"/></g>
-          </g>
-
-          <!-- Scotland: tower house with turrets on a heather crag -->
-          <g class="sk-sc">
-            <path class="sk-crag" d="M1228 222 L1262 198 L1288 186 L1302 172 L1362 170 L1392 186 L1440 198 V222 Z"/>
-            <path class="sk-heather" d="M1262 206 a3 3 0 1 0 0.1 0 M1280 198 a3 3 0 1 0 0.1 0 M1300 192 a2.6 2.6 0 1 0 0.1 0 M1372 186 a3 3 0 1 0 0.1 0 M1394 196 a3 3 0 1 0 0.1 0 M1414 204 a3 3 0 1 0 0.1 0 M1340 178 a2.4 2.4 0 1 0 0.1 0"/>
-            <rect fill="url(#sk-stone)" x="1304" y="108" width="54" height="66"/>
-            <path class="sk-merlons sk-merlons-stone" d="M1304 100 h7 v8 h-7 Z M1316 100 h7 v8 h-7 Z M1328 100 h7 v8 h-7 Z M1340 100 h7 v8 h-7 Z M1352 100 h7 v8 h-7 Z "/>
-            <rect fill="url(#sk-stone)" x="1288" y="96" width="16" height="78"/>
-            <path class="sk-slate" d="M1286 96 L1296 70 L1306 96 Z M1352 110 L1360 90 L1368 110 Z"/>
-            <rect fill="url(#sk-stone)" x="1352" y="110" width="16" height="22"/>
-            <path class="sk-pole" d="M1331 100 V76"/>
-            <path class="sk-saltire" d="M1331 76 h16 v10 h-16 Z"/>
-            <path class="sk-saltire-x" d="M1331 76 L1347 86 M1347 76 L1331 86"/>
-            <g class="lit">
-              <rect x="1316" y="124" width="7" height="10"/>
-              <rect x="1338" y="124" width="7" height="10"/>
-              <rect x="1327" y="148" width="7" height="10"/>
-              <rect x="1293" y="118" width="5" height="9"/>
-            </g>
-          </g>
-
-          <path fill="url(#sk-ground)" d="M0 220 Q200 208 400 218 T800 214 T1200 220 T1440 212 V260 H0 Z"/>
-        </svg>
-      </div>
+{{> skyline}}
     </section>
 
     <!-- ============ ABOUT ============ -->
@@ -296,7 +167,7 @@
           </div>
 
           <figure class="diagram">
-          <svg viewBox="0 0 560 380" role="img" aria-labelledby="fl-title fl-desc">
+          <svg viewBox="0 0 560 340" role="img" aria-labelledby="fl-title fl-desc">
             <title id="fl-title">{{fl_title}}</title>
             <desc id="fl-desc">{{fl_desc}}</desc>
             <defs>
@@ -321,7 +192,14 @@
               <path id="l4" d="M448 288 Q370 268 312 212"/>
             </g>
             <g class="d-flow">
-              <use href="#l1"/><use href="#l2"/><use href="#l3"/><use href="#l4"/>
+              <circle class="d-dot" r="3.4"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#l1" xlink:href="#l1"/></animateMotion></circle>
+              <circle class="d-dot" r="3.4"><animateMotion dur="2.6s" begin="-1.3s" repeatCount="indefinite"><mpath href="#l1" xlink:href="#l1"/></animateMotion></circle>
+              <circle class="d-dot" r="3.4"><animateMotion dur="2.6s" begin="-0.6s" repeatCount="indefinite"><mpath href="#l3" xlink:href="#l3"/></animateMotion></circle>
+              <circle class="d-dot" r="3.4"><animateMotion dur="2.6s" begin="-1.9s" repeatCount="indefinite"><mpath href="#l3" xlink:href="#l3"/></animateMotion></circle>
+              <circle class="d-dot" r="3.4"><animateMotion dur="2.6s" calcMode="linear" keyPoints="1;0" keyTimes="0;1" repeatCount="indefinite"><mpath href="#l2" xlink:href="#l2"/></animateMotion></circle>
+              <circle class="d-dot" r="3.4"><animateMotion dur="2.6s" begin="-1.3s" calcMode="linear" keyPoints="1;0" keyTimes="0;1" repeatCount="indefinite"><mpath href="#l2" xlink:href="#l2"/></animateMotion></circle>
+              <circle class="d-dot" r="3.4"><animateMotion dur="2.6s" begin="-0.6s" calcMode="linear" keyPoints="1;0" keyTimes="0;1" repeatCount="indefinite"><mpath href="#l4" xlink:href="#l4"/></animateMotion></circle>
+              <circle class="d-dot" r="3.4"><animateMotion dur="2.6s" begin="-1.9s" calcMode="linear" keyPoints="1;0" keyTimes="0;1" repeatCount="indefinite"><mpath href="#l4" xlink:href="#l4"/></animateMotion></circle>
             </g>
 
             <circle class="d-ring" cx="280" cy="190" r="40"/>
@@ -342,13 +220,11 @@
             <text class="d-note" x="186" y="100" transform="rotate(28 186 100)">{{fl_updates}}</text>
             <text class="d-note" x="374" y="100" transform="rotate(-28 374 100)">{{fl_merged}}</text>
 
-            <g transform="translate(134 352)">
-              <path class="d-gold" d="M3 5 V3 a4 4 0 0 1 8 0 V5"/>
-              <rect class="d-goldfill" x="1" y="5" width="12" height="9" rx="1"/>
-              <text class="d-legend" x="22" y="14">{{fl_legend}}</text>
-            </g>
           </svg>
-            <figcaption>{{fl_caption}}</figcaption>
+            <figcaption>
+              <span class="fl-legend"><svg viewBox="0 0 14 15" aria-hidden="true" focusable="false"><path d="M3 6 V4 a4 4 0 0 1 8 0 V6" fill="none" stroke="#c7b377" stroke-width="2"/><rect x="1" y="6" width="12" height="9" rx="1" fill="#c7b377"/></svg>{{fl_legend}}</span>
+              {{fl_caption}}
+            </figcaption>
           </figure>
         </div>
       </div>
@@ -368,7 +244,7 @@
             <h3 class="tree-tab" id="tree-research">{{tree_research}}</h3>
             <ol class="nodes">
               <li class="node"><span class="node-gem" aria-hidden="true">ML</span><span class="node-body"><span class="node-name">{{ml_n}}</span><span class="node-desc">{{ml_d}}</span></span></li>
-              <li class="node"><span class="node-gem" aria-hidden="true">NLP</span><span class="node-body"><span class="node-name">{{nlp_n}}</span><span class="node-desc">{{nlp_d}}</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">LLM</span><span class="node-body"><span class="node-name">{{nlp_n}}</span><span class="node-desc">{{nlp_d}}</span></span></li>
               <li class="node"><span class="node-gem" aria-hidden="true">FL</span><span class="node-body"><span class="node-name">{{fln_n}}</span><span class="node-desc">{{fln_d}}</span></span></li>
               <li class="node"><span class="node-gem" aria-hidden="true">&sigma;</span><span class="node-body"><span class="node-name">{{bio_n}}</span><span class="node-desc">{{bio_d}}</span></span></li>
               <li class="node"><span class="node-gem" aria-hidden="true">VAL</span><span class="node-body"><span class="node-name">{{val_n}}</span><span class="node-desc">{{val_d}}</span></span></li>
@@ -378,8 +254,8 @@
             <h3 class="tree-tab" id="tree-engineering">{{tree_engineering}}</h3>
             <ol class="nodes">
               <li class="node"><span class="node-gem" aria-hidden="true">OPS</span><span class="node-body"><span class="node-name">{{ops_n}}</span><span class="node-desc">{{ops_d}}</span></span></li>
-              <li class="node"><span class="node-gem" aria-hidden="true">&#9729;</span><span class="node-body"><span class="node-name">{{cloud_n}}</span><span class="node-desc">{{cloud_d}}</span></span></li>
-              <li class="node"><span class="node-gem" aria-hidden="true">&#8644;</span><span class="node-body"><span class="node-name">{{pipe_n}}</span><span class="node-desc">{{pipe_d}}</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">&#8644;</span><span class="node-body"><span class="node-name">{{arch_n}}</span><span class="node-desc">{{arch_d}}</span></span></li>
+              <li class="node"><span class="node-gem" aria-hidden="true">ENV</span><span class="node-body"><span class="node-name">{{infra_n}}</span><span class="node-desc">{{infra_d}}</span></span></li>
               <li class="node"><span class="node-gem" aria-hidden="true">SEC</span><span class="node-body"><span class="node-name">{{sec_n}}</span><span class="node-desc">{{sec_d}}</span></span></li>
               <li class="node"><span class="node-gem" aria-hidden="true">GxP</span><span class="node-body"><span class="node-name">{{reg_n}}</span><span class="node-desc">{{reg_d}}</span></span></li>
             </ol>
